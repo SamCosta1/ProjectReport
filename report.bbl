@@ -1,8 +1,47 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{electron}
+Electron.
+
+\bibitem{jersey}
+Jersey.
+
+\bibitem{nodejs}
+Nodejs.
+
+\bibitem{sourcetree}
+Atlassian.
+
+\bibitem{gitkraken}
+axosoft.
+
+\bibitem{sketch}
+Bohemian Coding.
+\newblock Sketch.
+
+\bibitem{gitguis}
+git scm.
+\newblock Git in other environments - graphical interfaces.
+\newblock Accessed: 26-02-2019.
+
+\bibitem{gitk}
+gitk.
+
+\bibitem{teendesign}
+Alita Joyce and Jakob Nielsen.
+\newblock Teenager’s ux: Designing for teens.
+
+\bibitem{horizontalScrolling}
+Jakob Nielsen.
+\newblock Scrolling and scrollbars.
 
 \bibitem{ofqual}
 Ofqual.
 \newblock Gcse outcomes in england.
 \newblock Accessed: 26-02-2019.
+
+\bibitem{spring}
+Pivotal.
+\newblock The spring framework.
 
 \end{thebibliography}

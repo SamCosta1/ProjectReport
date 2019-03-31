@@ -1,9 +1,54 @@
 \chapter{Introduction}
 
-In England and Wales the percentage of students choosing to study a GCSE in computer science rose by 50\% from 2015 to 2016 and continued to rise between 2016 and 2017 \cite{ofqual}. This is according to official statistics published by Ofqual.
+In England and Wales, the percentage of students choosing to study a GCSE in computer science rose by 50\% from 2015 to 2016 and continued to rise between 2016 and 2017 \cite{ofqual}. This is according to official statistics published by Ofqual.
 
 Combined with government aims to introduce simple programming to children as young as five years old, this suggests that more and more young people are beginning to produce code.
 
-This project does not aim to convince the reader that five year old require a source control system, however for students at GCSE age, and for ALevel students, both of whom are completing projects involving non-trivial amounts of code, the need for comprehensive backups and version control become more apparent.
+This project does not aim to convince the reader toddlers are in need of a source control system, however for students at GCSE age, and for ALevel students, both of whom are completing projects involving non-trivial amounts of code, the need for comprehensive backups and version control become more apparent.
 
-In the field of computer science, this is a solved problem. The \emph{Git} source control solves all these problems, providing means of easily backing up code, keeping track of versions and enabling rolling ba
+In the field of computer science, this is a solved problem. The \emph{Git} source control solves all these problems. Providing means of easily keeping backups, keeping track of versions and providing the ability to easily roll back to an old version.
+
+Of course, using Git comes with its own challenges. To use it effectively requires practice and an understanding of its low-level commands and can be daunting at first.
+
+This project aims to strike a balance between the complexity of the system and the needs of younger users. To take advantage of such a rich version control system and to provide an interface to it which can be understood and used even by children.
+
+The emphasis of this interface is on the concept of \emph{version control} rather than Git specifically. Abstracting and automating the internals of Git to allow the user to concentrate on the higher level concepts of, ``rolling back," and, ``saving a new version".
+
+\subsection{Background on Git}
+
+This section will briefly describe some of the main advantages of Git and introduce some relevant terminology. 
+
+As previously mentioned Git allows for easy backups. In practice, this means the existence of a remote server which also holds a copy of the user's code. When the user wishes to back up their code. They create what is known as a \commit object. This contains a subset of the files in the directory that the user has edited since the last commit, as well as metadata such as the date, author e.t.c. Importantly, the metadata contains a pointer to the last commit that was created. This then forms a graph of the project history.
+
+At any point in the future, the user now has the ability to reset the project to the state stored in any \commit. These objects can also be pushed to the remote server, this is the way Git handles backups. 
+
+Sharing of projects across devices now becomes easy. The user on a different device makes a copy of the project from the remote server (this is known as \emph{cloning}). They are then free to create their own commits and to push them to the remote server, and to pull down commits created by others.
+
+This leads on to the fact Git is difficult to learn. The following is simply the author's opinion and should not be interpreted as a statement of concrete fact.
+
+This being said, it seems clear that Git's main complexity comes from the fact that any piece of code could be in one of many places. It could exist in a stash, in the working directory, in the staging area, in a commit on the remote e.t.c.
+
+Users are required to know about all these different areas and how they interact. When they inevitably make a mistake, usually this results in an error which is very difficult to read and interpret. 
+
+With this in mind, the first goal of this project becomes clear. To abstract away as many of these different places as possible. In fact, we will see that the project will present the user with only two areas. The remote version, and their local version.
+
+\subsection{Project Goals}\label{sec:projectgoals}
+
+On the outset of the project, there were two main objectives, from which all other aims extend. These are as follows.
+
+\noindent \textbf{Objective 1:} To produce a user interface which should be useable by anybody over the age of thirteen years old. This interface should enable interaction with an underlying Git repository at a very high level of abstraction. \emph{Note:} The GUI is not aiming to \emph{teach} the user about Git, or even about version control. The idea, is that given a brief introduction to the concept of version control, that the user should be able to easily use the system.
+
+What follows is the list of use cases the project originally aimed to fulfil. The one use case highlighted in red was lated judged to add needless complexity and was not implemented.
+
+\begin{itemize}
+\item Ability to login on any machine with the software installed and see a list of projects.
+\item Ability to open any of these projects locally just with a click.
+\item New commits should appear on other machines logged into the same user account without the need for the user to perform manual steps.
+\item Ability to jump back and forwards through the project history.
+\item \color{red}Ability to choose which files to add to a commit \color{black}
+\end{itemize}
+
+\noindent \textbf{Objective 2} The second objective is less tangible and is best described as follows. To produce a system that is scalable, well tested and robust enough for use by inexperienced users. In practice, this last part implies that the system should be able to automatically detect and correct issues with the underlying Git repository which would usually need to be manually corrected.
+
+Scalability is an important part of this project and warrants further discussion. Consider the case that the project is wildly successful and has many users beginning to use it. This means many repositories needing to be stored on remote servers. One of the key aims of the project is to build a system that allows more remote machines to be added to the pool of available resources and that the system automatically begins using these multiple servers.
+

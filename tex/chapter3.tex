@@ -1,0 +1,74 @@
+In this chapter, we discuss the main development phase of the project and justify some of the main decisions made throughout its course. We'll explore the implementations of the architectures discussed at a high level in Chapter 2 as well as some of the more intriguing problems encountered throughout development.
+
+
+\section{Planning and management of work}
+
+Trello boards were used from the very beginning to keep track of project goals and tasks. A separate board kept track of tasks relating to the server, the littlegit-core and the GUI. Figure \ref{screenshot:trello} shows the current state of the board for the littlegit-core (though the screenshot cuts off many done tasks). The strategy used with regards to the boards was as follows. Very early in the project, a large number of tasks were created in each board and placed in the \emph{Backlog} column. Every week a few of the highest priority tasks were moved to the next column along, the \emph{Next Priorty} column for completion that week. 
+
+\fig{figures/trello.png}{A screenshot of the Trello board for the littlegit-core component of the project, taken after the end of development.}{screenshot:trello}{0.5}
+
+The strategy was first to complete a bulk of the tasks for the littlegit-core, then the server. Once both were stable, we then began work on the GUI. The approach worked reasonably well but did lead to a small amount of thoroughly tested code not being used in the final project; we will discuss the benefits and weaknesses of the approach in Section \ref{??}.
+
+It is worth mentioning the way tasks were chosen. The approach was to take the desired feature set (discussed back in Section \ref{sec:projectgoals}) and to break these features up into the tasks needed to achieve them. 
+
+\section{Choice of language}
+
+In chapter 2 we introduced the need for a library (the littlegit-core) to interact with the Git binary and provide a higher level interface to it, to be used by both the main server and the GUI. 
+
+Considering the time constraints on this project, only implementing the library once was crucial. Furthermore, the time constraints would not permit writing further wrappers of the littlegit-core to make it compatible with other technologies. Hence the GUI and server needed to be able to import the littlegit-core directly. 
+
+Three main technologies were considered. They are as follows.
+
+\begin{enumerate}
+\item \textbf{JavaScript:} Though this technology has been a staple of web development for many years, in recent years the Electron \cite{electron} has become a common technology allowing JavaScript, HTML and CSS (all traditionally web technologies) to be used to produce cross-platform desktop applications.
+
+Furthermore, NodeJS \cite{nodejs} is a technology allowing JavaScript's use in writing server code, making it a very viable choice as a core technology for littlegit. 
+
+However, JavaScript is a \emph{weakly typed} language, and previous experience has indicated that maintaining a large body of weakly typed code quickly becomes very difficult. Despite the advent of tools such as \emph{TypeScript} which is a typed language which transpiles into JavaScript, it is still no replacement for a truly typed language such as Java.
+
+\end{enumerate}
+
+
+\section{Implementation of components}
+
+There was an emphasis following best practices throughout this project from a software engineering point of view. Principle among these was the tenant of separation of concerns. This section details the implementation of the individual components which communicate with each other but are distinct. 
+
+\section{The littlegit-core}
+
+As has already been discussed, this is the library that interacts directly with the Git binary. The primary challenge involved in producing this component was the interaction with the so-called git-plumbing.
+
+Git commands are loosely grouped into two categories (though the distinction is not a hard one). The first is git-porcelain. Porcelain commands are those with which most Git users are likely to have interacted. A good example is \texttt{git-status}, which gives a summary of the current state of the user's local Git repository. These are commands designed for use by human users; often, their outputs are tweaked between Git versions to aid human readability. This makes them unsuited for machine use; it is impossible to reliably parse output which is slightly different in every version of Git.
+
+The git-plumbing commands, on the other hand, are generally lower level commands to the porcelain and are often used under the hood by the porcelain itself. Their outputs are considered stable and designed for interaction with other software rather than humans. While making them a far better choice for the littlegit-core to interact with, the difficulty is in the fact they are by nature lower level commands. For example, to check out a branch with git-porcelain is a straightforward one-line operation, but this conceals multiple plumbing commands under the hood. Littlegit-core endeavours to use plumbing commands wherever possible.
+
+As has been mentioned, the project aims to follow best practices wherever possible. For this reason, and the fact that the rest of the project relies heavily on the littlegit-core being stable, a TDD testing approach was used. One way of achieving this was to \emph{design the library for testibility}. The main design decision supporting this was the decision to make the library's operations synchronous. The user's interaction with the GUI shouldn't grind to a halt because a shell command is executing. Hence there must be some asynchronicity, but the decision was made that the GUI would be responsible for threading calls to the littlegit-core, leaving it to return its results synchronously.
+
+Methods who return synchronously prove to be a much simpler and more reliable to test, allowing the entire library to be covered thoroughly with tests.
+
+\subsubsection{Architecture}
+
+The primary driver behind the architecture of the littlegit-core is the fact it must be able to execute its commands on remote machines over an SSH connection as well as on the local machine. For example, it is used to initialise remote repositories via SSH on the Git servers.
+
+Figure \ref{fig:core-architecture} shows the way the library is architected. The top layer is used to combine plumbing commands; for example, multiple plumbing commands are required to change branches. It is in the \texttt{command combiner} layer that this happens, these commands are represented at a high level at this stage. It is the responsibility of the \texttt{command runner} to convert these into raw commands to be interpreted by Git, which are executed either through the local or remote runners depending on the configuration. Local for the GUI, remote on the server.
+
+\fig{figures/core-architecture}{The internal architecture of the littlegit-core.}{fig:core-architecture}{0.5}
+
+
+\subsubsection{Deployment}
+
+We keep mentioning that the library is \emph{used} or \emph{included} by the GUI and server. It's worth explaining what this means and describing the deployment process for the library. Figure \ref{fig:core-deployment} shows the deployment pipeline, triggered by a push to source control; all the automated tests are run remotely by Travis's continuous integration service. Importantly when the tests succeed the library is deployed to a maven repository allowing it to easily be included as a maven dependency by the server and the GUI, without the need to manually copy any files.
+
+\fig{figures/core-deployment.pdf}{The deployment pipeline of the littlegit-core.}{fig:core-deployment}{0.5}
+
+\section{The main server}
+In this section, we will explore the implementation of the main server and justify the technologies used. Recall that the main server's primary function is the management of users and remote repositories. Keeping track of user details as well as information on which users have access to which repositories. 
+
+\subsection{Technologies}
+
+We've already justified the decision to use the Kotlin programming language for the server. However, this was not the only decision, the next decision was which framework the server should use. Two options stood out.
+
+\begin{itemize}
+\item The Spring framework \cite{spring}.
+\item The Jersey framework \cite{jersey}.
+\end{itemize}
+1

@@ -1,9 +1,0 @@
-\chapter{Introduction}
-
-In England and Wales the percentage of students choosing to study a GCSE in computer science rose by 50\% from 2015 to 2016 and continued to rise between 2016 and 2017 \cite{ofqual}. This is according to official statistics published by Ofqual.
-
-Combined with government aims to introduce simple programming to children as young as five years old, this suggests that more and more young people are beginning to produce code.
-
-This project does not aim to convince the reader that five year old require a source control system, however for students at GCSE age, and for ALevel students, both of whom are completing projects involving non-trivial amounts of code, the need for comprehensive backups and version control become more apparent.
-
-In the field of computer science, this is a solved problem. The \emph{Git} source control solves all these problems, providing means of easily backing up code, keeping track of versions and enabling rolling ba
