@@ -49,7 +49,7 @@ Methods who return synchronously prove to be a much simpler and more reliable to
 
 The primary driver behind the architecture of the littlegit-core is the fact it must be able to execute its commands on remote machines over an SSH connection as well as on the local machine. For example, it is used to initialise remote repositories via SSH on the Git servers.
 
-Figure \ref{fig:core-architecture} shows the way the library is architected. The top layer is used to combine plumbing commands; for example, multiple plumbing commands are required to change branches. It is in the \texttt{command combiner} layer that this happens, these commands are represented at a high level at this stage. It is the responsibility of the \texttt{command runner} to convert these into raw commands to be interpreted by Git, which are executed either through the local or remote runners depending on the configuration. Local for the GUI, remote on the server.
+Figure \ref{fig:core-architecture} shows the way the library is architected. The top layer is used to combine plumbing commands; for example, multiple plumbing commands are required to change branches. It makes calls to the \texttt{command runner} which provides a high-level interface to these Git commands. The  \texttt{command runner} then converts these high-level invocations raw commands to be interpreted by Git, which are executed either through the local or remote runners depending on the configuration. Local for the GUI, remote on the server.
 
 \fig{figures/core-architecture}{The internal architecture of the littlegit-core.}{fig:core-architecture}{0.5}
 
@@ -65,10 +65,37 @@ In this section, we will explore the implementation of the main server and justi
 
 \subsection{Technologies}
 
-We've already justified the decision to use the Kotlin programming language for the server. However, this was not the only decision, the next decision was which framework the server should use. Two options stood out.
+We've already justified the decision to use the Kotlin programming language for the server. However, multiple options were available in regards to different technologies for everything from the database to the framework used to build the server itself. We discuss and justify the choices made here.
+
+\subsubsection{Web server framework}
+
+Let's first discuss the choice of the server framework used. The two frameworks most seriously considered are as follows.
 
 \begin{itemize}
 \item The Spring framework \cite{spring}.
 \item The Jersey framework \cite{jersey}.
 \end{itemize}
-1
+
+We chose Jersey for its lightweight nature, it provides an easy way of creating API endpoints but unlike Spring does not attempt to control the entire stack down to the database allowing much more flexibility. Considering the need for the server to communicate via SSH with the Git servers, having full control of the stack was vital.
+
+The downside of Jersey and the advantage of Spring is a direct consequence. Spring provides much of the required functionality (communication with the database and authentication of users, being most significant) as standard, while these must be done manually with Jersey. In the end, the need for flexibility made Jersey the correct choice, despite the additional implementation work involved.
+
+\subsubsection{Database and caching}
+
+Given the rise of non-relational databases such as CouchDB and Firebase the decision to use a traditional SQL database is no longer a trivial one. These non-relational databases have some significant advantages, one of the most enticing being their quality of scaling horizontally, unlike traditional databases which generally only scale vertically. 
+
+However, the decision was made to use a traditional database for the following reasons. The first and most important of these reasons are the need for complex querying on the data where non-relational databases don't compete with the power of traditional SQL. An example of this kind of complex query is the need to find all the Git servers which contain repositories the user either owns or has access to which don't currently hold their SSH keys.
+
+Moreover, the data has an evident structure, a structure which doesn't need to change often or adapt to a rapidly changing environment (where non-relational databases come into their own). Because of this, the static, rarely changing schemes of traditional SQL databases are not a hindrance. 
+
+The scaling issue, however, must be addressed. No matter the convenience to the programmer, the use of a technology that won't scale efficiently cannot be justified when one of the objectives of the project is to produce a scalable system. 
+
+Let us consider the data that the system needs to store. For the reader with experience with relational databases, Figure \ref{fig:entity-relationship} shows an entity relationship diagram for the database. In short, the data we need to store is as follows.
+
+\begin{itemize}
+\item
+\end{itemize}
+
+\fig{figures/er-diagram.png}{An entity relationship diagram representing the database.}{fig:entity-relationship}{0.7}
+
+
