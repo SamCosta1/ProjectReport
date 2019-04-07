@@ -111,7 +111,7 @@ Moreover, having a cache with built-in replication allows it to scale across mul
 
 Let us consider the situation where the load on the server becomes large, causing requests to become slow and even to time out. Since the memory of the machine hosting the server caches the data, the only option is to get a bigger machine with more memory (vertical scaling). On the other hand, using our approach we can spin up multiple machines hosting the server to balance the load, and Redis's inbuilt replication allows us to do the same thing with the cache. Figure \ref{fig:loadbalancing} shows the idea \footnote{This was only tested with one machine each for the cache, server and database without a load balancer due to the cost of doing so on Amazon Web Services and other platforms, the code however fully supports the architecture described.}.
 
-
+\fig{figures/loadbalancing.pdf}{A representation of how the system scales.}{fig:loadbalancing}{0.5}
 
 
 
