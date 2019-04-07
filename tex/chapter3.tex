@@ -1,4 +1,4 @@
-In this chapter, we discuss the main development phase of the project and justify some of the main decisions made throughout its course. We'll explore the implementations of the architectures discussed at a high level in Chapter 2 as well as some of the more intriguing problems encountered throughout development.
+In this chapter, we discuss the main development phase of the project and justify some of the main decisions made throughout its course. We will explore the implementations of the architectures discussed at a high level in Chapter 2 as well as some of the more intriguing problems encountered throughout development.
 
 
 \section{Planning and management of work}
@@ -41,7 +41,7 @@ Git commands are loosely grouped into two categories (though the distinction is 
 
 The git-plumbing commands, on the other hand, are generally lower level commands to the porcelain and are often used under the hood by the porcelain itself. Their outputs are considered stable and designed for interaction with other software rather than humans. While making them a far better choice for the littlegit-core to interact with, the difficulty is in the fact they are by nature lower level commands. For example, to check out a branch with git-porcelain is a straightforward one-line operation, but this conceals multiple plumbing commands under the hood. Littlegit-core endeavours to use plumbing commands wherever possible.
 
-As has been mentioned, the project aims to follow best practices wherever possible. For this reason, and the fact that the rest of the project relies heavily on the littlegit-core being stable, a TDD testing approach was used. One way of achieving this was to \emph{design the library for testibility}. The main design decision supporting this was the decision to make the library's operations synchronous. The user's interaction with the GUI shouldn't grind to a halt because a shell command is executing. Hence there must be some asynchronicity, but the decision was made that the GUI would be responsible for threading calls to the littlegit-core, leaving it to return its results synchronously.
+As has been mentioned, the project aims to follow best practices wherever possible. For this reason, and the fact that the rest of the project relies heavily on the littlegit-core being stable, a TDD testing approach was used. One way of achieving this was to \emph{design the library for testibility}. The main design decision supporting this was the decision to make the library's operations synchronous. The user's interaction with the GUI should not grind to a halt because a shell command is executing. Hence there must be some asynchronicity, but the decision was made that the GUI would be responsible for threading calls to the littlegit-core, leaving it to return its results synchronously.
 
 Methods who return synchronously prove to be a much simpler and more reliable to test, allowing the entire library to be covered thoroughly with tests.
 
@@ -56,22 +56,22 @@ Figure \ref{fig:core-architecture} shows the way the library is architected. The
 
 \subsubsection{Deployment}
 
-We keep mentioning that the library is \emph{used} or \emph{included} by the GUI and server. It's worth explaining what this means and describing the deployment process for the library. Figure \ref{fig:core-deployment} shows the deployment pipeline, triggered by a push to source control; all the automated tests are run remotely by Travis's continuous integration service. Importantly when the tests succeed the library is deployed to a maven repository allowing it to easily be included as a maven dependency by the server and the GUI, without the need to manually copy any files.
+We keep mentioning that the library is \emph{used} or \emph{included} by the GUI and server. It is worth explaining what this means and describing the deployment process for the library. Figure \ref{fig:core-deployment} shows the deployment pipeline, triggered by a push to source control; all the automated tests are run remotely by Travis's continuous integration service. Importantly when the tests succeed the library is deployed to a maven repository allowing it to easily be included as a maven dependency by the server and the GUI, without the need to manually copy any files.
 
 \fig{figures/core-deployment.pdf}{The deployment pipeline of the littlegit-core.}{fig:core-deployment}{0.5}
 
 \section{The main server}
 In this section, we will explore the implementation of the main server and justify the technologies used. Recall that the main server's primary function is the management of users and remote repositories. Keeping track of user details as well as information on which users have access to which repositories. 
 
-\subsection{Technologies}
+\subsection{Technologies}\label{sec:technologies}
 
-We've already justified the decision to use the Kotlin programming language for the server. However, multiple options were available in regards to different technologies for everything from the database to the framework used to build the server itself. We discuss and justify the choices made here.
+We have already justified the decision to use the Kotlin programming language for the server. However, multiple options were available in regards to different technologies for everything from the database to the framework used to build the server itself. We discuss and justify the choices made here.
 
 Firstly, Amazon Web Services hosts all the online infrastructure for this project. The justification for this is simple, hosting of databases and servers is expensive, and AWS offers a free tier of the services needed for students.
 
 \subsubsection{Web server framework}
 
-Let's first discuss the choice of the server framework used. The two frameworks most seriously considered are as follows.
+Let us first discuss the choice of the server framework used. The two frameworks most seriously considered are as follows.
 
 \begin{itemize}
 \item The Spring framework \cite{spring}.
@@ -86,39 +86,72 @@ The downside of Jersey and the advantage of Spring is a direct consequence. Spri
 
 Given the rise of non-relational databases such as CouchDB and Firebase the decision to use a traditional SQL database is no longer a trivial one. These non-relational databases have some significant advantages, one of the most enticing being their quality of scaling horizontally, unlike traditional databases which generally only scale vertically. 
 
-However, the decision was made to use a traditional database for the following reasons. The first and most important of these reasons are the need for complex querying on the data where non-relational databases don't compete with the power of traditional SQL. An example of this kind of complex query is the need to find all the Git servers which contain repositories the user either owns or has access to which don't currently hold their SSH keys.
+However, the decision was made to use a traditional database for the following reasons. The first and most important of these reasons are the need for complex querying on the data where non-relational databases do not compete with the power of traditional SQL. An example of this kind of complex query is the need to find all the Git servers which contain repositories the user either owns or has access to which do not currently hold their SSH keys.
 
-Moreover, the data has an evident structure, a structure which doesn't need to change often or adapt to a rapidly changing environment (where non-relational databases come into their own). Because of this, the static, rarely changing schemes of traditional SQL databases are not a hindrance. 
+Moreover, the data has an evident structure, a structure which does not need to change often or adapt to a rapidly changing environment (where non-relational databases come into their own). Because of this, the static, rarely changing schemes of traditional SQL databases are not a hindrance. 
 
-The scaling issue, however, must be addressed. No matter the convenience to the programmer, the use of a technology that won't scale efficiently cannot be justified when one of the objectives of the project is to produce a scalable system. 
+The scaling issue, however, must be addressed. No matter the convenience to the programmer, the use of a technology that will not scale efficiently cannot be justified when one of the objectives of the project is to produce a scalable system. 
 
 Let us consider the data that the system needs to store. For the reader with experience with relational databases, Figure \ref{fig:entity-relationship} shows an entity relationship diagram for the database. In short, the data we need to store is as follows.
 
 \begin{itemize}
 \item User information including tokens used for authorisation and authentication.
-\item Information about repositories and the servers upon which they're stored.
+\item Information about repositories and the servers upon which they are stored.
 \item The SSH keys for each user.
 \item Information regarding which users have access to which repositories.
 \end{itemize}
 
 \fig{figures/er-diagram.png}{An entity relationship diagram representing the database.}{fig:entity-relationship}{0.5}
 
-The scalability of the server relies on one key observation, the fact that the reading from the database is a far more common operation than writing. For example, the creation of repositories is not a common operation but checking if a user has access to a repository is very common (this will be discussed further in subsequent sections). This observation allows us to introduce caching to solve our scalability issue. By caching as many of the values as possible in a scalable, \textbf{in-memory} caching solution, we massively reduce traffic to the database. We'll discuss this further in subsequent sections, for now, we'll justify the use of Redis \cite{redis} as our caching solution.
+The scalability of the server relies on one key observation, the fact that the reading from the database is a far more common operation than writing. For example, the creation of repositories is not a common operation but checking if a user has access to a repository is very common (this will be discussed further in subsequent sections). This observation allows us to introduce caching to solve our scalability issue. By caching as many of the values as possible in a scalable, \textbf{in-memory} caching solution, we massively reduce traffic to the database. We will discuss this further in subsequent sections, for now, we will justify the use of Redis \cite{redis} as our caching solution.
 
-Redis's feature set is vast \cite{redis}, but the important ones for us are its in-memory key-value store and built-in replication. Its in-memory nature allows for very fast reads of the data. Of course, key-value pairs don't offer the benefit of flexible SQL-like queries. However, this isn't what we need at this point, if we need to do complex queries we can access the database, the cache speeds up common simple operations such as returning the details for a particular user, or checking if an authentication token is valid \textbf{without} the overhead of checking the database which is on disk.
+Redis's feature set is vast \cite{redis}, but the important ones for us are its in-memory key-value store and built-in replication. Its in-memory nature allows for very fast reads of the data. Of course, key-value pairs do not offer the benefit of flexible SQL-like queries. However, this isn't what we need at this point, if we need to do complex queries we can access the database, the cache speeds up common simple operations such as returning the details for a particular user, or checking if an authentication token is valid \textbf{without} the overhead of checking the database which is on disk.
 
-Moreover, having a cache with built-in replication allows it to scale across multiple machines easily giving us the horizontal scaling we require. The reader may wonder why we're using a caching solution rather than making use of data structures within the server code itself to achieve the same thing. It is a very valid argument to say that such an approach would be more straightforward and easy to implement, with less to go wrong!
+Moreover, having a cache with built-in replication allows it to scale across multiple machines easily giving us the horizontal scaling we require. The reader may wonder why we are using a caching solution rather than making use of data structures within the server code itself to achieve the same thing. It is a very valid argument to say that such an approach would be more straightforward and easy to implement, with less to go wrong!
 
 Let us consider the situation where the load on the server becomes large, causing requests to become slow and even to time out. Since the memory of the machine hosting the server caches the data, the only option is to get a bigger machine with more memory (vertical scaling). On the other hand, using our approach we can spin up multiple machines hosting the server to balance the load, and Redis's inbuilt replication allows us to do the same thing with the cache. Figure \ref{fig:loadbalancing} shows the idea \footnote{This was only tested with one machine each for the cache, server and database without a load balancer due to the cost of doing so on Amazon Web Services and other platforms, the code however fully supports the architecture described.}.
 
-\fig{figures/loadbalancing.pdf}{A representation of how the system scales.}{fig:loadbalancing}{0.5}
+\fig{figures/loadbalancing.pdf}{The overall architecture of the main server and the way it is designed to scale.}{fig:loadbalancing}{0.5}
+
+\subsubsection{Data transfer}
+
+The decision to use the JSON data format for communication between the server and desktop client was a straightforward one. JSON is lightweight and is easily parsable by machine while also being straightforward to understand by humans (making debugging easy) \cite{json}.
+
+Furthermore, the decision to create a RESTful interface with the server allows it to be used by other clients in future easily. For example, if a web interface was required to enable users to view and manipulate their remote repositories, the same endpoints could be used without any additional work.
+
+\subsection{Internal server architecture}
+
+While discussing technologies, we saw the overall structure of the server technology stack. In this section, however, we discuss the way the code which interacts with these various components is architected.
+
+As was described in Section \ref{sec:technologies}, a lightweight server framework was selected for the system which does not enforce a particular architecture. The Spring framework was a loose inspiration to our architecture, resulting in the use of a \emph{Layered Architecture}. Figure \ref{fig:server-architecture} shows the different layers of the system.
+
+As the diagram shows, each layer abstracts the one beneath it, and each layer interacts exclusively with the one below it. The roles of the individual layers are as follows.
+
+\fig{figures/server-architecture.pdf}{The internal architecture of the main server.}{fig:server-architecture}{0.5}
+
+\subsubsection{Repository Layer}
+
+The repository layer is little more than an abstraction on the database and caching layers. Used by the service layer to retrieve and write information, this layer invokes raw SQL commands to communicate with the database and crucially also reads from the cache, and invalidates cached information when data is updated. For the interested reader, the caching strategy is described in more depth in Appendix \ref{appendix_caching}.
+
+Furthermore, the repository layer handles the mapping of data from the database and cache to Kotlin data structures.
+
+By the nature of this layer's direct communication with the SQL database, it is here that considerations must be made to protect against SQL injection attacks.
 
 
+\subsubsection{Service Layer}
 
+In this layer, we have all of our application-specific business logic. For example, the process of creating a new repository consists of several steps, involving multiple writes to the database and the running of commands on remote Git servers. The logic for combining these operations exists in the service layer.
 
+\subsubsection{Controller Layer}
 
+This layer defines the interface between the server's logic and the outside world. This means defining the individual API endpoints and the mappings from HTTP URLs to methods. Importantly, in this layer, we also define what kind of user can access each endpoint. A discussion of the types of users supported by the server is included in Appendix \ref{appendix_users}.
 
+By far, this is the most difficult layer to test since it how we define the interface of our API using syntax provided by the Jersey framework. For this reason, it is vital that the controller contains as little business logic as possible. In fact, for this project, each controller does nothing but invoke code in the Service layer which is far easier to test.
 
+\section{Authentication}
 
+There are two main kinds of authentication used by the system. SSH authentication is used when the desktop GUI performs Git operations interacting with the remote Git server (for example \texttt{git push} and \texttt{git fetch}), whereas calls to the API use a token-based system. 
 
+\subsection{API authentication}
 
+We discuss the SSH authentication in the next section

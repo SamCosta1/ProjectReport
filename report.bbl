@@ -9,6 +9,9 @@ Jersey.
 \bibitem{nodejs}
 Nodejs.
 
+\bibitem{redis}
+Redis.
+
 \bibitem{sourcetree}
 Atlassian.
 
@@ -18,6 +21,10 @@ axosoft.
 \bibitem{sketch}
 Bohemian Coding.
 \newblock Sketch.
+
+\bibitem{json}
+ereger.
+\newblock What is json?
 
 \bibitem{gitguis}
 git scm.

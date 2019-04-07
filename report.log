@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.9)  7 APR 2019 12:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.9)  7 APR 2019 17:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -208,7 +208,7 @@ LaTeX Warning: Reference `sourcetree_issue' on page 4 undefined on input line 1
 File: figures/highlevel.pdf Graphic file (type pdf)
 
 <use figures/highlevel.pdf>
-Package pdftex.def Info: figures/highlevel.pdf used on input line 23.
+Package pdftex.def Info: figures/highlevel.pdf used on input line 24.
 (pdftex.def)             Requested size: 327.74364pt x 235.35872pt.
  [4
 
@@ -219,34 +219,34 @@ Package pdftex.def Info: figures/highlevel.pdf used on input line 23.
 File: figures/gui-core.pdf Graphic file (type pdf)
 
 <use figures/gui-core.pdf>
-Package pdftex.def Info: figures/gui-core.pdf used on input line 54.
+Package pdftex.def Info: figures/gui-core.pdf used on input line 55.
 (pdftex.def)             Requested size: 195.73076pt x 167.18419pt.
  [6 <./figures/gui-core.pdf>]
 <figures/sourcetree.png, id=74, 1135.24126pt x 552.0625pt>
 File: figures/sourcetree.png Graphic file (type png)
 
 <use figures/sourcetree.png>
-Package pdftex.def Info: figures/sourcetree.png used on input line 74.
+Package pdftex.def Info: figures/sourcetree.png used on input line 75.
 (pdftex.def)             Requested size: 340.575pt x 165.62003pt.
 
 <figures/gitkraken.png, id=76, 1444.39626pt x 880.28876pt>
 File: figures/gitkraken.png Graphic file (type png)
 
 <use figures/gitkraken.png>
-Package pdftex.def Info: figures/gitkraken.png used on input line 76.
+Package pdftex.def Info: figures/gitkraken.png used on input line 77.
 (pdftex.def)             Requested size: 433.32222pt x 264.08865pt.
 
-Overfull \hbox (88.32222pt too wide) in paragraph at lines 76--76
+Overfull \hbox (88.32222pt too wide) in paragraph at lines 77--77
  [][] 
  []
 
 <figures/gitk.png, id=77, 1157.32375pt x 703.62875pt>
 File: figures/gitk.png Graphic file (type png)
  <use figures/gitk.png>
-Package pdftex.def Info: figures/gitk.png used on input line 78.
+Package pdftex.def Info: figures/gitk.png used on input line 79.
 (pdftex.def)             Requested size: 347.1998pt x 211.09026pt.
 
-Overfull \hbox (2.1998pt too wide) in paragraph at lines 78--78
+Overfull \hbox (2.1998pt too wide) in paragraph at lines 79--79
  [][] 
  []
 
@@ -255,27 +255,21 @@ Overfull \hbox (2.1998pt too wide) in paragraph at lines 78--78
 File: figures/horizontal-graph.pdf Graphic file (type pdf)
 
 <use figures/horizontal-graph.pdf>
-Package pdftex.def Info: figures/horizontal-graph.pdf used on input line 84.
+Package pdftex.def Info: figures/horizontal-graph.pdf used on input line 85.
 (pdftex.def)             Requested size: 174.38885pt x 32.81082pt.
  [9 <./figures/horizontal-graph.pdf>]
-
-LaTeX Warning: Citation `' on page 10 undefined on input line 110.
-
-
-LaTeX Warning: Reference `design2' on page 10 undefined on input line 110.
-
 <figures/design1.png, id=101, 2569.6pt x 1604.99625pt>
 File: figures/design1.png Graphic file (type png)
 
 <use figures/design1.png>
-Package pdftex.def Info: figures/design1.png used on input line 112.
+Package pdftex.def Info: figures/design1.png used on input line 113.
 (pdftex.def)             Requested size: 282.65688pt x 176.55013pt.
 
 <figures/design2.png, id=102, 2569.6pt x 1604.99625pt>
 File: figures/design2.png Graphic file (type png)
 
 <use figures/design2.png>
-Package pdftex.def Info: figures/design2.png used on input line 114.
+Package pdftex.def Info: figures/design2.png used on input line 115.
 (pdftex.def)             Requested size: 282.65688pt x 176.55013pt.
 ) [10 <./figures/design1.png>] [11 <./figures/design2.png>]
 \openout2 = `tex/chapter3.aux'.
@@ -327,39 +321,54 @@ File: figures/er-diagram.png Graphic file (type png)
 <use figures/er-diagram.png>
 Package pdftex.def Info: figures/er-diagram.png used on input line 104.
 (pdftex.def)             Requested size: 262.17885pt x 124.86618pt.
-
-
-LaTeX Warning: Citation `redis' on page 16 undefined on input line 106.
-
-[16]
-
-LaTeX Warning: Citation `redis' on page 17 undefined on input line 108.
-
+ [16]
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 112.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 112.
+
 <figures/loadbalancing.pdf, id=159, 642.48026pt x 166.7028pt>
 File: figures/loadbalancing.pdf Graphic file (type pdf)
 
 <use figures/loadbalancing.pdf>
 Package pdftex.def Info: figures/loadbalancing.pdf used on input line 114.
 (pdftex.def)             Requested size: 321.23933pt x 83.35118pt.
-) [17 <./figures/er-diagram.png>] [18 <./figures/loadbalancing.pdf
+ [17 <./figures/er-diagram.png>]
+<figures/server-architecture.pdf, id=167, 283.0575pt x 325.215pt>
+File: figures/server-architecture.pdf Graphic file (type pdf)
+
+<use figures/server-architecture.pdf>
+Package pdftex.def Info: figures/server-architecture.pdf used on input line 130
+.
+(pdftex.def)             Requested size: 141.5284pt x 162.6071pt.
+ [18 <./figures/loadbalancing.pdf
 
 pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./figures/loadbalancing.pdf)
 : PDF inclusion: invalid other resource which is no dict (key 'ProcSets', type 
 <array>); ignored.
->]
-Appendix A.
-(./report.bbl [19
+> <./figures/server-architecture.pdf
 
+pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./figures/server-architectur
+e.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets',
+ type <array>); ignored.
+>]) [19]
+Appendix A.
+[20
+
+
+]
+Appendix B.
+[21
+
+]
+Appendix C.
+(./report.bbl [22
 
 ]
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
-) [20
+) [23
 
 ] (./report.aux (./tex/abstract.aux) (./tex/chapter1.aux) (./tex/chapter2.aux) 
 (./tex/chapter3.aux))
@@ -368,10 +377,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 2325 strings out of 492995
- 32597 string characters out of 6132705
- 99874 words of memory out of 5000000
- 5825 multiletter control sequences out of 15000+600000
+ 2333 strings out of 492995
+ 32835 string characters out of 6132705
+ 99925 words of memory out of 5000000
+ 5832 multiletter control sequences out of 15000+600000
  9621 words of font info for 34 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,8n,35p,816b,224s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -386,10 +395,10 @@ texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/tex
 live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texli
 ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on report.pdf (21 pages, 2434762 bytes).
+Output written on report.pdf (24 pages, 2463178 bytes).
 PDF statistics:
- 225 PDF objects out of 1000 (max. 8388607)
- 143 compressed objects within 2 object streams
+ 244 PDF objects out of 1000 (max. 8388607)
+ 156 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 66 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 71 words of extra memory for PDF output out of 10000 (max. 10000000)
 
