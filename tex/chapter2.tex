@@ -14,7 +14,6 @@ However, here too is where the automation stops. There is little to no help with
 
 The project, therefore, aims to build upon the positive features of Source Tree and the Atlassian ecosystem, adding more abstraction and automation in the hopes of achieving a much simpler user experience.
 
-
 \subsection{Technical Overview}
 
 First, we present a very high-level description of the system as a whole, before exploring its components and their roles.
@@ -92,7 +91,7 @@ Since this automation is taking place, it seems prudent to explicitly describe t
 
 Hence, creating new commits should be the primary operation the user sees when using the application. Furthermore, by looking at GitKraken and SourceTree in particular, the reader may also notice that many of the buttons on their left toolbars are merely the names of branches. In regular use clicking on them allows the user to check out these branches. Both applications also allow for using the graph to navigate between branches, allowing the user to click on the branch they wish to check out. With littlegit we aimed to expand this functionality, allowing the user to check out any commit in the history and handling this with branches internally without exposing this to the user.
 
-\subsection {Designing for teenagers}
+\subsection {Designing for teenagers}\label{sec:teen-design}
 
 There has been much research conducted on the topic of designing user interfaces for teenagers. Unfortunately, the orientation of much of that research was towards websites and mobile applications rather than desktop apps. A result of this is usually much discussion of the importance of social media integration and good mobile compatibility, neither of which apply to a desktop application such as littlegit.
 
@@ -108,7 +107,7 @@ Lastly, a point continually emphasised by the study is that of fast loading spee
 
 The development of the software followed an iterative approach. This meant continually seeking feedback from others as the project continued. However, it was essential to have an initial design to aim for, taking into account the research above.
 
-To do this the design software Sketch \cite{sketch} was used to produce initial designs. These designs are included in Figures \ref{fig:design1} and \ref{fig:design2}.
+To do this the design software Sketch \cite{sketch,} was used to produce initial designs. These designs are included in Figures \ref{fig:design1} and \ref{design2}.
 
 \fig{figures/design1.png}{The main screen of littlegit}{fig:design1}{0.11}
 

@@ -1,0 +1,40 @@
+\contentsline {chapter}{\numberline {1}Introduction}{2}{chapter.1}
+\contentsline {subsection}{\numberline {1.0.1}Background on Git}{2}{subsection.1.0.1}
+\contentsline {subsection}{\numberline {1.0.2}Project Goals}{3}{subsection.1.0.2}
+\contentsline {chapter}{\numberline {2}Technical Design}{5}{chapter.2}
+\contentsline {subsection}{\numberline {2.0.1}Other work in this area}{5}{subsection.2.0.1}
+\contentsline {subsection}{\numberline {2.0.2}Technical Overview}{6}{subsection.2.0.2}
+\contentsline {subsubsection}{Git Servers and the Main server}{6}{section*.2}
+\contentsline {subsubsection}{GUI}{7}{section*.3}
+\contentsline {subsubsection}{ Low-level git library}{8}{section*.4}
+\contentsline {subsection}{\numberline {2.0.3}UI Design}{8}{subsection.2.0.3}
+\contentsline {subsection}{\numberline {2.0.4}Designing for teenagers}{11}{subsection.2.0.4}
+\contentsline {subsection}{\numberline {2.0.5}Final design before implementation}{11}{subsection.2.0.5}
+\contentsline {chapter}{\numberline {3}Implementation}{13}{chapter.3}
+\contentsline {section}{\numberline {3.1}Planning and management of work}{13}{section.3.1}
+\contentsline {section}{\numberline {3.2}Choice of language}{13}{section.3.2}
+\contentsline {section}{\numberline {3.3}Implementation of components}{15}{section.3.3}
+\contentsline {section}{\numberline {3.4}The littlegit-core}{15}{section.3.4}
+\contentsline {subsubsection}{Architecture}{16}{section*.5}
+\contentsline {subsubsection}{Deployment}{16}{section*.6}
+\contentsline {section}{\numberline {3.5}The main server}{17}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Technologies}{17}{subsection.3.5.1}
+\contentsline {subsubsection}{Web server framework}{17}{section*.7}
+\contentsline {subsubsection}{Database and caching}{17}{section*.8}
+\contentsline {subsubsection}{Data transfer}{19}{section*.9}
+\contentsline {subsection}{\numberline {3.5.2}Internal server architecture}{19}{subsection.3.5.2}
+\contentsline {subsubsection}{Repository Layer}{20}{section*.10}
+\contentsline {subsubsection}{Service Layer}{20}{section*.11}
+\contentsline {subsubsection}{Controller Layer}{20}{section*.12}
+\contentsline {section}{\numberline {3.6}Authentication}{21}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}API authentication}{21}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}SSH authentication}{21}{subsection.3.6.2}
+\contentsline {subsubsection}{Step 1: Before creating the repository}{22}{section*.13}
+\contentsline {subsubsection}{Step 2: Creating a repository}{22}{section*.14}
+\contentsline {subsubsection}{Step 3: Pushing or fetching from the remote server}{22}{section*.15}
+\contentsline {section}{\numberline {3.7}Desktop GUI}{23}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}Git graph}{23}{subsection.3.7.1}
+\contentsline {subsection}{\numberline {3.7.2}Threading}{23}{subsection.3.7.2}
+\contentsline {chapter}{Appendix \numberline {A}SSH Authentication}{26}{Appendix.1.A}
+\contentsline {chapter}{Appendix \numberline {B}User roles}{27}{Appendix.1.B}
+\contentsline {chapter}{Appendix \numberline {C}Caching strategy}{28}{Appendix.1.C}

@@ -1,3 +1,5 @@
+\chapter{Implementation}
+
 In this chapter, we discuss the main development phase of the project and justify some of the main decisions made throughout its course. We will explore the implementations of the architectures discussed at a high level in Chapter 2 as well as some of the more intriguing problems encountered throughout development.
 
 
@@ -5,7 +7,7 @@ In this chapter, we discuss the main development phase of the project and justif
 
 Trello boards were used from the very beginning to keep track of project goals and tasks. A separate board kept track of tasks relating to the server, the littlegit-core and the GUI. Figure \ref{screenshot:trello} shows the current state of the board for the littlegit-core (though the screenshot cuts off many done tasks). The strategy used with regards to the boards was as follows. Very early in the project, a large number of tasks were created in each board and placed in the \emph{Backlog} column. Every week a few of the highest priority tasks were moved to the next column along, the \emph{Next Priorty} column for completion that week. 
 
-\fig{figures/trello.png}{A screenshot of the Trello board for the littlegit-core component of the project, taken after the end of development.}{screenshot:trello}{0.5}
+\fig{figures/trello.png}{A screenshot of the Trello board for the littlegit-core component of the project, taken after the end of development.}{screenshot:trello}{0.25}
 
 The strategy was first to complete a bulk of the tasks for the littlegit-core, then the server. Once both were stable, we then began work on the GUI. The approach worked reasonably well but did lead to a small amount of thoroughly tested code not being used in the final project; we will discuss the benefits and weaknesses of the approach in Section \ref{??}.
 
@@ -13,7 +15,7 @@ It is worth mentioning the way tasks were chosen. The approach was to take the d
 
 \section{Choice of language}
 
-In chapter 2 we introduced the need for a library (the littlegit-core) to interact with the Git binary and provide a higher level interface to it, to be used by both the main server and the GUI. 
+In Chapter 2 we introduced the need for a library (the littlegit-core) to interact with the Git binary and provide a higher level interface to it, to be used by both the main server and the GUI. 
 
 Considering the time constraints on this project, only implementing the library once was crucial. Furthermore, the time constraints would not permit writing further wrappers of the littlegit-core to make it compatible with other technologies. Hence the GUI and server needed to be able to import the littlegit-core directly. 
 
@@ -25,6 +27,15 @@ Three main technologies were considered. They are as follows.
 Furthermore, NodeJS \cite{nodejs} is a technology allowing JavaScript's use in writing server code, making it a very viable choice as a core technology for littlegit. 
 
 However, JavaScript is a \emph{weakly typed} language, and previous experience has indicated that maintaining a large body of weakly typed code quickly becomes very difficult. Despite the advent of tools such as \emph{TypeScript} which is a typed language which transpiles into JavaScript, it is still no replacement for a truly typed language such as Java.
+
+\item \textbf{C\# and .NET:} There exists rich support for developing web server applications using the ASP framework in C\#, and the project very nearly was written entirely in C\#, a modern feature rich language.
+
+However, early experimentation developing a toy C\# application in an OSX environment (used for development) proved difficult and the tooling clumsy. 
+
+\item \textbf{Kotlin:} In the end, the project was written entirely in the Kotlin programming language. Kotlin is a strongly typed language that can compile to the JVM and is fully compatible with Java frameworks and libraries enabling the use of longstanding, reliable frameworks to be used (as we will discuss in subsequent sections). 
+
+Kotlin is a relatively new language, and though it is inheritance model and general structure is similar to Java (to allow compatibility), it is a very different language to program in. Its rich support for functional programming was heavily utilised primarily in the development of the littlegit-core in the parsing of raw git output. Furthermore, Kotlin is far less verbose than Java allowing much faster development with less boilerplate code to maintain.
+
 
 \end{enumerate}
 
@@ -144,7 +155,7 @@ In this layer, we have all of our application-specific business logic. For examp
 
 \subsubsection{Controller Layer}
 
-This layer defines the interface between the server's logic and the outside world. This means defining the individual API endpoints and the mappings from HTTP URLs to methods. Importantly, in this layer, we also define what kind of user can access each endpoint. A discussion of the types of users supported by the server is included in Appendix \ref{appendix_users}.
+This layer defines the interface between the server's logic and the outside world. This means defining the individual API endpoints and the mappings from HTTP URLs to methods. Importantly, in this layer, we also define what kind of user can access each endpoint. A discussion of the types of user1s supported by the server is included in Appendix \ref{appendix_users}.
 
 By far, this is the most difficult layer to test since it how we define the interface of our API using syntax provided by the Jersey framework. For this reason, it is vital that the controller contains as little business logic as possible. In fact, for this project, each controller does nothing but invoke code in the Service layer which is far easier to test.
 
@@ -154,4 +165,72 @@ There are two main kinds of authentication used by the system. SSH authenticatio
 
 \subsection{API authentication}
 
-We discuss the SSH authentication in the next section
+The token-based system used to authenticate calls to the API implements the OAuth 2.0 protocol since at the time of writing this is the industry standard for authentication \cite{oauth2}. Furthermore, it is relatively simple to implement, and the use of tokens also makes it easy to cache authentication details for a user which helps speed up requests.
+
+\subsection{SSH authentication}
+
+Implementing secure SSH based authentication between the desktop GUI and the Git servers is one of the key technical challenges of the project. Firstly we must explore what happens when we run a command such as \texttt{git fetch}. Internally, Git runs a command using SSH on a remote machine. The context under which the command has a user in the environment of the remote machine, by convention this user is called \emph{git}. 
+
+The first task was to ensure that the user \emph{git} could only execute Git commands since otherwise, it would be possible to execute any shell command on the remote machine, a clear security risk. To achieve this, the \emph{git} user is configured not to use the standard Unix shell, but instead, to use a tool called the \textbf{git-shell} which performs the restrictions (this is reliable since the creators of git itself wrote the tool).
+
+On the other hand, when a user creates a new repository, it is the responsibility of the main server to create this repository on one of the Git servers. This requires a different user to the \emph{git} user since it needs permission to create a directory and initialise the repository. Due to this need, it was important to carefully set file permissions to ensure both users have only the permissions they need and no more to reduce the threat of malicious access.
+
+To explain the way the actual authentication process works we will work through the steps of an example user action. In the following example, the user is creating their first repository and then pushing to it. Note, when we refer to API calls in this section we still refer to calls to the server's RESTful interface using token-based authentication.
+
+\subsubsection{Step 1: Before creating the repository}
+
+The act of logging in to the desktop GUI for the first time on a machine triggers the generation of the user's SSH key. An API call registers the SSH key with the main server. If the user already has repositories (for example one created from a different machine), then the main server produces a list of all the Git servers hosting repositories owned by that user. It then takes the SSH key and adds it to the server's \texttt{authorized\_keys} file, which contains a list of all the public SSH keys whose users have permission to access that machine.
+
+\subsubsection{Step 2: Creating a repository}
+ 
+It is the desktop GUI's responsibility to initialise the Git repository locally and to make a call to the main server to set up the remote repository which it does by executing commands via SSH on one of the Git servers (both making use of the littlegit-core). The GUI must also set a Git configuration option to ensure Git uses the generated SSH key for authentication and not look in the location\footnote{This is \url{~/.ssh/id_rsa} on most Linux systems}. This prevents interference with user-created SSH keys on machines used by more advanced users.
+
+\subsubsection{Step 3: Pushing or fetching from the remote server}
+
+When the GUI triggers a fetch or pull from the server, the first thing SSH does is looks up the user's public SSH key in the list in the \texttt{authorized\_keys} file. An example entry in this file is as follows.
+
+\begin{verbatim}
+command="./check-authorization.sh 677",no-port-forwarding, ...
+no-x11-forwarding,no-agent-forwarding,no-pty ...
+ssh-rsa AAAAB3NAAADAQABAAAAgQDmFNE9u8MHeGhb2o6qCfv8eRjK18EUA75XH3vElQ== SSHCerts
+\end{verbatim}
+
+In general, an entry in the file has the following format.
+
+\begin{verbatim}
+command="./check-authorization.sh <user ID>" <options> <user's ssh key>
+\end{verbatim}
+
+Once SSH finds the user's ssh key in the list (if it is not present the request is immediately terminated), the \emph{command} specified on the line is executed with the user's ID as an argument. The command has access to information about the Git command being executed, including the repository the request is attempting to manipulate. Using this information the Git server can call an endpoint on the main server to check if the user with the given ID has access to the given repository. If so, the request is allowed, SSH terminates the request.
+
+Unfortunately, this presents us with a potential performance bottleneck. The list is searched sequentially for the user's SSH key. If the list is extensive, this search quickly becomes slow which is further motivation to use multiple Git servers since having multiple machines hosting the repositories, each with only a subset of the total SSH keys registered in their \texttt{authorized\_keys} files leads to far fewer lines in each file. 
+
+\section{Desktop GUI}
+
+Some of the work involved with building the GUI consisted of standard implementation of user interfaces. Placement of buttons, wiring up of forms e.t.c. In this section, we skate over these tedious parts and also omit discussion of functionality implemented in the GUI already mentioned in other sections.
+
+\subsection{Git graph}
+
+One of the only elements of this project involving the design of an algorithm is the drawing of the so-called \emph{Git graph}, which is a visual representation of the project's history.
+
+Some readers may suppose that given the feature set described in Section \ref{sec:projectgoals}, the resulting history will not be particularly complex since the user is unable to create and merge branches. However, we must consider the situation where an existing (complex) Git repository is opened in littlegit; it is essential that the graph displays correctly. For this reason, the software supports arbitrarily complex Git graphs. Figure \ref{fig:littlegit-graph} shows a project with a reasonably complex history opened in littlegit.
+
+\fig{figures/littlegit-complexgraph.png}{The Git graph for the littlegit-core library opened in littlegit.}{fig:littlegit-graph}{0.5}
+
+Each time the Git history changes (for example when the user creates a commit) the local copy needs to be updated, the graph must be re-drawn. As we saw from our research in Section \ref{sec:teen-design} it is critical that this is as fast as possible. 
+
+Consider a project with a long history with many thousands of commits. It is not unreasonable that a person from the target demographic may be working with such a project; for example, it may be an exercise to make changes to an open source piece of software. In this case, the graph must update quickly. The key to this is first to calculate which part of the graph is currently visible on the screen based on how far the user has scrolled and the size of the window.
+
+Experimentation with the resulting algorithm has shown that the time to redraw the graph (which is now independent of how extensive the history is) is negligible in comparison with the time taken to read the history from Git in order to draw it.
+
+\subsection{Threading}
+
+We have stated repeatedly the importance of software that does not lag considering the target audience. It follows directly that the software should not freeze just because it is performing background tasks. In practice, this means ensuring we do not perform long running tasks on the application's main UI thread.
+
+Long-running tasks include API calls (since the network may be slow), interactions with the file-system, including calls to the littlegit-core since invoking some Git commands may be slow. On the face of it, this seems straightforward. Upon needing to run one of these tasks, we run it on a separate thread and wait for it to complete before updating the UI.
+
+Unfortunately, the fact that we are interacting with a Git repository complicates matters. Consider the scenario we make a call to the littlegit-core to create a new commit on a very slow machine, suppose that multiple files have changed and must be included in the commit. Now suppose the user tries to check out a different commit. Checking out a different commit while halfway through the creation of another will lead to Git throwing errors and possibly corrupting the repository (depending on precisely what happened). To prevent this, we have two options; whenever any background task runs, we disable the entire UI to prevent the user from doing anything. As we have discussed this is bound to anger our users.
+
+The second option, the option used by littlegit is to use a queue instead. All operations which depend on these long-running tasks are added to a queue and executed one by one (on a separate thread). The scenario described above now performs as a user would expect, one operation following the other automatically without the need for repeated clicking.
+
+
