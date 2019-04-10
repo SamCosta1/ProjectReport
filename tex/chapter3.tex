@@ -5,11 +5,11 @@ In this chapter, we discuss the main development phase of the project and justif
 
 \section{Planning and management of work}
 
-Trello boards were used from the very beginning to keep track of project goals and tasks. A separate board kept track of tasks relating to the server, the littlegit-core and the GUI. Figure \ref{screenshot:trello} shows the current state of the board for the littlegit-core (though the screenshot cuts off many ``done" tasks). The strategy used with regards to the boards was as follows. Very early in the project, a large number of tasks were created in each board and placed in the \emph{Backlog} column. Every week a few of the highest priority tasks were moved to the next column along, the \emph{Next Priorty} column for completion that week. 
+Trello boards were used from the very beginning to keep track of project goals and tasks. Separate boards kept track of tasks relating to the server, the littlegit-core and the GUI. Figure \ref{screenshot:trello} shows the current state of the board for the littlegit-core (though the screenshot cuts off many ``done" tasks). The strategy used with regards to the boards was as follows. Very early in the project, a large number of tasks were created in each board and placed in the \emph{Backlog} column. Every week a few of the highest priority tasks were moved to the next column along, the \emph{Next Priorty} column for completion that week. 
 
 \fig{figures/trello.png}{A screenshot of the Trello board for the littlegit-core component of the project, taken after the end of development.}{screenshot:trello}{0.25}
 
-The strategy was first to complete a bulk of the tasks for the littlegit-core, then the server. Once both were stable, we then began work on the GUI. The approach worked reasonably well but did lead to a small amount of thoroughly tested code not being used in the final project; we will discuss the benefits and weaknesses of the approach in Section \ref{??}.
+The strategy was first to complete a bulk of the tasks for the littlegit-core, then the server. Once both were stable, we then began work on the GUI. The approach worked reasonably well but did lead to a small amount of thoroughly tested code not being used in the final project.
 
 It is worth mentioning the way tasks were chosen. The approach was to take the desired feature set (discussed back in Section \ref{sec:projectgoals}) and to break these features up into the tasks needed to achieve them.
 
@@ -30,13 +30,15 @@ Furthermore, NodeJS \cite{nodejs} is a technology allowing JavaScript's use in w
 
 However, JavaScript is a \emph{weakly typed} language, and previous experience has indicated that maintaining a large body of weakly typed code quickly becomes very difficult. Despite the advent of tools such as \emph{TypeScript} which is a typed language which transpiles into JavaScript, it is still no replacement for a truly typed language such as Java.
 
-\item \textbf{C\# and .NET:} There exists rich support for developing web server applications using the ASP framework in C\#, and the project very nearly was written entirely in C\#, a modern feature rich language.
+\item \textbf{C\# and .NET:} There exists rich support for developing web server applications using the ASP framework in C\#, and the project very nearly was written entirely in C\#, a modern, feature rich language.
 
 However, early experimentation developing a toy C\# application in an OSX environment (used for development) proved difficult and the tooling clumsy. 
 
-\item \textbf{Kotlin:} In the end, the project was written entirely in the Kotlin programming language. Kotlin is a strongly typed language that can compile to the JVM and is fully compatible with Java frameworks and libraries enabling the use of longstanding, reliable frameworks to be used (as we will discuss in subsequent sections). 
+\item \textbf{Kotlin:} In the end, the project was written entirely in the Kotlin programming language. Kotlin is a strongly typed language that can compile to the JVM and is fully compatible with Java frameworks and libraries enabling longstanding, reliable frameworks to be used (as we will discuss in subsequent sections). 
 
-Kotlin is a relatively new language, and though it is inheritance model and general structure is similar to Java (to allow compatibility), it is a very different language to program in. Its rich support for functional programming was heavily utilised primarily in the development of the littlegit-core in the parsing of raw git output. Furthermore, Kotlin is far less verbose than Java allowing much faster development with less boilerplate code to maintain.
+Kotlin is a relatively new language, and though it is inheritance model and general structure is similar to Java (to allow compatibility), it is a very different language to work with. Its rich support for functional programming was heavily utilised primarily in the development of the littlegit-core in the parsing of raw git output. Furthermore, Kotlin is far less verbose than Java allowing much faster development with less boilerplate code to maintain.
+
+Moreover, the Tornado Fx \cite{tornadofx} framework is a relatively new, open source framework which allows the development of desktop applications in Kotlin. 
 
 
 \end{enumerate}
@@ -48,15 +50,15 @@ As has already been discussed, this is the library that interacts directly with 
 
 Git commands are loosely grouped into two categories (though the distinction is not a hard one). The first is git-porcelain. Porcelain commands are those with which most Git users are likely to have interacted. A good example is \texttt{git-status}, which gives a summary of the current state of the user's local Git repository. These are commands designed for use by human users; often, their outputs are tweaked between Git versions to aid human readability. This makes them unsuited for machine use; it is impossible to reliably parse output which is slightly different in every version of Git.
 
-The git-plumbing commands, on the other hand, are generally lower level commands to the porcelain and are often used under the hood by the porcelain itself. Their outputs are considered stable and designed for interaction with other software rather than humans. While making them a far better choice for the littlegit-core to interact with, the difficulty is in the fact they are by nature lower level commands. For example, to check out a branch with git-porcelain is a straightforward one-line operation, but this conceals multiple plumbing commands under the hood. Littlegit-core endeavours to use plumbing commands wherever possible.
+Plumbing commands, on the other hand, are generally lower level commands to the porcelain and are often used internally by the porcelain itself. Their outputs are considered stable and designed for interaction with other software rather than humans. While making them a far better choice for the littlegit-core to interact with, the difficulty is in the fact they are by nature lower level commands. For example, to check out a branch with git-porcelain is a straightforward one-line operation, but this conceals the invocation of multiple plumbing commands. Littlegit-core endeavours to use plumbing commands wherever possible.
 
-As has been mentioned, the project aims to follow best practices wherever possible. For this reason, and the fact that the rest of the project relies heavily on the littlegit-core being stable, a TDD testing approach was used. One way of achieving this was to \emph{design the library for testibility}. The main design decision supporting this was the decision to make the library's operations synchronous. The user's interaction with the GUI should not grind to a halt because a shell command is executing. Hence there must be some asynchronicity, but the decision was made that the GUI would be responsible for threading calls to the littlegit-core, leaving it to return its results synchronously.
+The project aims to follow modern best practices for software development. For this reason, a TDD testing approach was used throughout. One way of achieving this was to \emph{design the library for testibility}. The main design decision supporting this was the decision to make the library's operations synchronous. The user's interaction with the GUI should not grind to a halt because a shell command is executing. Hence there must be some asynchronicity, but the decision was made that the GUI would be responsible for threading calls to the littlegit-core, leaving it to return its results synchronously.
 
 Methods who return synchronously prove to be a much simpler and more reliable to test, allowing the entire library to be covered thoroughly with tests.
 
 \subsection{Architecture}\label{sec:core-architecture}
 
-The primary driver behind the architecture of the littlegit-core is the fact it must be able to execute its commands on remote machines over an SSH connection as well as on the local machine. For example, it is used to initialise remote repositories via SSH on the Git servers.
+The GUI uses the littlegit-core to execute Git commands on local Git repositories, however, the main server needs to be able to execute commands on remote servers over an SSH connection. This requirement is a primary driver behind the architecture of the littlegit-core.
 
 Figure \ref{fig:core-architecture} shows the way the library is architected. The top layer is used to combine plumbing commands; for example, multiple plumbing commands are required to change branches. It makes calls to the \texttt{command runner} which provides a high-level interface to these Git commands. The  \texttt{command runner} then converts these high-level invocations raw commands to be interpreted by Git, which are executed either through the local or remote runners depending on the configuration. Local for the GUI, remote on the server.
 
@@ -76,7 +78,7 @@ In this section, we will explore the implementation of the main server and justi
 
 We have already justified the decision to use the Kotlin programming language for the server. However, multiple options were available in regards to different technologies for everything from the database to the framework used to build the server itself. We discuss and justify the choices made here.
 
-Firstly, Amazon Web Services hosts all the online infrastructure for this project. The justification for this is simple, hosting of databases and servers is expensive, and AWS offers a free tier of the services needed for students.
+Firstly, Amazon Web Services hosts all the online infrastructure for this project. The justification for this is simple, hosting of databases and servers is expensive, and for students, AWS offers a free tier of the services needed.
 
 \subsubsection{Web server framework}
 
@@ -112,11 +114,11 @@ Let us consider the data that the system needs to store. For the reader with exp
 
 \fig{figures/er-diagram.png}{An entity relationship diagram representing the database.}{fig:entity-relationship}{0.5}
 
-The scalability of the server relies on one key observation, the fact that the reading from the database is a far more common operation than writing. For example, the creation of repositories is not a common operation but checking if a user has access to a repository is very common (this will be discussed further in subsequent sections). This observation allows us to introduce caching to solve our scalability issue. By caching as many of the values as possible in a scalable, \textbf{in-memory} caching solution, we massively reduce traffic to the database. We will discuss this further in subsequent sections, for now, we will justify the use of Redis \cite{redis} as our caching solution.
+The scalability of the server relies on one key observation, the fact that the reading from the database is a far more common operation than writing. For example, the creation of repositories is not a common operation but checking if a user has access to a repository is very common (this will be discussed further in subsequent sections). This observation allows us to introduce caching to solve our scalability issue. By caching as many of the values as possible in a scalable, \textbf{in-memory} caching solution, we massively reduce traffic to the database. 
 
-Redis's feature set is vast \cite{redis}, but the important ones for us are its in-memory key-value store and built-in replication. Its in-memory nature allows for very fast reads of the data. Of course, key-value pairs do not offer the benefit of flexible SQL-like queries. However, this isn't what we need at this point, if we need to do complex queries we can access the database, the cache speeds up common simple operations such as returning the details for a particular user, or checking if an authentication token is valid \textbf{without} the overhead of checking the database which is on disk.
+Redis \cite{redis} was selected as the caching solution, its feature set is vast, but the important ones for us are its in-memory key-value store and built-in replication. Its in-memory nature allows for very fast reads of the data. Of course, key-value pairs do not offer the benefit of flexible SQL-like queries. However, this isn't what we need at this point, if we need to do complex queries we can access the database, the cache speeds up common simple operations such as returning the details for a particular user, or checking if an authentication token is valid \textbf{without} the overhead of checking the database which is on disk.
 
-Moreover, having a cache with built-in replication allows it to scale across multiple machines easily giving us the horizontal scaling we require. The reader may wonder why we are using a caching solution rather than making use of data structures within the server code itself to achieve the same thing. It is a very valid argument to say that such an approach would be more straightforward and easy to implement, with less to go wrong!
+Moreover, having a cache with built-in replication allows it to scale across multiple machines easily giving us the horizontal scaling we require. The reader may wonder why we are using a caching solution rather than making use of data structures within the server code itself to achieve the same thing. It is a very valid argument to say that such an approach would be more straightforward and easier to implement, with less to go wrong!
 
 Let us consider the situation where the load on the server becomes large, causing requests to become slow and even to time out. Since the memory of the machine hosting the server caches the data, the only option is to get a bigger machine with more memory (vertical scaling). On the other hand, using our approach we can spin up multiple machines hosting the server to balance the load, and Redis's inbuilt replication allows us to do the same thing with the cache. Figure \ref{fig:loadbalancing} shows the idea \footnote{This was only tested with one machine each for the cache, server and database without a load balancer due to the cost of doing so on Amazon Web Services and other platforms, the code however fully supports the architecture described.}.
 
@@ -155,7 +157,7 @@ In this layer, we have all of our application-specific business logic. For examp
 
 This layer defines the interface between the server's logic and the outside world. This means defining the individual API endpoints and the mappings from HTTP URLs to methods. Importantly, in this layer, we also define what kind of user can access each endpoint. Admin users have access to everything which we mainly use for testing; then we have standard users of the system. The third type of user is the unauthenticated user; we can think of these users as those that are not logged in. Of course, the only endpoints these have access to are those used to login and register new users.
 
-By far, this is the most difficult layer to test since it how we define the interface of our API using syntax provided by the Jersey framework. For this reason, it is vital that the controller contains as little business logic as possible. In fact, for this project, each controller does nothing but invoke code in the Service layer which is far easier to test.
+By far, this is the most difficult layer to test since it how we define the interface of our API using syntax provided by the Jersey framework. For this reason, it is vital that the controller contains as little business logic as possible.
 
 
 
@@ -169,7 +171,7 @@ One of the only elements of this project involving the design of an algorithm is
 
 Some readers may suppose that given the feature set described in Section \ref{sec:projectgoals}, the resulting history will not be particularly complex since the user is unable to create and merge branches. However, we must consider the situation where an existing (complex) Git repository is opened in littlegit; it is essential that the graph displays correctly. For this reason, the software supports arbitrarily complex Git graphs. Figure \ref{fig:littlegit-graph} shows a project with a reasonably complex history opened in littlegit.
 
-\fig{figures/littlegit-complexgraph.png}{The Git graph for the littlegit-core library opened in littlegit.}{fig:littlegit-graph}{0.5}
+\fig{figures/littlegit-complexgraph.png}{The Git graph for the littlegit-core library opened in littlegit.}{fig:littlegit-graph}{0.2}
 
 Each time the Git history changes (for example when the user creates a commit) the local copy needs to be updated, the graph must be re-drawn. As we saw from our research in Section \ref{sec:teen-design} it is critical that this is as fast as possible. 
 
@@ -197,39 +199,31 @@ The token-based system used to authenticate calls to the API implements the OAut
 
 \subsection{SSH authentication}
 
-Implementing secure SSH based authentication between the desktop GUI and the Git servers is one of the key technical challenges of the project. Firstly we must explore what happens when we run a command such as \texttt{git fetch}. Internally, Git runs a command using SSH on a remote machine. The context under which the command has a user in the environment of the remote machine, by convention this user is called \emph{git}. 
+Implementing secure SSH based authentication between the desktop GUI and the Git servers is one of the key technical challenges of the project. Firstly we must explore what happens when we run a command such as \texttt{git fetch}. Internally, Git runs a command using SSH on a remote machine. The context under which the command runs, has a user in the environment of the remote machine, by convention this user is called \emph{git}. 
 
-The first task was to ensure that the user \emph{git} could only execute Git commands since otherwise, it would be possible to execute any shell command on the remote machine, a clear security risk. To achieve this, the \emph{git} user is configured not to use the standard Unix shell, but instead, to use a tool called the \textbf{git-shell} which performs the restrictions (this is reliable since the creators of Git itself wrote the tool).
+The first task was to ensure that the user \emph{git} could only execute Git commands since otherwise, it would be possible to execute any shell command on the remote machine, a clear security risk. To achieve this, the \emph{git} user is configured not to use the standard Unix shell, but instead, to use a tool called the \textbf{git-shell} \cite{git-shell} which enforces the restrictions (this is reliable since the creators of Git itself wrote the tool).
 
-On the other hand, when a user creates a new repository, it is the responsibility of the main server to create this repository on one of the Git servers. This requires a different user to the \emph{git} user since it needs permission to create a directory and initialise the repository. Due to this need, it was important to carefully set file permissions to ensure both users have only the permissions they need and no more to reduce the threat of malicious access.
+On the other hand, when a user creates a new repository, it is the responsibility of the main server to create this repository on one of the Git servers. This requires a different user to the \emph{git} user since it needs permission to create a directory and initialise the repository. Due to this need, it was important to carefully set file permissions to ensure both users have only the permissions they need and no more, to reduce the threat of malicious access.
 
 To explain the way the actual authentication process works we will work through the steps of an example user action. In the following example, the user is creating their first repository and then pushing to it. Note, when we refer to API calls in this section we still refer to calls to the server's RESTful interface using token-based authentication.
 
 \subsubsection{Step 1: Before creating the repository}
 
-The act of logging in to the desktop GUI for the first time on a machine triggers the generation of the user's public/private SSH key pair. An API call registers the public SSH key with the main server. SSH. If the user already has repositories (for example one created from a different machine), then the main server produces a list of all the Git servers hosting repositories owned by that user. It then takes the public SSH key and adds it to the server's \texttt{authorized\_keys} file, which contains a list of all the public SSH keys whose users have permission to access that machine.
+The act of logging in to the desktop GUI for the first time on a machine triggers the generation of the user's public/private SSH key pair. An API call registers the public SSH key with the main server. If the user already has repositories (for example one created from a different machine), then the main server produces a list of all the Git servers hosting repositories owned by that user. It then takes the public SSH key and adds it to each of these servers'  \texttt{authorized\_keys} file, which contains a list of all the public SSH keys whose users have permission to access that machine.
 
 \subsubsection{Step 2: Creating a repository}
  
-It is the desktop GUI's responsibility to initialise the Git repository locally and to make a call to the main server to set up the remote repository which it does by executing commands via SSH on one of the Git servers (both making use of the littlegit-core). The GUI must also set a Git configuration option to ensure Git uses the generated SSH key for authentication and not look in the location\footnote{This is \url{~/.ssh/id_rsa} on most Linux systems}. This prevents interference with user-created SSH keys on machines used by more advanced users.
+It is the desktop GUI's responsibility to initialise the Git repository locally and to make a call to the main server to set up the remote repository. The main server chooses one of the Git servers from the available pool and sets up the remote upon it by executing commands via SSH (making use of the littlegit-core).
 
 \subsubsection{Step 3: Pushing or fetching from the remote server}
 
-When the GUI triggers a fetch or pull from the server, the first thing SSH does is looks up the user's public SSH key in the list in the \texttt{authorized\_keys} file. An example entry in this file is as follows.
-
-\begin{verbatim}
-command="./check-authorization.sh 677",no-port-forwarding, ...
-no-x11-forwarding,no-agent-forwarding,no-pty ...
-ssh-rsa AAAAB3NAAADAQABAAAAgQDmFNE9u8MHeGhb2o6qCfv8eRjK18EUA75XH3vElQ== SSHCerts
-\end{verbatim}
-
-In general, an entry in the file has the following format.
+When the GUI triggers a fetch or pull from the server, the first thing SSH does is looks up the user's public SSH key in the list in the \texttt{authorized\_keys} file. In general, an entry in the file has the following format.
 
 \begin{verbatim}
 command="./check-authorization.sh <user ID>" <options> <user's ssh key>
 \end{verbatim}
 
-Once SSH finds the user's ssh key in the list (if it is not present the request is immediately terminated), the \emph{command} specified on the line is executed with the user's ID as an argument. The command has access to information about the Git command being executed, including the repository the request is attempting to manipulate. Using this information the Git server can call an endpoint on the main server to check if the user with the given ID has access to the given repository. If so, the request is allowed, SSH terminates the request.
+Once SSH finds the user's ssh key in the list (if it is not present the request is immediately terminated), the \emph{command} specified on the line is executed with the user's ID as an argument. The command has access to information about the Git command being executed, including the repository the request is attempting to manipulate. Using this information the Git server can call an endpoint on the main server to check if the user with the given ID has access to the given repository. If so, the request is allowed, SSH terminates the request if not.
 
 Unfortunately, this presents us with a potential performance bottleneck. The list is searched sequentially for the user's SSH key. If the list is extensive, this search quickly becomes slow which is further motivation to use multiple Git servers since having multiple machines hosting the repositories, each with only a subset of the total SSH keys registered in their \texttt{authorized\_keys} files leads to far fewer lines in each file. 
 

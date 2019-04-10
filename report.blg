@@ -1,58 +1,53 @@
 This is BibTeX, Version 0.99d (TeX Live 2017)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: report.aux
-A level-1 auxiliary file: tex/abstract.aux
-A level-1 auxiliary file: tex/chapter1.aux
-A level-1 auxiliary file: tex/chapter2.aux
-A level-1 auxiliary file: tex/chapter3.aux
-A level-1 auxiliary file: tex/chapter4.aux
 The style file: plain.bst
 Database file #1: bibfile.bib
-Warning--I didn't find a database entry for ""
 Warning--to sort, need author or key in electron
 Warning--to sort, need author or key in nodejs
 Warning--to sort, need author or key in jersey
 Warning--to sort, need author or key in redis
 Warning--to sort, need author or key in oauth2
-You've used 16 entries,
+Warning--to sort, need author or key in git-shell
+You've used 25 entries,
             2118 wiz_defined-function locations,
-            543 strings with 4573 characters,
-and the built_in function-call counts, 2907 in all, are:
-= -- 234
-> -- 88
+            562 strings with 4716 characters,
+and the built_in function-call counts, 4599 in all, are:
+= -- 374
+> -- 145
 < -- 0
-+ -- 42
-- -- 24
-* -- 86
-:= -- 423
-add.period$ -- 26
-call.type$ -- 16
-change.case$ -- 57
++ -- 67
+- -- 40
+* -- 131
+:= -- 685
+add.period$ -- 43
+call.type$ -- 25
+change.case$ -- 92
 chr.to.int$ -- 0
-cite$ -- 21
-duplicate$ -- 112
-empty$ -- 358
-format.name$ -- 24
-if$ -- 650
+cite$ -- 31
+duplicate$ -- 175
+empty$ -- 557
+format.name$ -- 40
+if$ -- 1023
 int.to.chr$ -- 0
-int.to.str$ -- 16
+int.to.str$ -- 25
 missing$ -- 0
-newline$ -- 61
-num.names$ -- 22
-pop$ -- 135
+newline$ -- 96
+num.names$ -- 38
+pop$ -- 207
 preamble$ -- 1
-purify$ -- 44
+purify$ -- 70
 quote$ -- 0
-skip$ -- 158
+skip$ -- 248
 stack$ -- 0
-substring$ -- 82
-swap$ -- 16
+substring$ -- 127
+swap$ -- 25
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 64
-warning$ -- 5
-while$ -- 22
-width$ -- 18
-write$ -- 102
+type$ -- 100
+warning$ -- 6
+while$ -- 38
+width$ -- 27
+write$ -- 163
 (There were 6 warnings)

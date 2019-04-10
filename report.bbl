@@ -3,6 +3,9 @@
 \bibitem{electron}
 Electron.
 
+\bibitem{git-shell}
+Git shell.
+
 \bibitem{jersey}
 Jersey.
 
@@ -37,6 +40,14 @@ git scm.
 \bibitem{gitk}
 gitk.
 
+\bibitem{dagger2}
+Google.
+\newblock Dagger 2.
+
+\bibitem{flaticon}
+Icongeek26.
+\newblock Flat icon.
+
 \bibitem{teendesign}
 Alita Joyce and Jakob Nielsen.
 \newblock Teenager’s ux: Designing for teens.
@@ -44,6 +55,10 @@ Alita Joyce and Jakob Nielsen.
 \bibitem{horizontalScrolling}
 Jakob Nielsen.
 \newblock Scrolling and scrollbars.
+
+\bibitem{primarycoding}
+Department of~education.
+\newblock Computing programmes of study.
 
 \bibitem{ofqual}
 Ofqual.
@@ -53,6 +68,26 @@ Ofqual.
 \bibitem{spring}
 Pivotal.
 \newblock The spring framework.
+
+\bibitem{jedis}
+Open Source.
+\newblock Jedis.
+
+\bibitem{tornadofx}
+Open Source.
+\newblock Tornado fx.
+
+\bibitem{moshi}
+Square.
+\newblock Moshi.
+
+\bibitem{retrofit}
+Square.
+\newblock Retrofit.
+
+\bibitem{git}
+Linus Torvalds.
+\newblock Git.
 
 \bibitem{testpyramid}
 Ham Vocke.
