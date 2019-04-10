@@ -1,17 +1,19 @@
-\chapter{Implementation}
+\chapter{Implementation and Development}
 
 In this chapter, we discuss the main development phase of the project and justify some of the main decisions made throughout its course. We will explore the implementations of the architectures discussed at a high level in Chapter 2 as well as some of the more intriguing problems encountered throughout development.
 
 
 \section{Planning and management of work}
 
-Trello boards were used from the very beginning to keep track of project goals and tasks. A separate board kept track of tasks relating to the server, the littlegit-core and the GUI. Figure \ref{screenshot:trello} shows the current state of the board for the littlegit-core (though the screenshot cuts off many done tasks). The strategy used with regards to the boards was as follows. Very early in the project, a large number of tasks were created in each board and placed in the \emph{Backlog} column. Every week a few of the highest priority tasks were moved to the next column along, the \emph{Next Priorty} column for completion that week. 
+Trello boards were used from the very beginning to keep track of project goals and tasks. A separate board kept track of tasks relating to the server, the littlegit-core and the GUI. Figure \ref{screenshot:trello} shows the current state of the board for the littlegit-core (though the screenshot cuts off many ``done" tasks). The strategy used with regards to the boards was as follows. Very early in the project, a large number of tasks were created in each board and placed in the \emph{Backlog} column. Every week a few of the highest priority tasks were moved to the next column along, the \emph{Next Priorty} column for completion that week. 
 
 \fig{figures/trello.png}{A screenshot of the Trello board for the littlegit-core component of the project, taken after the end of development.}{screenshot:trello}{0.25}
 
 The strategy was first to complete a bulk of the tasks for the littlegit-core, then the server. Once both were stable, we then began work on the GUI. The approach worked reasonably well but did lead to a small amount of thoroughly tested code not being used in the final project; we will discuss the benefits and weaknesses of the approach in Section \ref{??}.
 
-It is worth mentioning the way tasks were chosen. The approach was to take the desired feature set (discussed back in Section \ref{sec:projectgoals}) and to break these features up into the tasks needed to achieve them. 
+It is worth mentioning the way tasks were chosen. The approach was to take the desired feature set (discussed back in Section \ref{sec:projectgoals}) and to break these features up into the tasks needed to achieve them.
+
+
 
 \section{Choice of language}
 
@@ -40,10 +42,6 @@ Kotlin is a relatively new language, and though it is inheritance model and gene
 \end{enumerate}
 
 
-\section{Implementation of components}
-
-There was an emphasis following best practices throughout this project from a software engineering point of view. Principle among these was the tenant of separation of concerns. This section details the implementation of the individual components which communicate with each other but are distinct. 
-
 \section{The littlegit-core}
 
 As has already been discussed, this is the library that interacts directly with the Git binary. The primary challenge involved in producing this component was the interaction with the so-called git-plumbing.
@@ -56,7 +54,7 @@ As has been mentioned, the project aims to follow best practices wherever possib
 
 Methods who return synchronously prove to be a much simpler and more reliable to test, allowing the entire library to be covered thoroughly with tests.
 
-\subsubsection{Architecture}
+\subsection{Architecture}\label{sec:core-architecture}
 
 The primary driver behind the architecture of the littlegit-core is the fact it must be able to execute its commands on remote machines over an SSH connection as well as on the local machine. For example, it is used to initialise remote repositories via SSH on the Git servers.
 
@@ -65,7 +63,7 @@ Figure \ref{fig:core-architecture} shows the way the library is architected. The
 \fig{figures/core-architecture}{The internal architecture of the littlegit-core.}{fig:core-architecture}{0.5}
 
 
-\subsubsection{Deployment}
+\subsection{Deployment}
 
 We keep mentioning that the library is \emph{used} or \emph{included} by the GUI and server. It is worth explaining what this means and describing the deployment process for the library. Figure \ref{fig:core-deployment} shows the deployment pipeline, triggered by a push to source control; all the automated tests are run remotely by Travis's continuous integration service. Importantly when the tests succeed the library is deployed to a maven repository allowing it to easily be included as a maven dependency by the server and the GUI, without the need to manually copy any files.
 
@@ -97,7 +95,7 @@ The downside of Jersey and the advantage of Spring is a direct consequence. Spri
 
 Given the rise of non-relational databases such as CouchDB and Firebase the decision to use a traditional SQL database is no longer a trivial one. These non-relational databases have some significant advantages, one of the most enticing being their quality of scaling horizontally, unlike traditional databases which generally only scale vertically. 
 
-However, the decision was made to use a traditional database for the following reasons. The first and most important of these reasons are the need for complex querying on the data where non-relational databases do not compete with the power of traditional SQL. An example of this kind of complex query is the need to find all the Git servers which contain repositories the user either owns or has access to which do not currently hold their SSH keys.
+However, the decision was made to use a traditional database for the following reasons. The first and most important of these reasons are the need for complex querying on the data where non-relational databases do not compete with the power of traditional SQL. An example of this kind of complex query is the need to find all the Git servers which contain repositories the user either owns or has access to.
 
 Moreover, the data has an evident structure, a structure which does not need to change often or adapt to a rapidly changing environment (where non-relational databases come into their own). Because of this, the static, rarely changing schemes of traditional SQL databases are not a hindrance. 
 
@@ -130,7 +128,7 @@ The decision to use the JSON data format for communication between the server an
 
 Furthermore, the decision to create a RESTful interface with the server allows it to be used by other clients in future easily. For example, if a web interface was required to enable users to view and manipulate their remote repositories, the same endpoints could be used without any additional work.
 
-\subsection{Internal server architecture}
+\subsection{Internal server architecture}\label{sec:server-architecture}
 
 While discussing technologies, we saw the overall structure of the server technology stack. In this section, however, we discuss the way the code which interacts with these various components is architected.
 
@@ -142,7 +140,7 @@ As the diagram shows, each layer abstracts the one beneath it, and each layer in
 
 \subsubsection{Repository Layer}
 
-The repository layer is little more than an abstraction on the database and caching layers. Used by the service layer to retrieve and write information, this layer invokes raw SQL commands to communicate with the database and crucially also reads from the cache, and invalidates cached information when data is updated. For the interested reader, the caching strategy is described in more depth in Appendix \ref{appendix_caching}.
+The repository layer is little more than an abstraction on the database and caching layers. Used by the service layer to retrieve and write information, this layer invokes raw SQL commands to communicate with the database and crucially also reads from the cache, and invalidates cached information when data is updated.
 
 Furthermore, the repository layer handles the mapping of data from the database and cache to Kotlin data structures.
 
@@ -155,55 +153,11 @@ In this layer, we have all of our application-specific business logic. For examp
 
 \subsubsection{Controller Layer}
 
-This layer defines the interface between the server's logic and the outside world. This means defining the individual API endpoints and the mappings from HTTP URLs to methods. Importantly, in this layer, we also define what kind of user can access each endpoint. A discussion of the types of user1s supported by the server is included in Appendix \ref{appendix_users}.
+This layer defines the interface between the server's logic and the outside world. This means defining the individual API endpoints and the mappings from HTTP URLs to methods. Importantly, in this layer, we also define what kind of user can access each endpoint. Admin users have access to everything which we mainly use for testing; then we have standard users of the system. The third type of user is the unauthenticated user; we can think of these users as those that are not logged in. Of course, the only endpoints these have access to are those used to login and register new users.
 
 By far, this is the most difficult layer to test since it how we define the interface of our API using syntax provided by the Jersey framework. For this reason, it is vital that the controller contains as little business logic as possible. In fact, for this project, each controller does nothing but invoke code in the Service layer which is far easier to test.
 
-\section{Authentication}
 
-There are two main kinds of authentication used by the system. SSH authentication is used when the desktop GUI performs Git operations interacting with the remote Git server (for example \texttt{git push} and \texttt{git fetch}), whereas calls to the API use a token-based system. 
-
-\subsection{API authentication}
-
-The token-based system used to authenticate calls to the API implements the OAuth 2.0 protocol since at the time of writing this is the industry standard for authentication \cite{oauth2}. Furthermore, it is relatively simple to implement, and the use of tokens also makes it easy to cache authentication details for a user which helps speed up requests.
-
-\subsection{SSH authentication}
-
-Implementing secure SSH based authentication between the desktop GUI and the Git servers is one of the key technical challenges of the project. Firstly we must explore what happens when we run a command such as \texttt{git fetch}. Internally, Git runs a command using SSH on a remote machine. The context under which the command has a user in the environment of the remote machine, by convention this user is called \emph{git}. 
-
-The first task was to ensure that the user \emph{git} could only execute Git commands since otherwise, it would be possible to execute any shell command on the remote machine, a clear security risk. To achieve this, the \emph{git} user is configured not to use the standard Unix shell, but instead, to use a tool called the \textbf{git-shell} which performs the restrictions (this is reliable since the creators of git itself wrote the tool).
-
-On the other hand, when a user creates a new repository, it is the responsibility of the main server to create this repository on one of the Git servers. This requires a different user to the \emph{git} user since it needs permission to create a directory and initialise the repository. Due to this need, it was important to carefully set file permissions to ensure both users have only the permissions they need and no more to reduce the threat of malicious access.
-
-To explain the way the actual authentication process works we will work through the steps of an example user action. In the following example, the user is creating their first repository and then pushing to it. Note, when we refer to API calls in this section we still refer to calls to the server's RESTful interface using token-based authentication.
-
-\subsubsection{Step 1: Before creating the repository}
-
-The act of logging in to the desktop GUI for the first time on a machine triggers the generation of the user's SSH key. An API call registers the SSH key with the main server. If the user already has repositories (for example one created from a different machine), then the main server produces a list of all the Git servers hosting repositories owned by that user. It then takes the SSH key and adds it to the server's \texttt{authorized\_keys} file, which contains a list of all the public SSH keys whose users have permission to access that machine.
-
-\subsubsection{Step 2: Creating a repository}
- 
-It is the desktop GUI's responsibility to initialise the Git repository locally and to make a call to the main server to set up the remote repository which it does by executing commands via SSH on one of the Git servers (both making use of the littlegit-core). The GUI must also set a Git configuration option to ensure Git uses the generated SSH key for authentication and not look in the location\footnote{This is \url{~/.ssh/id_rsa} on most Linux systems}. This prevents interference with user-created SSH keys on machines used by more advanced users.
-
-\subsubsection{Step 3: Pushing or fetching from the remote server}
-
-When the GUI triggers a fetch or pull from the server, the first thing SSH does is looks up the user's public SSH key in the list in the \texttt{authorized\_keys} file. An example entry in this file is as follows.
-
-\begin{verbatim}
-command="./check-authorization.sh 677",no-port-forwarding, ...
-no-x11-forwarding,no-agent-forwarding,no-pty ...
-ssh-rsa AAAAB3NAAADAQABAAAAgQDmFNE9u8MHeGhb2o6qCfv8eRjK18EUA75XH3vElQ== SSHCerts
-\end{verbatim}
-
-In general, an entry in the file has the following format.
-
-\begin{verbatim}
-command="./check-authorization.sh <user ID>" <options> <user's ssh key>
-\end{verbatim}
-
-Once SSH finds the user's ssh key in the list (if it is not present the request is immediately terminated), the \emph{command} specified on the line is executed with the user's ID as an argument. The command has access to information about the Git command being executed, including the repository the request is attempting to manipulate. Using this information the Git server can call an endpoint on the main server to check if the user with the given ID has access to the given repository. If so, the request is allowed, SSH terminates the request.
-
-Unfortunately, this presents us with a potential performance bottleneck. The list is searched sequentially for the user's SSH key. If the list is extensive, this search quickly becomes slow which is further motivation to use multiple Git servers since having multiple machines hosting the repositories, each with only a subset of the total SSH keys registered in their \texttt{authorized\_keys} files leads to far fewer lines in each file. 
 
 \section{Desktop GUI}
 
@@ -232,5 +186,51 @@ Long-running tasks include API calls (since the network may be slow), interactio
 Unfortunately, the fact that we are interacting with a Git repository complicates matters. Consider the scenario we make a call to the littlegit-core to create a new commit on a very slow machine, suppose that multiple files have changed and must be included in the commit. Now suppose the user tries to check out a different commit. Checking out a different commit while halfway through the creation of another will lead to Git throwing errors and possibly corrupting the repository (depending on precisely what happened). To prevent this, we have two options; whenever any background task runs, we disable the entire UI to prevent the user from doing anything. As we have discussed this is bound to anger our users.
 
 The second option, the option used by littlegit is to use a queue instead. All operations which depend on these long-running tasks are added to a queue and executed one by one (on a separate thread). The scenario described above now performs as a user would expect, one operation following the other automatically without the need for repeated clicking.
+
+\section{Authentication}
+
+There are two main kinds of authentication used by the system. SSH authentication is used when the desktop GUI performs Git operations interacting with the remote Git server (for example \texttt{git push} and \texttt{git fetch}), whereas calls to the API use a token-based system. 
+
+\subsection{API authentication}
+
+The token-based system used to authenticate calls to the API implements the OAuth 2.0 protocol since at the time of writing this is the industry standard for authentication \cite{oauth2}. Furthermore, it is relatively simple to implement, and the use of tokens also makes it easy to cache authentication details for a user which helps speed up requests.
+
+\subsection{SSH authentication}
+
+Implementing secure SSH based authentication between the desktop GUI and the Git servers is one of the key technical challenges of the project. Firstly we must explore what happens when we run a command such as \texttt{git fetch}. Internally, Git runs a command using SSH on a remote machine. The context under which the command has a user in the environment of the remote machine, by convention this user is called \emph{git}. 
+
+The first task was to ensure that the user \emph{git} could only execute Git commands since otherwise, it would be possible to execute any shell command on the remote machine, a clear security risk. To achieve this, the \emph{git} user is configured not to use the standard Unix shell, but instead, to use a tool called the \textbf{git-shell} which performs the restrictions (this is reliable since the creators of Git itself wrote the tool).
+
+On the other hand, when a user creates a new repository, it is the responsibility of the main server to create this repository on one of the Git servers. This requires a different user to the \emph{git} user since it needs permission to create a directory and initialise the repository. Due to this need, it was important to carefully set file permissions to ensure both users have only the permissions they need and no more to reduce the threat of malicious access.
+
+To explain the way the actual authentication process works we will work through the steps of an example user action. In the following example, the user is creating their first repository and then pushing to it. Note, when we refer to API calls in this section we still refer to calls to the server's RESTful interface using token-based authentication.
+
+\subsubsection{Step 1: Before creating the repository}
+
+The act of logging in to the desktop GUI for the first time on a machine triggers the generation of the user's public/private SSH key pair. An API call registers the public SSH key with the main server. SSH. If the user already has repositories (for example one created from a different machine), then the main server produces a list of all the Git servers hosting repositories owned by that user. It then takes the public SSH key and adds it to the server's \texttt{authorized\_keys} file, which contains a list of all the public SSH keys whose users have permission to access that machine.
+
+\subsubsection{Step 2: Creating a repository}
+ 
+It is the desktop GUI's responsibility to initialise the Git repository locally and to make a call to the main server to set up the remote repository which it does by executing commands via SSH on one of the Git servers (both making use of the littlegit-core). The GUI must also set a Git configuration option to ensure Git uses the generated SSH key for authentication and not look in the location\footnote{This is \url{~/.ssh/id_rsa} on most Linux systems}. This prevents interference with user-created SSH keys on machines used by more advanced users.
+
+\subsubsection{Step 3: Pushing or fetching from the remote server}
+
+When the GUI triggers a fetch or pull from the server, the first thing SSH does is looks up the user's public SSH key in the list in the \texttt{authorized\_keys} file. An example entry in this file is as follows.
+
+\begin{verbatim}
+command="./check-authorization.sh 677",no-port-forwarding, ...
+no-x11-forwarding,no-agent-forwarding,no-pty ...
+ssh-rsa AAAAB3NAAADAQABAAAAgQDmFNE9u8MHeGhb2o6qCfv8eRjK18EUA75XH3vElQ== SSHCerts
+\end{verbatim}
+
+In general, an entry in the file has the following format.
+
+\begin{verbatim}
+command="./check-authorization.sh <user ID>" <options> <user's ssh key>
+\end{verbatim}
+
+Once SSH finds the user's ssh key in the list (if it is not present the request is immediately terminated), the \emph{command} specified on the line is executed with the user's ID as an argument. The command has access to information about the Git command being executed, including the repository the request is attempting to manipulate. Using this information the Git server can call an endpoint on the main server to check if the user with the given ID has access to the given repository. If so, the request is allowed, SSH terminates the request.
+
+Unfortunately, this presents us with a potential performance bottleneck. The list is searched sequentially for the user's SSH key. If the list is extensive, this search quickly becomes slow which is further motivation to use multiple Git servers since having multiple machines hosting the repositories, each with only a subset of the total SSH keys registered in their \texttt{authorized\_keys} files leads to far fewer lines in each file. 
 
 

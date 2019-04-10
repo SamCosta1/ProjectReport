@@ -2,11 +2,11 @@
 
 This chapter aims to describe and explain the system's overall architecture. To explore potential performance bottlenecks and their solutions, as well as discussing the roles of the individual components that make up the final solution. This chapter does not discuss the implementation details, but rather give a high-level view of the \emph{why} rather than the \emph{how}. It is relevant to mention that the system as a whole has been informally dubbed 'littlegit', a name used throughout this report.
 
-\subsection{Other work in this area}
+\section{Other work in this area}
 
 So-called \emph{git guis} have existed almost as long as git itself has existed. Notable, git itself comes with two visual tools, \textbf{gitk} and \textbf{git-gui}. The former is used mainly for viewing the commit history, and the latter's main function is to create commits \cite{gitguis}.
 
-However, these tools provide very little functionality beyond a graphical way of invoking git commands. There is very little automation, and a reasonable knowledge of Git is still very much required. Furthermore, they provide no help with generation of SSH keys, or the resolving of conflicts/ SSH keys are the most convenient means of authentication with Git. Please see Appendix \ref{appendix_sshkeys} for an overview of how Git handles authentication through SSH.
+However, these tools provide very little functionality beyond a graphical way of invoking git commands. There is very little automation, and a reasonable knowledge of Git is still very much required. Furthermore, they provide no help with generation of SSH keys, which are used by Git for authentication.
 
 At the time of writing the most comparable system to that which this project aims to create belongs to Atlassian. The user can manage remote repositories, clone them to their local machine, view history and interact with the repository in man complex ways through the desktop application \emph{Source Tree}. The most noticeable feature here is the management of remote repositories from within the same application. 
 
@@ -14,7 +14,7 @@ However, here too is where the automation stops. There is little to no help with
 
 The project, therefore, aims to build upon the positive features of Source Tree and the Atlassian ecosystem, adding more abstraction and automation in the hopes of achieving a much simpler user experience.
 
-\subsection{Technical Overview}
+\section{Technical Overview}
 
 First, we present a very high-level description of the system as a whole, before exploring its components and their roles.
 
@@ -31,9 +31,9 @@ The reader may recall that to take advantage of Git fully as a source control sy
 
 The final component is the main server. It does \emph{not} host remote repositories but manages the system as a whole. The main server keeps track of users and their repositories, as well as ensuring that the correct users have access to the correct repositories. 
 
-\subsubsection{Git Servers and the Main server}
+\subsection{Git Servers and the Main server}
 
-The user may ask whether this infrastructure is needed. There already exist many hosting services for Git repositories. GitHub, Gitlab and Bitbucket to name a few. However, the issue with using these remains to be our goal of automating as much as possible. To be able to set up SSH keys for the user we must have complete control over the backend infrastructure. 
+The reader may ask whether this infrastructure is needed. There already exist many hosting services for Git repositories. GitHub, Gitlab and Bitbucket to name a few. However, the issue with using these is our goal of automating as much as possible. To be able to perform tasks such as setting up SSH keys for the user we must have complete control over the backend infrastructure. 
 
 Furthermore, this control allows for easy integration of new features in future. For example, we could introduce a new type of user such as a teacher who could have access to multiple repositories. To introduce such a role while relying on the stability of a third party service would be much more difficult.
 
@@ -45,7 +45,7 @@ Of course, having multiple servers hosting Git repositories presents its own set
 
 The management of SSH keys is only one role assigned to the main server; it also creates Git repositories on the Git servers and manages users, keeps track of their repositories and handles all user authentication.
 
-\subsubsection{GUI}
+\subsection{GUI}
 
 The GUI is the desktop application the end user interacts with and uses. Its primary responsibilities are to allow the user to manipulate the Git repository and visually display its current state.
 
@@ -65,7 +65,7 @@ Both the main server and GUI include the littlegit-core library as a dependency,
 
 We discuss the GUI's design and features in the following section.
 
-\subsection{UI Design}
+\section{UI Design}
  
 Early in the project, the interfaces of other Git GUIs were examined, exploring their strengths, weaknesses and most importantly, their common traits. The findings of this research are discussed here as well as a discussion of how the results impacted the design of this project's user interface.
 
@@ -91,7 +91,7 @@ Since this automation is taking place, it seems prudent to explicitly describe t
 
 Hence, creating new commits should be the primary operation the user sees when using the application. Furthermore, by looking at GitKraken and SourceTree in particular, the reader may also notice that many of the buttons on their left toolbars are merely the names of branches. In regular use clicking on them allows the user to check out these branches. Both applications also allow for using the graph to navigate between branches, allowing the user to click on the branch they wish to check out. With littlegit we aimed to expand this functionality, allowing the user to check out any commit in the history and handling this with branches internally without exposing this to the user.
 
-\subsection {Designing for teenagers}\label{sec:teen-design}
+\section {Designing for teenagers}\label{sec:teen-design}
 
 There has been much research conducted on the topic of designing user interfaces for teenagers. Unfortunately, the orientation of much of that research was towards websites and mobile applications rather than desktop apps. A result of this is usually much discussion of the importance of social media integration and good mobile compatibility, neither of which apply to a desktop application such as littlegit.
 
@@ -103,9 +103,9 @@ Furthermore, the study suggests that the strategy mentioned earlier of reducing 
 
 Lastly, a point continually emphasised by the study is that of fast loading speeds. Though this refers specifically to websites, the study highlights the impatience of teenagers while using the software.  The second objective of the project; therefore, of a scalable architecture which allows the application to work at speed is doubly important when considering the target audience.
 
-\subsection{Final design before implementation}
+\section{Final design before implementation}
 
-The development of the software followed an iterative approach. This meant continually seeking feedback from others as the project continued. However, it was essential to have an initial design to aim for, taking into account the research above.
+The intent was to use an iterative and incremental approach to developing the GUI element of the software. However, having a limited opportunity to seek feedback from teenagers it was essential to have an initial design (influenced by the research above) to aim for and to take feedback into account when it was possible.
 
 To do this the design software Sketch \cite{sketch,} was used to produce initial designs. These designs are included in Figures \ref{fig:design1} and \ref{design2}.
 

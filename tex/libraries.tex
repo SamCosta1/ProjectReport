@@ -1,0 +1,10 @@
+Chapter 3 details many of the pivotal decisions regarding technologies and libraries made throughout the project. However, there are a few libraries used that warrant credit, though the decision to use them followed directly from the decisions discussed in Chapter 3, or from merely being industry standard libraries for their given functions.
+
+Retrofit \cite{retrofit} was used for performing API calls from the desktop GUI to the main server, and Moshi \cite{moshi} used for the conversions between JSON to Kotlin objects.
+
+For communication between the main server and the Redis cache, Jedis \cite{jedis} was used, chosen for its speed and simplicity.
+
+Dependency injection was used in architecting the main server code, improving readability and maintainability. This technique makes the architecture described in Chapter 3 feasible. The dependency injection framework chosen was Dagger 2 \cite{dagger2}.
+
+Lastly, though not a software library, the library of icons used for many of the buttons in the GUI was obtained under from a FlatIcon author \cite{flaticon} under the Creative Commons licence.
+
