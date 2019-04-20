@@ -1,0 +1,21 @@
+To explain the way littlegit handles Git authentication we will work through the steps of an example user action. In the following example, the user is creating their first repository and then pushing to it. Note, when we refer to API calls in this section we still refer to calls to the server's RESTful interface using token-based authentication.
+
+\subsubsection{Step 1: Before creating the repository}
+
+The act of logging in to the desktop GUI for the first time on a machine triggers the generation of the user's public/private SSH key pair. An API call registers the public SSH key with the main server. If the user already has repositories (for example one created from a different machine), then the main server produces a list of all the Git servers hosting repositories owned by that user. It then takes the public SSH key and adds it to each of these servers'  \texttt{authorized\_keys} file, which contains a list of all the public SSH keys whose users have permission to access that machine.
+
+\subsubsection{Step 2: Creating a repository}
+ 
+It is the desktop GUI's responsibility to initialise the Git repository locally and to make a call to the main server to set up the remote repository. The main server chooses one of the Git servers from the available pool and sets up the remote upon it by executing commands via SSH (making use of the littlegit-core).
+
+\subsubsection{Step 3: Pushing or fetching from the remote server}
+
+When the GUI triggers a fetch or pull from the server, the first thing SSH does is looks up the user's public SSH key in the list in the \texttt{authorized\_keys} file. In general, an entry in the file has the following format.
+
+\begin{verbatim}
+command="./check-authorization.sh <user ID>" <options> <user's ssh key>
+\end{verbatim}
+
+Once SSH finds the user's public SSH key in the list (if it is not present the request is immediately terminated), the \emph{command} specified on the line is executed with the user's ID as an argument. The command has access to information about the Git command being executed, including the repository the request is attempting to manipulate. Using this information the Git server can call an endpoint on the main server to check if the user with the given ID has access to the given repository. If so, the request is allowed, SSH terminates the request if not.
+
+Unfortunately, this presents us with a potential performance bottleneck. The list is searched sequentially for the user's SSH key. If the list is extensive, this search quickly becomes slow which is further motivation to use multiple Git servers since having multiple machines hosting the repositories, each with only a subset of the total SSH keys registered in their \texttt{authorized\_keys} files leads to far fewer lines in each file. 

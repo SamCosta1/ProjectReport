@@ -18,6 +18,10 @@ Oauth 2.0.
 \bibitem{redis}
 Redis.
 
+\bibitem{maven}
+Apache.
+\newblock Apache maven.
+
 \bibitem{sourcetree}
 Atlassian.
 
@@ -51,6 +55,10 @@ Icongeek26.
 \bibitem{teendesign}
 Alita Joyce and Jakob Nielsen.
 \newblock Teenager’s ux: Designing for teens.
+
+\bibitem{asp}
+Microsoft.
+\newblock Asp.net.
 
 \bibitem{horizontalScrolling}
 Jakob Nielsen.

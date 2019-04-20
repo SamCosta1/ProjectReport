@@ -18,7 +18,7 @@ The project, therefore, aims to build upon the positive features of Source Tree 
 
 \section{Technical Overview}
 
-First, we present a very high-level description of the system as a whole, before exploring its components and their roles.
+First, we present a very high-level description of the system as a whole, before exploring its components and their roles. Figure \ref{fig:highlevel} shows a high-level representation of the system. The desktop GUI is the application the end user installs and uses to manipulate their repositories.
 
 \begin{figure} 
     \centering
@@ -27,15 +27,11 @@ First, we present a very high-level description of the system as a whole, before
     \label{fig:highlevel}
 \end{figure}
 
-Figure \ref{fig:highlevel} shows an overview of the system. The three main components shown run on distinct machines communicating over the internet. The GUI is the graphical user interface that runs on the user's machine, allowing them to manipulate their repositories. 
-
-The reader may recall that to take advantage of Git fully as a source control system the user must define a \emph{remote repository}. A repository hosted on a remote server which remains in sync with the local copy on the user's machine. The Git servers in Figure \ref{fig:highlevel} are the machines that host these remote repositories.
-
-The final component is the main server. It does \emph{not} host remote repositories but manages the system as a whole. The main server keeps track of users and their repositories, as well as ensuring that the correct users have access to the correct repositories. 
+The Git servers are the machines that host these remote repositories, these are distinct from the main server which does \emph{not} host repositories but manages the system as a whole.
 
 \subsection{Git Servers and the Main server}
 
-The reader may ask whether this infrastructure is needed. There already exist many hosting services for Git repositories. GitHub, Gitlab and Bitbucket to name a few. However, the issue with using these is our goal of automating as much as possible. To be able to perform tasks such as setting up SSH keys for the user we must have complete control over the backend infrastructure. 
+The reader may ask whether this infrastructure is needed. There already exist many hosting services for Git repositories. GitHub, Gitlab and Bitbucket to name a few. However, using these limits our ability to automate as much as possible. To be able to perform tasks such as setting up SSH keys for the user we must have complete control over the backend infrastructure. 
 
 Furthermore, this control allows for easy integration of new features in future. For example, we could introduce a new type of user such as a teacher who could have access to multiple repositories. To introduce such a role while relying on the stability of a third party service would be much more difficult.
 
@@ -45,7 +41,7 @@ For this reason, we spread the load of Git repositories over multiple machines. 
 
 Of course, having multiple servers hosting Git repositories presents its own set of challenges. For a user's machine to be able to communicate with a Git server, we must register its public SSH key on all the Git servers that host the user's repositories. One of the responsibilities of the main server is precisely this. To manage SSH keys, ensuring the right ones exist on the correct machines, which becomes more complicated when we realise that an SSH key is associated to a machine, not a user and that a user may work on multiple machines necessitating multiple keys.
 
-The management of SSH keys is only one role assigned to the main server; it also creates Git repositories on the Git servers and manages users, keeps track of their repositories and handles all user authentication.
+The main server provides API endpoints for the GUI to use to handle all user authentication, create new repositories and importantly, to register new SSH keys.
 
 \subsection{GUI}
 
