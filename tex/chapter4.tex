@@ -2,23 +2,23 @@
 
 This Chapter discusses the approach to testing and evaluating the system; this includes both the automated testing strategy and the steps taken to procure feedback from likely users. 
 
-The focus of the automated tests was to ensure a stable and reliable product, to catch bugs and help prevent regressions. On the other hand, the aim of user testing was not on finding bugs (though this is a secondary objective) due to the limited amount of time available interacting with likely users (i.e. teenagers). It was decided that a much better use of this time was to obtain feedback about the usability and usefulness of the system, rather than spend the time having users try to break the system to discover faults.
+The focus of the automated tests was to ensure a stable and reliable product, to catch bugs and help prevent regressions. On the other hand, the primary aim of user testing was not on finding bugs due to the limited amount of time available interacting with likely users (i.e. teenagers). It was decided that obtaining feedback about the usability and usefulness of the system was a better use of this time, rather than having users try to break the system to discover faults.
 
 \section{Automated Testing}
 
-As has already been indicated, this project consists of three distinct codebases. As a result, the testing strategy for each is slightly different, and we will discuss them separately. 
+This project consists of three distinct codebases. A test-driven approach was used across the board but the testing strategy for each is slightly different, and we will discuss them separately. 
 
 \subsection{Littlegit-core}
 
-Conventional wisdom with regards to automated testing is to follow the \textbf{Cohn test automation pyramid} \cite{testpyramid} which requires a large proportion of the tests to be unit tests and fewer service level and UI tests.
+Conventional wisdom with regards to automated testing is to follow the \textbf{Cohn test automation pyramid} \cite{testpyramid} which advises a large proportion of the tests to be unit tests with fewer integration and UI tests.
 
-For testing the Littlegit-core, this guideline was purposely ignored, and the vast majority of the tests are integration tests. These examine the library's interaction with real Git repositories (created and managed by the test case) and ensure results are correct. 
+For testing the littlegit-core, this guideline was purposely ignored, and the vast majority of the tests are integration tests. These examine the library's interaction with real Git repositories (created and managed by the test case) and ensure results are correct. 
 
-To follow the guidelines these tests would have to become Unit tests. To achieve this, we would have to mock Git's output at each stage of the test. However, this quickly proved impractical since minor changes to the test code require new dummy Git output to be generated each time, a slow manual process, resulting in the decision to test against Git itself.
+The reason these tests are not unit tests because such tests would have to mock Git's output at each stage of the test. Such an approach quickly proved impractical since minor changes to the test code require new dummy Git output to be generated each time, a slow manual process, resulting in the decision to test against Git itself.
 
-The downside to our chosen approach is that test cases execute marginally more slowly due to the dependency on Git and the filesystem, though in practice the suite of over a hundred tests still runs in under 15 seconds on average making this a non-issue for development.
+The downside to our chosen approach is that test cases execute marginally more slowly due to the dependency on Git and the filesystem, though in practice the suite of over a hundred tests still runs (on average) in under 15 seconds making this a non-issue for development.
 
-Regarding code coverage, as Figure \ref{fig:core-coverage} shows we have code coverage above 90\% which we consider more than acceptable. Furthermore, in using the library in the development of the project's other components, it has proven stable, with only a few bugs, implying the testing strategy has been successful.
+Regarding code coverage, as Figure \ref{fig:core-coverage} shows we have code coverage above 90\% which we consider more than acceptable. Furthermore, in using the library in the development of the project's other components, it has proven stable, with only a few bugs discovered.
 
 \fig{figures/core-coverage.png}{The code coverage statistics for the littlegit-core library.}{fig:core-coverage}{0.5}
 
@@ -28,38 +28,39 @@ The main server called for an entirely different testing strategy to that used f
 
 Recall the server architecture we discussed in Section \ref{sec:server-architecture}. Many Unit tests are used to test the \emph{Repository} layer, the layer that interacts with the database. The decision was made to test against a real database and cache rather than try to mock out the connections since this is tedious. We also get the advantage of checking the database and cache connections using this approach.
 
-To Unit test the \emph{Service} layer we mock out the dependency on the \emph{Repository} layer to ensure we only test the Service layer functionality. 
+To unit test the \emph{Service} layer we mock out the dependency on the \emph{Repository} layer to ensure we only test the Service layer functionality. 
 
 A much smaller number of integration tests are used to check the stack from the \emph{Controller} level down to the database, the aim being to catch any issues in the integration of the various layers. 
 
-Formal Performance tests were not used in the development of the server. Manual testing shows that calls to the API execute quickly and that the caching strategy does indeed speed up data retrieval. Any further insights that formal Performance tests would provide would require the system to run on multiple machines as previously described leading to a significant monetary cost which it was deemed unnecessary.
+Formal performance tests were not used in the development of the server. Manual testing shows that calls to the API execute quickly and that the caching strategy does indeed speed up data retrieval. Any further insights that formal performance tests would provide would require the system to run on multiple machines as previously described leading to a significant monetary cost which was deemed unnecessary.
 
 Code coverage for the server is lower than the littlegit-core but still stands at 76\% which is acceptable.
 
 \subsubsection{Improvements}
 
-Manual testing was used to sanity check the API endpoints. Running the server, and then calling the endpoints with input data and reviewing the JSON response. Automating this process would be useful. Currently, all tests are run automatically on a build server before deployment of the server. These planned tests would run after the server has been deployed, sanity checking that all the endpoints are working and that there are no glaring issues. 
+Manual testing was used to sanity check the API endpoints. Involving running the server, and then calling the endpoints with input data and reviewing the JSON response. 
+
+Automating this process would be useful, running tests after the server has been deployed, sanity checking that all the endpoints are working and that there are no glaring issues. Currently, we only run tests before deployment, mocking out the network connection.
  
 \subsection{Desktop GUI}
 
-By far this codebase was the most difficult to test owing to the fact most of the operations most vital to examine are asynchronous. It was decided that UI tests would not be used since the Tornado FX framework's support for them is limited, and early experimentation showed them to be unreliable.
+By far this codebase was the most difficult to test owing to the fact most of the operations to be tested run asynchronously. 
 
-The strategy, therefore, was to concentrate on the code that performs automation of Git, ensuring that the system reacts correctly to Git errors and the user mistakes causing them. Furthermore, it was essential to verify the GUI responded correctly to issues with the network connection and errors from the API. Mocking was used to simulate these conditions and ensure the system reacted appropriately.
+The strategy, therefore, was to concentrate on the code that performs automation of Git operations, ensuring that the system reacts correctly to Git errors and the user mistakes causing them. Furthermore, it was essential to verify the GUI responded correctly to issues with the network connection and errors from the API. Mocking was used to simulate these conditions and ensure the system reacted appropriately.
 
 Unit testing was used extensively to ensure that the Desktop GUI's internal data persistence store was stable, tests that proved useful since minor mistakes in the persistence code almost caused multiple serious regressions which were caught by the tests.
 
-Due to the decision not to use UI tests, the test coverage of the GUI is by far the lowest of the components at 33\%. However, if we omit UI code from this figure, our coverage is close to 80\% which we regard as acceptable.
+It was decided that UI tests would not be used since the Tornado FX framework's support for them is limited, and early experimentation showed them to be unreliable. Due to the lack of UI tests, the test coverage of the GUI is by far the lowest of the components at 33\%. However, if we omit UI code from this figure, our coverage is close to 80\% which we regard as acceptable.
 
-\section{User testing}
+\section{User testing}\label{sec:user-testing}
 
 As was briefly mentioned in Chapter 2, a true iterative approach to developing the GUI was not possible due to a limited number of opportunities to seek feedback from the target audience. 
 
-However, two feedback sessions occurred during development, the first roughly halfway through and the second nearing the end. The students involved had received a short talk about source-control and the idea of creating commits.
+However, two feedback sessions with teenagers occurred during development, the first roughly halfway through and the second nearing the end. The students involved had received a short talk about source-control and the idea of creating commits.
 
-The format of both sessions was the same; participants were asked to perform tasks using the software (for example creating a few commits, then navigating back to a specific commit and examining it). As they completed the tasks, it was observed that none had difficulty using the software and upon being asked, all said they found it easy and intuitive. If anything some seemed confused why they were being asked to complete such trivial exercises. Of course, two focus groups is not enough to conclude the user experience is well designed and useful, but it is a promising indication.
+The format of both sessions was the same; participants were asked to perform tasks using the software (for example creating a few commits, then navigating back to a specific commit and examining it). As they completed the tasks, it was observed that none had difficulty using the software and upon being asked, all said they found it easy and intuitive. If anything, some seemed confused about why they were being asked to complete such trivial exercises. Of course, two focus groups is not enough to conclude the user experience is well designed and useful, but it is a promising indication.
 
 Interestingly, the second group pointed out more issues with the software than the first. These issues were not bugs, but suggestions for improvement such as the opinion that the Git graph looks strange and its meaning is unclear when only one commit exists in the repository. Unfortunately, time constraints prevented their concerns from being adequately addressed during the main project lifecycle, but these are indeed areas for future improvement, making the feedback valuable.
 
-Moreover, feedback sessions were carried out numerous times within a small tutor group involving students and lecturers where feedback was obtained about the project's progress. These sessions were instrumental in the initial designs described in Chapter 2, and certain features (the Git graph chief among them) were iterated upon multiple times based on feedback from these sessions.
-
+Moreover, feedback sessions were carried out numerous times within a small tutor group involving university students and lecturers where feedback was obtained about the project's progress. These sessions were instrumental in the initial designs described in Chapter 2, and certain features (the Git graph chief among them) were iterated upon multiple times based on feedback from these sessions.
 
