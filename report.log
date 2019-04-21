@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.9)  20 APR 2019 11:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.9)  21 APR 2019 11:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -284,7 +284,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.44 ...}Reflection and Conclusion}{28}{chapter.5}
+l.46 ...}Reflection and Conclusion}{29}{chapter.5}
                                                    [1
 
 ])
@@ -325,14 +325,10 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 52.
-
-
-LaTeX Warning: Reference `sec:user-testing' on page 3 undefined on input line 7
-0.
-
-) (./tex/chapter2.tex [3] [4]
+)
+(./tex/chapter2.tex [3] [4]
 Chapter 2.
-<figures/sourcetree_issue.png, id=272, 1140.26pt x 887.315pt>
+<figures/sourcetree_issue.png, id=273, 1140.26pt x 887.315pt>
 File: figures/sourcetree_issue.png Graphic file (type png)
 
 <use figures/sourcetree_issue.png>
@@ -341,28 +337,28 @@ Package pdftex.def Info: figures/sourcetree_issue.png used on input line 15.
  [5
 
 ]
-<figures/highlevel.pdf, id=281, 655.48888pt x 470.7186pt>
+<figures/highlevel.pdf, id=282, 655.48888pt x 470.7186pt>
 File: figures/highlevel.pdf Graphic file (type pdf)
 
 <use figures/highlevel.pdf>
 Package pdftex.def Info: figures/highlevel.pdf used on input line 25.
 (pdftex.def)             Requested size: 327.74364pt x 235.35872pt.
  [6 <./figures/sourcetree_issue.png>]
-<figures/gui-core.pdf, id=289, 391.4625pt x 334.3692pt>
+<figures/gui-core.pdf, id=290, 391.4625pt x 334.3692pt>
 File: figures/gui-core.pdf Graphic file (type pdf)
 
 <use figures/gui-core.pdf>
 Package pdftex.def Info: figures/gui-core.pdf used on input line 52.
 (pdftex.def)             Requested size: 195.73076pt x 167.18419pt.
  [7 <./figures/highlevel.pdf>]
-<figures/sourcetree.png, id=322, 1135.24126pt x 552.0625pt>
+<figures/sourcetree.png, id=323, 1135.24126pt x 552.0625pt>
 File: figures/sourcetree.png Graphic file (type png)
 
 <use figures/sourcetree.png>
 Package pdftex.def Info: figures/sourcetree.png used on input line 70.
 (pdftex.def)             Requested size: 340.575pt x 165.62003pt.
 
-<figures/gitkraken.png, id=323, 1444.39626pt x 880.28876pt>
+<figures/gitkraken.png, id=324, 1444.39626pt x 880.28876pt>
 File: figures/gitkraken.png Graphic file (type png)
 
 <use figures/gitkraken.png>
@@ -373,7 +369,7 @@ Overfull \hbox (88.32222pt too wide) in paragraph at lines 72--72
  [][] 
  []
 
-<figures/gitk.png, id=324, 1157.32375pt x 703.62875pt>
+<figures/gitk.png, id=325, 1157.32375pt x 703.62875pt>
 File: figures/gitk.png Graphic file (type png)
  <use figures/gitk.png>
 Package pdftex.def Info: figures/gitk.png used on input line 74.
@@ -383,7 +379,7 @@ Overfull \hbox (2.1998pt too wide) in paragraph at lines 74--74
  [][] 
  []
 
-<figures/horizontal-graph.pdf, id=327, 581.2917pt x 109.3686pt>
+<figures/horizontal-graph.pdf, id=328, 581.2917pt x 109.3686pt>
 File: figures/horizontal-graph.pdf Graphic file (type pdf)
 
 <use figures/horizontal-graph.pdf>
@@ -391,14 +387,14 @@ Package pdftex.def Info: figures/horizontal-graph.pdf used on input line 80.
 (pdftex.def)             Requested size: 174.38885pt x 32.81082pt.
  [8 <./figures/gui-core.pdf>] [9 <./figures/sourcetree.png> <./figures/gitkrake
 n.png>] [10 <./figures/gitk.png> <./figures/horizontal-graph.pdf>] [11]
-<figures/design1.png, id=392, 2569.6pt x 1604.99625pt>
+<figures/design1.png, id=393, 2569.6pt x 1604.99625pt>
 File: figures/design1.png Graphic file (type png)
 
 <use figures/design1.png>
 Package pdftex.def Info: figures/design1.png used on input line 108.
 (pdftex.def)             Requested size: 282.65688pt x 176.55013pt.
 
-<figures/design2.png, id=393, 2569.6pt x 1604.99625pt>
+<figures/design2.png, id=394, 2569.6pt x 1604.99625pt>
 File: figures/design2.png Graphic file (type png)
 
 <use figures/design2.png>
@@ -407,7 +403,7 @@ Package pdftex.def Info: figures/design2.png used on input line 110.
 ) (./tex/chapter3.tex [12 <./figures/design1.png>]
 [13 <./figures/design2.png>]
 Chapter 3.
-<figures/trello.png, id=408, 1409.265pt x 652.4375pt>
+<figures/trello.png, id=409, 1409.265pt x 652.4375pt>
 File: figures/trello.png Graphic file (type png)
  <use figures/trello.png>
 Package pdftex.def Info: figures/trello.png used on input line 10.
@@ -420,14 +416,14 @@ Overfull \hbox (7.31538pt too wide) in paragraph at lines 10--10
 [14
 
 ] [15 <./figures/trello.png>]
-<figures/core-architecture.pdf, id=433, 371.46779pt x 258.0039pt>
+<figures/core-architecture.pdf, id=434, 371.46779pt x 258.0039pt>
 File: figures/core-architecture.pdf Graphic file (type pdf)
 
 <use figures/core-architecture.pdf>
 Package pdftex.def Info: figures/core-architecture.pdf used on input line 53.
 (pdftex.def)             Requested size: 185.73343pt x 129.00163pt.
 
-<figures/core-deployment.pdf, id=436, 572.1375pt x 222.8325pt>
+<figures/core-deployment.pdf, id=437, 572.1375pt x 222.8325pt>
 File: figures/core-deployment.pdf Graphic file (type pdf)
 
 <use figures/core-deployment.pdf>
@@ -443,21 +439,21 @@ ype <array>); ignored.
 pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./figures/core-deployment.pd
 f): PDF inclusion: invalid other resource which is no dict (key 'ProcSets', typ
 e <array>); ignored.
->] <figures/er-diagram.png, id=483, 524.359pt x 249.733pt>
+>] <figures/er-diagram.png, id=484, 524.359pt x 249.733pt>
 File: figures/er-diagram.png Graphic file (type png)
 
 <use figures/er-diagram.png>
 Package pdftex.def Info: figures/er-diagram.png used on input line 105.
 (pdftex.def)             Requested size: 262.17885pt x 124.86618pt.
  [18 <./figures/er-diagram.png>]
-<figures/loadbalancing.pdf, id=494, 642.48026pt x 166.7028pt>
+<figures/loadbalancing.pdf, id=495, 642.48026pt x 166.7028pt>
 File: figures/loadbalancing.pdf Graphic file (type pdf)
 
 <use figures/loadbalancing.pdf>
 Package pdftex.def Info: figures/loadbalancing.pdf used on input line 115.
 (pdftex.def)             Requested size: 321.23933pt x 83.35118pt.
 
-<figures/server-architecture.pdf, id=498, 283.0575pt x 325.215pt>
+<figures/server-architecture.pdf, id=499, 283.0575pt x 325.215pt>
 File: figures/server-architecture.pdf Graphic file (type pdf)
 
 <use figures/server-architecture.pdf>
@@ -474,7 +470,7 @@ pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./figures/loadbalancing.pdf)
 pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./figures/server-architectur
 e.pdf): PDF inclusion: invalid other resource which is no dict (key 'ProcSets',
  type <array>); ignored.
->] <figures/littlegit-complexgraph.png, id=537, 1927.2pt x 1181.41376pt>
+>] <figures/littlegit-complexgraph.png, id=538, 1927.2pt x 1181.41376pt>
 File: figures/littlegit-complexgraph.png Graphic file (type png)
 
 <use figures/littlegit-complexgraph.png>
@@ -490,29 +486,43 @@ Overfull \hbox (40.43318pt too wide) in paragraph at lines 160--160
 Chapter 4.
 [24
 
-] <figures/core-coverage.png, id=566, 634.37pt x 237.88875pt>
+] <figures/core-coverage.png, id=567, 634.37pt x 237.88875pt>
 File: figures/core-coverage.png Graphic file (type png)
 
 <use figures/core-coverage.png>
 Package pdftex.def Info: figures/core-coverage.png used on input line 23.
 (pdftex.def)             Requested size: 317.18422pt x 118.94408pt.
  [25 <./figures/core-coverage.png>]
-Overfull \hbox (4.50053pt too wide) in paragraph at lines 57--58
-[]\OT1/cmr/m/n/10 However, two feed-back ses-sions oc-curred dur-ing de-vel-op-
-ment, the first roughly
+Underfull \hbox (badness 10000) in paragraph at lines 65--66
+
  []
 
-[26]) (./tex/chapter5.tex [27]
-Chapter 5.
-[28
 
-]) [29]
+Underfull \hbox (badness 10000) in paragraph at lines 69--70
+
+ []
+
+[26]
+Underfull \hbox (badness 10000) in paragraph at lines 73--74
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 77--78
+
+ []
+
+[27]) (./tex/chapter5.tex [28]
+Chapter 5.
+[29
+
+]) [30]
 Appendix A.
-(./tex/libraries.tex) [30
+(./tex/libraries.tex) [31
 
 ]
 Appendix B.
-(./tex/gitcommands.tex) [31
+(./tex/gitcommands.tex) [32
 
 ]
 Appendix C.
@@ -522,17 +532,17 @@ Overfull \hbox (27.74675pt too wide) in paragraph at lines 17--17
 's ssh key>[] 
  []
 
-[32
+[33
 
-]) (./report.bbl [33]
+]) (./report.bbl [34]
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
- [34
+ [35
 
 ])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 60.
- [35]
+ [36]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 60.
  (./report.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 60.
@@ -546,9 +556,9 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 60.
  ) 
 Here is how much of TeX's memory you used:
- 6083 strings out of 492995
- 89413 string characters out of 6132705
- 181295 words of memory out of 5000000
+ 6086 strings out of 492995
+ 89442 string characters out of 6132705
+ 181335 words of memory out of 5000000
  9412 multiletter control sequences out of 15000+600000
  9621 words of font info for 34 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -564,10 +574,10 @@ texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/tex
 live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texli
 ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on report.pdf (39 pages, 3621074 bytes).
+Output written on report.pdf (40 pages, 3624308 bytes).
 PDF statistics:
- 702 PDF objects out of 1000 (max. 8388607)
- 589 compressed objects within 6 object streams
- 141 named destinations out of 1000 (max. 500000)
+ 709 PDF objects out of 1000 (max. 8388607)
+ 595 compressed objects within 6 object streams
+ 144 named destinations out of 1000 (max. 500000)
  430 words of extra memory for PDF output out of 10000 (max. 10000000)
 

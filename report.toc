@@ -41,14 +41,16 @@
 \contentsline {subsubsection}{Improvements}{25}{section*.9}
 \contentsline {subsection}{\numberline {4.1.3}Desktop GUI}{26}{subsection.4.1.3}
 \contentsline {section}{\numberline {4.2}User testing}{26}{section.4.2}
-\contentsline {chapter}{\numberline {5}Reflection and Conclusion}{28}{chapter.5}
-\contentsline {section}{\numberline {5.1}Management of work}{28}{section.5.1}
-\contentsline {section}{\numberline {5.2}Project goals}{28}{section.5.2}
-\contentsline {section}{\numberline {5.3}What went wrong?}{28}{section.5.3}
-\contentsline {section}{\numberline {5.4}Personal Achievements}{29}{section.5.4}
-\contentsline {chapter}{Appendix \numberline {A}Libraries}{30}{Appendix.1.A}
-\contentsline {chapter}{Appendix \numberline {B}Git commands}{31}{Appendix.1.B}
-\contentsline {chapter}{Appendix \numberline {C}Git authentication}{32}{Appendix.1.C}
-\contentsline {subsubsection}{Step 1: Before creating the repository}{32}{section*.10}
-\contentsline {subsubsection}{Step 2: Creating a repository}{32}{section*.11}
-\contentsline {subsubsection}{Step 3: Pushing or fetching from the remote server}{32}{section*.12}
+\contentsline {subsubsection}{First feedback session}{26}{section*.10}
+\contentsline {subsubsection}{Second feedback session}{27}{section*.11}
+\contentsline {chapter}{\numberline {5}Reflection and Conclusion}{29}{chapter.5}
+\contentsline {section}{\numberline {5.1}Management of work}{29}{section.5.1}
+\contentsline {section}{\numberline {5.2}Project goals}{29}{section.5.2}
+\contentsline {section}{\numberline {5.3}What went wrong?}{29}{section.5.3}
+\contentsline {section}{\numberline {5.4}Personal Achievements}{30}{section.5.4}
+\contentsline {chapter}{Appendix \numberline {A}Libraries}{31}{Appendix.1.A}
+\contentsline {chapter}{Appendix \numberline {B}Git commands}{32}{Appendix.1.B}
+\contentsline {chapter}{Appendix \numberline {C}Git authentication}{33}{Appendix.1.C}
+\contentsline {subsubsection}{Step 1: Before creating the repository}{33}{section*.12}
+\contentsline {subsubsection}{Step 2: Creating a repository}{33}{section*.13}
+\contentsline {subsubsection}{Step 3: Pushing or fetching from the remote server}{33}{section*.14}
