@@ -1,55 +1,49 @@
 This is BibTeX, Version 0.99d (TeX Live 2017)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: report.aux
-The style file: abbrv.bst
+The style file: plain.bst
 Database file #1: bibfile.bib
 Warning--to sort, need author or key in electron
 Warning--to sort, need author or key in nodejs
-Warning--to sort, need author or key in tornadofx
-Warning--to sort, need author or key in jersey
-Warning--to sort, need author or key in redis
-Warning--to sort, need author or key in oauth2
-Warning--to sort, need author or key in git-shell
-Warning--to sort, need author or key in jedis
-You've used 27 entries,
+You've used 29 entries,
             2118 wiz_defined-function locations,
-            589 strings with 5318 characters,
-and the built_in function-call counts, 5139 in all, are:
-= -- 465
-> -- 147
+            611 strings with 6428 characters,
+and the built_in function-call counts, 6125 in all, are:
+= -- 599
+> -- 197
 < -- 0
-+ -- 69
-- -- 40
-* -- 141
-:= -- 780
-add.period$ -- 67
-call.type$ -- 27
-change.case$ -- 98
++ -- 85
+- -- 56
+* -- 151
+:= -- 1022
+add.period$ -- 112
+call.type$ -- 29
+change.case$ -- 115
 chr.to.int$ -- 0
-cite$ -- 35
-duplicate$ -- 189
-empty$ -- 603
-format.name$ -- 40
-if$ -- 1164
+cite$ -- 31
+duplicate$ -- 203
+empty$ -- 641
+format.name$ -- 56
+if$ -- 1356
 int.to.chr$ -- 0
-int.to.str$ -- 27
+int.to.str$ -- 29
 missing$ -- 0
-newline$ -- 124
-num.names$ -- 38
-pop$ -- 224
+newline$ -- 173
+num.names$ -- 54
+pop$ -- 289
 preamble$ -- 1
-purify$ -- 74
+purify$ -- 86
 quote$ -- 0
-skip$ -- 222
+skip$ -- 150
 stack$ -- 0
-substring$ -- 137
-swap$ -- 27
+substring$ -- 145
+swap$ -- 29
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 108
-warning$ -- 8
-while$ -- 38
-width$ -- 29
-write$ -- 217
-(There were 8 warnings)
+type$ -- 116
+warning$ -- 2
+while$ -- 54
+width$ -- 31
+write$ -- 313
+(There were 2 warnings)

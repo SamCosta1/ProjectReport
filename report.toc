@@ -9,29 +9,29 @@
 \contentsline {section}{\numberline {2.2}Technical Overview}{7}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}Git Servers and the Main server}{7}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Desktop GUI}{8}{subsection.2.2.2}
-\contentsline {subsubsection}{ Low-level git library}{8}{section*.2}
+\contentsline {subsubsection}{ Low-level git library}{9}{section*.2}
 \contentsline {section}{\numberline {2.3}UI Design}{9}{section.2.3}
 \contentsline {section}{\numberline {2.4}Designing for teenagers}{12}{section.2.4}
 \contentsline {section}{\numberline {2.5}Final design before implementation}{12}{section.2.5}
 \contentsline {chapter}{\numberline {3}Implementation and Development}{14}{chapter.3}
 \contentsline {section}{\numberline {3.1}Planning and management of work}{14}{section.3.1}
-\contentsline {section}{\numberline {3.2}Choice of language}{14}{section.3.2}
+\contentsline {section}{\numberline {3.2}Choice of language}{15}{section.3.2}
 \contentsline {section}{\numberline {3.3}The littlegit-core}{16}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}Architecture}{16}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Deployment}{16}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.2}Deployment}{17}{subsection.3.3.2}
 \contentsline {section}{\numberline {3.4}The main server}{17}{section.3.4}
 \contentsline {subsection}{\numberline {3.4.1}Technologies}{17}{subsection.3.4.1}
 \contentsline {subsubsection}{Web server framework}{17}{section*.3}
 \contentsline {subsubsection}{Database and caching}{18}{section*.4}
 \contentsline {subsubsection}{Data transfer}{19}{section*.5}
-\contentsline {subsection}{\numberline {3.4.2}Internal server architecture}{19}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.2}Internal server architecture}{20}{subsection.3.4.2}
 \contentsline {subsubsection}{Repository Layer}{20}{section*.6}
 \contentsline {subsubsection}{Service Layer}{20}{section*.7}
-\contentsline {subsubsection}{Controller Layer}{20}{section*.8}
+\contentsline {subsubsection}{Controller Layer}{21}{section*.8}
 \contentsline {section}{\numberline {3.5}Desktop GUI}{21}{section.3.5}
 \contentsline {subsection}{\numberline {3.5.1}Git graph}{21}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Threading}{21}{subsection.3.5.2}
-\contentsline {section}{\numberline {3.6}Authentication}{22}{section.3.6}
+\contentsline {subsection}{\numberline {3.5.2}Threading}{22}{subsection.3.5.2}
+\contentsline {section}{\numberline {3.6}Authentication}{23}{section.3.6}
 \contentsline {subsection}{\numberline {3.6.1}API authentication}{23}{subsection.3.6.1}
 \contentsline {subsection}{\numberline {3.6.2}SSH authentication}{23}{subsection.3.6.2}
 \contentsline {chapter}{\numberline {4}Evaluation and Testing}{24}{chapter.4}

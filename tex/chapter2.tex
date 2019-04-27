@@ -8,7 +8,7 @@ So-called \emph{Git GUIs} (graphical user interfaces to Git) have existed for al
 
 At the time of writing the most comparable system to that which this project aims to create belongs to Atlassian. The user can manage remote repositories, clone them to their local machine, view history and interact with the repository in many complex ways through the desktop application \emph{SourceTree}. The most noticeable feature here is the management of remote repositories from within the same application. However, here too is where the automation stops. There is little to no help with the resolving of conflicts, SSH key setup is still a manual process, and most importantly, errors from git are often directly passed onto the user with no attempt to resolve the issue for them. Figure \ref{fig:sourcetree_issue} is an example of this.
 
-\fig{figures/sourcetree_issue.png}{An example of SourceTree passing errors on to the user.}{fig:sourcetree_issue}{0.2}
+\fig{figures/sourcetree_issue.png}{An example of SourceTree passing errors on to the user.}{fig:sourcetree_issue}{0.3}
 
 The project, therefore, aims to build upon the positive features of SourceTree and the Atlassian ecosystem, adding more abstraction and automation in the hopes of achieving a much simpler user experience.
 
@@ -59,9 +59,9 @@ Early in the project, the interfaces of other Git GUIs were examined, exploring 
 
 The three main applications researched are the application SourceTree \cite{sourcetree} (mentioned earlier), GitKraken\cite{gitkraken} and GitK\cite{gitk}. Figures \ref{screenshot:sourcetree}, \ref{screenshot:gitkraken} and \ref{screenshot:gitk} show a screenshots of their main interfaces.
 
-\fig{figures/sourcetree.png}{A screenshot of the main interface of the application SourceTree.}{screenshot:sourcetree}{0.3}
+\fig{figures/sourcetree.png}{A screenshot of the main interface of the application SourceTree.}{screenshot:sourcetree}{0.32}
 
-\fig{figures/gitkraken.png}{A screenshot of the main interface of the application GitKraken.}{screenshot:gitkraken}{0.3}
+\fig{figures/gitkraken.png}{A screenshot of the main interface of the application GitKraken.}{screenshot:gitkraken}{0.25}
 
 \fig{figures/gitk.png}{A screenshot of the main interface of the application GitK.}{screenshot:gitk}{0.3}
 
@@ -69,9 +69,10 @@ The first thing to note in looking at the interfaces is the common element being
 
 However, other options were considered, Figure \ref{fig:horizontal-graph} shows an early design for an alternative graph which scrolls horizontally. The idea was to emulate a timeline to help visualise the repository as being a series of snapshots of the code, allowing the user to navigate backwards and forwards along it. This idea however soon proved impractical, visually representing branches in this model becomes messy and complicated, especially for more complex repositories. Furthermore, according to user testing \cite{horizontalScrolling}, users dislike horizontal scrolling.
 
-\fig{figures/horizontal-graph.pdf}{An early design for the Git graph using horizontal scrolling.}{fig:horizontal-graph}{0.3}
-
 Returning to our discussion of the other applications, the graphs of both SourceTree and GitK are relatively cramped. A large amount of information in very close proximity, this is especially true of GitK. On the other hand, GitKraken takes much more space to display the same information, a feature it was important for littlegit to emulate to ensure the data is clear and easy to understand.
+
+
+\fig{figures/horizontal-graph.pdf}{An early design for the Git graph using horizontal scrolling.}{fig:horizontal-graph}{0.5}
 
 Moreover, all three applications have lots of buttons and menus. After studying these controls, it became clear that in a system that aims to automate as much as possible the vast majority of the options were unneeded. For example, SourceTree has three separate buttons for pushing, pulling and fetching. The question littlegit asks is why? If there is something to push to the server, why not just do it on the users' behalf, and if there are no new changes on the server to be pulled, then why present the user with the option? This lead to the decision to use a popup dialogue to indicate when the user's local version is behind the server, giving them the option to update without the need to clutter the primary interface with the option.
 
@@ -93,9 +94,9 @@ Furthermore, the study suggests that the strategy of reducing clutter on the mai
 
 The intent was to use an iterative and incremental approach to developing the GUI element of the software. However, having a limited opportunity to seek feedback from teenagers, it was essential to have an initial design (influenced by the research above) to aim for and to take feedback into account when it was possible. To do this the design software Sketch \cite{sketch} was used to produce initial designs. These designs are included in Figures \ref{fig:design1} and \ref{fig:design2}.
 
-\fig{figures/design1.png}{The main screen of littlegit}{fig:design1}{0.11}
+\figh{figures/design1.png}{A design for the main screen of littlegit}{fig:design1}{0.13}
 
-\fig{figures/design2.png}{The main screen of littlegit after a user clicks a commit from the graph.}{fig:design2}{0.11}
+\figh{figures/design2.png}{A design for the main screen of littlegit after a user clicks a commit from the graph.}{fig:design2}{0.13}
 
 
 
