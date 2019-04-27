@@ -1,26 +1,30 @@
 \begin{thebibliography}{10}
 
-\bibitem{electron}
-\emph{Electron}.
-\newblock \url{https://electronjs.org/}.
-\newblock \\Accessed: 26-02-2019.
+\bibitem{ofqual}
+Ofqual.
+\newblock \emph{GCSE outcomes in England}.
+\newblock \url{https://analytics.ofqual.gov.uk/apps/2018/GCSE/Outcomes/}.
+\newblock \\Accessed: 13-03-2019.
 
-\bibitem{nodejs}
-\emph{NodeJS}.
-\newblock \url{https://nodejs.org/en/}.
-\newblock \\Accessed: 26-02-2019.
-
-\bibitem{maven}
-Apache.
-\newblock \emph{Apache Maven}.
-\newblock \url{https://maven.apache.org/}.
+\bibitem{primarycoding}
+Department of~education.
+\newblock \emph{Computing programmes of study}.
+\newblock \url
+  {https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/239033/PRIMARY_national_curriculum_-_Computing.pdf}.
 \newblock \\Accessed: 02-03-2019.
 
-\bibitem{couchdb}
-Apache.
-\newblock \emph{CouchDB}.
-\newblock \url{http://couchdb.apache.org/}.
-\newblock \\Accessed: 02-03-2019.
+\bibitem{git}
+Linus Torvalds.
+\newblock \emph{Git}.
+\newblock \url{ https://git-scm.com}.
+\newblock \\Accessed: 26-02-2019.
+
+\bibitem{gitguis}
+git.
+\newblock \emph{Git in Other Environments - Graphical Interfaces}.
+\newblock \\
+  \url{https://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Graphical-Interfaces}.
+\newblock \\Accessed: 26-02-2019.
 
 \bibitem{sourcetree}
 Atlassian.
@@ -34,10 +38,39 @@ axosoft.
 \newblock \url{ https://www.gitkraken.com/}.
 \newblock \\Accessed: 28-02-2019.
 
+\bibitem{gitk}
+git.
+\newblock \emph{gitk}.
+\newblock \url{https://git-scm.com/docs/gitk}.
+\newblock \\Accessed: 26-02-2019.
+
+\bibitem{horizontalScrolling}
+Jakob Nielsen.
+\newblock \emph{Scrolling and Scrollbars}.
+\newblock \url{https://www.nngroup.com/articles/scrolling-and-scrollbars/}.
+\newblock \\Accessed: 26-02-2019.
+
+\bibitem{teendesign}
+Alita Joyce and Jakob Nielsen.
+\newblock \emph{Teenager’s UX: Designing for Teens}.
+\newblock \\
+  \url{https://www.nngroup.com/articles/usability-of-websites-for-teenagers/}.
+\newblock Accessed: 26-02-2019.
+
 \bibitem{sketch}
 Bohemian Coding.
 \newblock \emph{Sketch}.
 \newblock \url{https://www.sketch.com/}.
+\newblock \\Accessed: 26-02-2019.
+
+\bibitem{electron}
+\emph{Electron}.
+\newblock \url{https://electronjs.org/}.
+\newblock \\Accessed: 26-02-2019.
+
+\bibitem{nodejs}
+\emph{NodeJS}.
+\newblock \url{https://nodejs.org/en/}.
 \newblock \\Accessed: 26-02-2019.
 
 \bibitem{asp}
@@ -46,35 +79,34 @@ Microsoft Corporation.
 \newblock \url{https://dotnet.microsoft.com/apps/aspnet}.
 \newblock \\Accessed: 14-04-2019.
 
+\bibitem{tornadofx}
+Edvin Syse.
+\newblock \emph{Tornado FX}.
+\newblock \url{https://tornadofx.io}.
+\newblock \\Accessed: 14-04-2019.
+
+\bibitem{maven}
+Apache.
+\newblock \emph{Apache Maven}.
+\newblock \url{https://maven.apache.org/}.
+\newblock \\Accessed: 02-03-2019.
+
+\bibitem{spring}
+Pivotal.
+\newblock \emph{The Spring framework}.
+\newblock \url{https://spring.io/}.
+\newblock \\Accessed: 14-04-2019.
+
 \bibitem{jersey}
 Oracle Corporation.
 \newblock \emph{Jersey}.
 \newblock \url{ https://jersey.github.io/}.
 \newblock \\Accessed: 14-04-2019.
 
-\bibitem{gitguis}
-git.
-\newblock \emph{Git in Other Environments - Graphical Interfaces}.
-\newblock \\
-  \url{https://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Graphical-Interfaces}.
-\newblock \\Accessed: 26-02-2019.
-
-\bibitem{git-shell}
-git.
-\newblock \emph{Git shell}.
-\newblock \url{https://git-scm.com/docs/git-shell}.
-\newblock \\Accessed: 02-03-2019.
-
-\bibitem{gitk}
-git.
-\newblock \emph{gitk}.
-\newblock \url{https://git-scm.com/docs/gitk}.
-\newblock \\Accessed: 26-02-2019.
-
-\bibitem{dagger2}
-Google.
-\newblock \emph{Dagger 2}.
-\newblock \url{https://github.com/google/dagger}.
+\bibitem{couchdb}
+Apache.
+\newblock \emph{CouchDB}.
+\newblock \url{http://couchdb.apache.org/}.
 \newblock \\Accessed: 02-03-2019.
 
 \bibitem{firebase}
@@ -83,40 +115,17 @@ Google.
 \newblock \url {https://firebase.google.com/}.
 \newblock \\Accessed: 02-03-2019.
 
-\bibitem{flaticon}
-Icongeek26.
-\newblock \emph{Flat Icon}.
-\newblock \url{https://www.flaticon.com/authors/icongeek26}.
-\newblock \\Accessed: 02-03-2019.
+\bibitem{redis}
+redislabs.
+\newblock \emph{Redis}.
+\newblock \url{https://redis.io/}.
+\newblock \\Accessed: 14-04-2019.
 
-\bibitem{teendesign}
-Alita Joyce and Jakob Nielsen.
-\newblock \emph{Teenager’s UX: Designing for Teens}.
-
-\bibitem{jedis}
-Jonathan Leibiusky.
-\newblock \emph{Jedis}.
-\newblock \url{https://github.com/xetorthio/jedis}.
-\newblock \\Accessed: 02-03-2019.
-
-\bibitem{horizontalScrolling}
-Jakob Nielsen.
-\newblock \emph{Scrolling and Scrollbars}.
-\newblock \url{https://www.nngroup.com/articles/scrolling-and-scrollbars/}.
-\newblock \\Accessed: 26-02-2019.
-
-\bibitem{primarycoding}
-Department of~education.
-\newblock \emph{Computing programmes of study}.
-\newblock \url
-  {https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/239033/PRIMARY_national_curriculum_-_Computing.pdf}.
-\newblock \\Accessed: 02-03-2019.
-
-\bibitem{ofqual}
-Ofqual.
-\newblock \emph{GCSE outcomes in England}.
-\newblock \url{https://analytics.ofqual.gov.uk/apps/2018/GCSE/Outcomes/}.
-\newblock \\Accessed: 13-03-2019.
+\bibitem{json}
+W3Schools.
+\newblock \emph{What is JSON?}
+\newblock \url {https://www.w3schools.com/whatis/whatis_json.asp}.
+\newblock \\Accessed: 14-04-2019.
 
 \bibitem{oauth2}
 Aaron Parecki.
@@ -124,16 +133,22 @@ Aaron Parecki.
 \newblock \url{https://oauth.net/2/}.
 \newblock \\Accessed: 14-04-2019.
 
-\bibitem{spring}
-Pivotal.
-\newblock \emph{The Spring framework}.
-\newblock \url{https://spring.io/}.
-\newblock \\Accessed: 14-04-2019.
+\bibitem{git-shell}
+git.
+\newblock \emph{Git shell}.
+\newblock \url{https://git-scm.com/docs/git-shell}.
+\newblock \\Accessed: 02-03-2019.
 
-\bibitem{redis}
-redislabs.
-\newblock \emph{Redis}.
-\newblock \url{https://redis.io/}.
+\bibitem{testpyramid}
+Ham Vocke.
+\newblock \emph{The Practical Test Pyramid}.
+\newblock \url{https://martinfowler.com/articles/practical-test-pyramid.html}.
+\newblock \\Accessed: 02-04-2019.
+
+\bibitem{retrofit}
+Square.
+\newblock \emph{Retrofit}.
+\newblock \url{https://square.github.io/retrofit/}.
 \newblock \\Accessed: 14-04-2019.
 
 \bibitem{moshi}
@@ -142,34 +157,22 @@ Square.
 \newblock \url{https://github.com/square/moshi}.
 \newblock \\Accessed: 02-03-2019.
 
-\bibitem{retrofit}
-Square.
-\newblock \emph{Retrofit}.
-\newblock \url{https://square.github.io/retrofit/}.
-\newblock \\Accessed: 14-04-2019.
+\bibitem{jedis}
+Jonathan Leibiusky.
+\newblock \emph{Jedis}.
+\newblock \url{https://github.com/xetorthio/jedis}.
+\newblock \\Accessed: 02-03-2019.
 
-\bibitem{tornadofx}
-Edvin Syse.
-\newblock \emph{Tornado FX}.
-\newblock \url{https://tornadofx.io}.
-\newblock \\Accessed: 14-04-2019.
+\bibitem{dagger2}
+Google.
+\newblock \emph{Dagger 2}.
+\newblock \url{https://github.com/google/dagger}.
+\newblock \\Accessed: 02-03-2019.
 
-\bibitem{git}
-Linus Torvalds.
-\newblock \emph{Git}.
-\newblock \url{ https://git-scm.com}.
-\newblock \\Accessed: 26-02-2019.
-
-\bibitem{testpyramid}
-Ham Vocke.
-\newblock \emph{The Practical Test Pyramid}.
-\newblock \url{https://martinfowler.com/articles/practical-test-pyramid.html}.
-\newblock \\Accessed: 02-04-2019.
-
-\bibitem{json}
-W3Schools.
-\newblock \emph{What is JSON?}
-\newblock \url {https://www.w3schools.com/whatis/whatis_json.asp}.
-\newblock \\Accessed: 14-04-2019.
+\bibitem{flaticon}
+Icongeek26.
+\newblock \emph{Flat Icon}.
+\newblock \url{https://www.flaticon.com/authors/icongeek26}.
+\newblock \\Accessed: 02-03-2019.
 
 \end{thebibliography}
