@@ -2,6 +2,7 @@
 \usepackage{cite}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage{url}
 \usepackage{hyperref}
 \usepackage[titletoc]{appendix}
 \begin{document}
@@ -18,18 +19,26 @@
 
 
 }
-%%1926
+%%1964
 \title{Third Year Project \\
 \large Making Git Accessible For Children \\
 }
 \author{Samuel Da Costa\\
 Supervisor: Caroline Jay}
 \maketitle
-\tableofcontents
+
 
 \begin{abstract}
 \input{tex/abstract}
 \end{abstract}
+
+\renewcommand{\abstractname}{Acknowledgements}
+\begin{abstract}
+I would like to express my gratitude to Caroline Jay, Robert Haines and my third year tutor group for their continued support from the very beginning of my project and for their insightful comments and feedback throughout.
+
+\end{abstract}
+
+\tableofcontents
 
 \input{tex/chapter1}
 \input{tex/chapter2}
@@ -54,7 +63,7 @@ Supervisor: Caroline Jay}
 
 \end{appendices}
 
-\bibliographystyle{plain}
-\bibliography{bibfile}
+%\bibliographystyle{abbrv}
+%\bibliography{bibfile}
 
 \end{document}

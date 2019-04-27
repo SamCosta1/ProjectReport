@@ -6,7 +6,7 @@ The act of logging in to the desktop GUI for the first time on a machine trigger
 
 \subsubsection{Step 2: Creating a repository}
  
-It is the desktop GUI's responsibility to initialise the Git repository locally and to make a call to the main server to set up the remote repository. The main server chooses one of the Git servers from the available pool and sets up the remote upon it by executing commands via SSH (making use of the littlegit-core).
+It is the desktop GUI's responsibility to initialise the Git repository locally and to make a call to the main server to set up the remote repository. The main server chooses one of the Git servers from the available pool and sets up the remote upon it by executing commands via SSH (making use of the littlegit-core). This mechanism also makes it easy to add new Git servers to the available pool, which will immediately be picked up and used by the main server.
 
 \subsubsection{Step 3: Pushing or fetching from the remote server}
 

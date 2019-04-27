@@ -1,17 +1,17 @@
-\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
-\contentsline {section}{\numberline {1.1}Background on Git}{1}{section.1.1}
-\contentsline {section}{\numberline {1.2}Project Goals}{2}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}Objective 1}{2}{subsection.1.2.1}
-\contentsline {subsection}{\numberline {1.2.2}Objective 2}{3}{subsection.1.2.2}
-\contentsline {subsection}{\numberline {1.2.3}Objective 3}{3}{subsection.1.2.3}
-\contentsline {chapter}{\numberline {2}Technical Design}{5}{chapter.2}
-\contentsline {section}{\numberline {2.1}Other work in this area}{5}{section.2.1}
-\contentsline {section}{\numberline {2.2}Technical Overview}{6}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Git Servers and the Main server}{6}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}GUI}{7}{subsection.2.2.2}
-\contentsline {subsubsection}{ Low-level git library}{7}{section*.2}
-\contentsline {section}{\numberline {2.3}UI Design}{8}{section.2.3}
-\contentsline {section}{\numberline {2.4}Designing for teenagers}{11}{section.2.4}
+\contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}Background on Git}{3}{section.1.1}
+\contentsline {section}{\numberline {1.2}Project Goals}{4}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Objective 1}{4}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Objective 2}{5}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}Objective 3}{5}{subsection.1.2.3}
+\contentsline {chapter}{\numberline {2}Technical Design}{6}{chapter.2}
+\contentsline {section}{\numberline {2.1}Other work in this area}{6}{section.2.1}
+\contentsline {section}{\numberline {2.2}Technical Overview}{7}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Git Servers and the Main server}{7}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Desktop GUI}{8}{subsection.2.2.2}
+\contentsline {subsubsection}{ Low-level git library}{8}{section*.2}
+\contentsline {section}{\numberline {2.3}UI Design}{9}{section.2.3}
+\contentsline {section}{\numberline {2.4}Designing for teenagers}{12}{section.2.4}
 \contentsline {section}{\numberline {2.5}Final design before implementation}{12}{section.2.5}
 \contentsline {chapter}{\numberline {3}Implementation and Development}{14}{chapter.3}
 \contentsline {section}{\numberline {3.1}Planning and management of work}{14}{section.3.1}
@@ -22,7 +22,7 @@
 \contentsline {section}{\numberline {3.4}The main server}{17}{section.3.4}
 \contentsline {subsection}{\numberline {3.4.1}Technologies}{17}{subsection.3.4.1}
 \contentsline {subsubsection}{Web server framework}{17}{section*.3}
-\contentsline {subsubsection}{Database and caching}{17}{section*.4}
+\contentsline {subsubsection}{Database and caching}{18}{section*.4}
 \contentsline {subsubsection}{Data transfer}{19}{section*.5}
 \contentsline {subsection}{\numberline {3.4.2}Internal server architecture}{19}{subsection.3.4.2}
 \contentsline {subsubsection}{Repository Layer}{20}{section*.6}
@@ -30,7 +30,7 @@
 \contentsline {subsubsection}{Controller Layer}{20}{section*.8}
 \contentsline {section}{\numberline {3.5}Desktop GUI}{21}{section.3.5}
 \contentsline {subsection}{\numberline {3.5.1}Git graph}{21}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Threading}{22}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.2}Threading}{21}{subsection.3.5.2}
 \contentsline {section}{\numberline {3.6}Authentication}{22}{section.3.6}
 \contentsline {subsection}{\numberline {3.6.1}API authentication}{23}{subsection.3.6.1}
 \contentsline {subsection}{\numberline {3.6.2}SSH authentication}{23}{subsection.3.6.2}
@@ -43,6 +43,7 @@
 \contentsline {section}{\numberline {4.2}User testing}{26}{section.4.2}
 \contentsline {subsubsection}{First feedback session}{26}{section*.10}
 \contentsline {subsubsection}{Second feedback session}{27}{section*.11}
+\contentsline {subsubsection}{Other user feedback}{28}{section*.12}
 \contentsline {chapter}{\numberline {5}Reflection and Conclusion}{29}{chapter.5}
 \contentsline {section}{\numberline {5.1}Management of work}{29}{section.5.1}
 \contentsline {section}{\numberline {5.2}Project goals}{29}{section.5.2}
@@ -51,6 +52,6 @@
 \contentsline {chapter}{Appendix \numberline {A}Libraries}{31}{Appendix.1.A}
 \contentsline {chapter}{Appendix \numberline {B}Git commands}{32}{Appendix.1.B}
 \contentsline {chapter}{Appendix \numberline {C}Git authentication}{33}{Appendix.1.C}
-\contentsline {subsubsection}{Step 1: Before creating the repository}{33}{section*.12}
-\contentsline {subsubsection}{Step 2: Creating a repository}{33}{section*.13}
-\contentsline {subsubsection}{Step 3: Pushing or fetching from the remote server}{33}{section*.14}
+\contentsline {subsubsection}{Step 1: Before creating the repository}{33}{section*.13}
+\contentsline {subsubsection}{Step 2: Creating a repository}{33}{section*.14}
+\contentsline {subsubsection}{Step 3: Pushing or fetching from the remote server}{33}{section*.15}

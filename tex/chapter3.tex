@@ -13,16 +13,14 @@ The strategy was first to complete a bulk of the tasks for the littlegit-core, t
 
 \section{Choice of language}
 
-Considering the time constraints on this project, only implementing the littlegit-core once, was crucial. Furthermore, the time constraints would not permit writing further wrappers around the littlegit-core to make it compatible with other technologies. Hence the GUI and server needed to be able to import the littlegit-core directly. 
-
-Three main technologies were considered. They are as follows.
+Considering the time constraints on this project, only implementing the littlegit-core once, was crucial. Furthermore, the time constraints would not permit writing further wrappers around the littlegit-core to make it compatible with other technologies. Hence the GUI and server needed to be able to import the littlegit-core directly. Three main technologies were considered. They are as follows.
 
 \begin{enumerate}
-\item \textbf{JavaScript:} Though this technology has been a staple of web development for many years, in recent years the Electron \cite{electron} has become a common technology allowing JavaScript, HTML and CSS (traditionally web technologies) to be used to produce cross-platform desktop applications.
+\item \textbf{JavaScript:} Though this technology has been a staple of web development for many years, in recent years the Electron \cite{electron} has become a popular technology allowing JavaScript, HTML and CSS (traditionally web technologies) to be used to produce cross-platform desktop applications.
 
 Furthermore, NodeJS \cite{nodejs} is a technology allowing JavaScript's use in writing server code, making it a very viable choice as a core technology for littlegit. 
 
-However, JavaScript is a \emph{weakly typed} language, and previous experience has indicated that maintaining a large body of weakly typed code quickly becomes very difficult. Despite the advent of tools such as \emph{TypeScript} which is a typed language which transpiles into JavaScript, it is still no replacement for a truly typed language such as Java.
+However, JavaScript is a \emph{weakly typed} language, and previous personal experience has indicated that maintaining a large body of weakly typed code quickly becomes very difficult. Despite the advent of tools such as \emph{TypeScript} which is a typed language which transpiles into JavaScript, it is still no replacement for a truly typed language such as Java.
 
 \item \textbf{C\# and .NET:} There exists rich support for developing web server applications using the ASP \cite{asp} framework in C\#, and the project very nearly was written entirely in C\#, a modern, feature-rich language.
 
@@ -32,7 +30,7 @@ However, early experimentation developing a toy C\# application in an OSX enviro
 
 Kotlin is a relatively new language, and though it is inheritance model and general structure is similar to Java (to allow compatibility), it is a very different language to work with. Its rich support for functional programming was heavily utilised primarily in the development of the littlegit-core in the parsing of raw git output. Furthermore, Kotlin is far less verbose than Java allowing much faster development with less boilerplate code to maintain.
 
-Moreover, the Tornado Fx \cite{tornadofx} framework is a relatively new, open source framework which allows the development of desktop applications in Kotlin. 
+Moreover, the Tornado Fx \cite{tornadofx} framework is a relatively new, open source framework which allows the development of cross-platform (Linux, Mac and Windows) desktop applications in Kotlin. 
 
 
 \end{enumerate}
@@ -42,13 +40,13 @@ Moreover, the Tornado Fx \cite{tornadofx} framework is a relatively new, open so
 
 As has already been discussed, this is the library that interacts directly with the Git binary. The primary challenge here was ensuring we use Git-plumbing commands since these are designed for machine use. A further discussion of Git-plumbing is included in Appendix \ref{appendix_plumbing}.
 
-The project aims to follow modern best practices for software development. For this reason, a TDD (test driven development) approach was used throughout. To achieve this, the library was \emph{designed for testibility}. To aid testibility the library's operations were made synchronous.  Methods who return synchronously prove to be a much simpler and more reliable to test, allowing the entire library to be covered thoroughly with tests.
+The project aims to follow modern best practices for software development. For this reason, a TDD (test driven development) approach was used throughout. To achieve this, the library was \emph{designed for testibility}. To aid testability, the library's operations were made synchronous.  Methods which return synchronously prove to be much simpler and more reliable to test, allowing the entire library to be covered thoroughly with tests.
 
 \subsection{Architecture}\label{sec:core-architecture}
 
 The GUI uses the littlegit-core to execute Git commands on local Git repositories. However, the main server needs to be able to execute commands on remote servers over an SSH connection. This requirement is a primary driver behind the architecture of the littlegit-core which visualised in Figure \ref{fig:core-architecture}. 
 
-The top layer is used to combine plumbing commands; for example, multiple plumbing commands are required to change branches. It makes calls to the \texttt{command runner} which provides a high-level interface to these Git commands. The  \texttt{command runner} then converts these high-level invocations raw commands to be interpreted by Git, which are executed either through the local or remote runners depending on the configuration. Local for the GUI, remote for the server.
+The top layer is used to combine plumbing commands; for example, multiple plumbing commands are required to change branches. It makes calls to the \texttt{command runner} which provides a high-level interface to these Git commands. The  \texttt{command runner} then converts these high-level invocations into raw commands to be interpreted by Git, which are executed either through the local or remote runners depending on the configuration. Local for the GUI, remote for the server.
 
 \fig{figures/core-architecture}{The internal architecture of the littlegit-core.}{fig:core-architecture}{0.5}
 
@@ -72,7 +70,7 @@ We will now explore the different technologies available for components that mak
 
 \subsubsection{Web server framework}
 
-Let us first discuss the choice of the server framework used. The two frameworks most seriously considered are as follows.
+A web server framework was needed as a starting point to build the API. The two frameworks most seriously considered are as follows.
 
 \begin{itemize}
 \item The Spring framework \cite{spring}.
@@ -81,19 +79,15 @@ Let us first discuss the choice of the server framework used. The two frameworks
 
 We chose Jersey for its lightweight nature, it provides an easy way of creating API endpoints but unlike Spring does not attempt to control the entire stack down to the database allowing much more flexibility. Considering the need for the server to communicate via SSH with the Git servers, having full control of the stack was vital.
 
-The downside of Jersey and the advantage of Spring is a direct consequence. Spring provides much of the required functionality (communication with the database and authentication of users, being most significant) as standard, while these must be done manually with Jersey. In the end, the need for flexibility made Jersey the correct choice, despite the additional implementation work involved.
+The downside of Jersey and the advantage of Spring is a direct consequence. Spring provides much of the required functionality (communication with the database and authentication of users, being most significant) as standard, while these must be implemented manually with Jersey. In the end, the need for flexibility made Jersey the correct choice, despite the additional implementation work involved.
 
 \subsubsection{Database and caching}
 
-Given the rise of non-relational databases such as CouchDB and Firebase the decision to use a traditional SQL database is no longer a trivial one. These non-relational databases have some significant advantages, one of the most enticing being their quality of scaling horizontally, unlike traditional databases which generally only scale vertically. 
+Given the rise of non-relational databases such as CouchDB \cite{couchdb} and Firebase \cite{firebase}, the decision to use a traditional SQL database is no longer a trivial one. These non-relational databases have some significant advantages, one of the most enticing being their quality of scaling horizontally, unlike traditional databases which generally only scale vertically. 
 
-However, the decision was made to use a traditional database for the following reasons. The first and most important of these reasons are the need for complex querying on the data where non-relational databases do not compete with the power of traditional SQL. An example of this kind of complex query is the need to find all the Git servers which contain repositories the user either owns or has access to.
+However, the decision was made to use a traditional database for the following reasons. The first and most important of these reasons are the need for complex querying on the data where non-relational databases do not compete with the power of traditional SQL. An example of this kind of complex query is the need to find all the Git servers which contain repositories the user either owns or has access to. Moreover, the data has an evident structure, a structure which does not need to change often or adapt to a rapidly changing environment (where non-relational databases come into their own). Because of this, the static, rarely changing schemes of traditional SQL databases are not a hindrance. 
 
-Moreover, the data has an evident structure, a structure which does not need to change often or adapt to a rapidly changing environment (where non-relational databases come into their own). Because of this, the static, rarely changing schemes of traditional SQL databases are not a hindrance. 
-
-The scaling issue, however, must be addressed. No matter the convenience to the programmer, the use of a technology that will not scale efficiently cannot be justified when one of the objectives of the project is to produce a scalable system. 
-
-Let us consider the data that the system needs to store. For the reader with experience with relational databases, Figure \ref{fig:entity-relationship} shows an entity relationship diagram for the database. In short, the data we need to store is as follows.
+The scaling issue, however, must be addressed. No matter the convenience to the programmer, the use of a technology that will not scale efficiently cannot be justified when one of the objectives of the project is to produce a scalable system. Let us consider the data that the system needs to store. For the reader with experience with relational databases, Figure \ref{fig:entity-relationship} shows an entity relationship diagram for the database. In short, the data we need to store is as follows.
 
 \begin{itemize}
 \item User information including tokens used for authorisation and authentication.
@@ -104,19 +98,17 @@ Let us consider the data that the system needs to store. For the reader with exp
 
 \fig{figures/er-diagram.png}{An entity relationship diagram representing the database.}{fig:entity-relationship}{0.5}
 
-The scalability of the server relies on one key observation, the fact that the reading from the database is a far more common operation than writing. For example, the creation of repositories is not a common operation but checking if a user has access to a repository is very common (this will be discussed further in subsequent sections). This observation allows us to introduce caching to solve our scalability issue. By caching as many of the values as possible in a scalable, \textbf{in-memory} caching solution, we massively reduce traffic to the database. 
+The scalability of the server relies on one key observation, the fact that the reading from the database is a far more common operation than writing. For example, the creation of repositories is not a common operation but checking if a user has access to a repository is very common. This observation allows us to introduce caching to solve our scalability issue. By caching as many of the values as possible in a scalable, \textbf{in-memory} caching solution, we massively reduce traffic to the database.
 
-Redis \cite{redis} was selected as the caching solution, its feature set is vast, but the important ones for us are its in-memory key-value store and built-in replication. Its in-memory nature allows for very fast reads of the data letting the cache speed up common simple operations such as returning the details for a particular user, or checking if an authentication token is valid. 
+Redis \cite{redis} was selected as the caching solution, its feature set is vast, but the important ones for us are its in-memory key-value store and built-in replication. Its in-memory nature allows for very fast reads of the data letting the cache speed up common simple operations such as returning the details for a particular user, or checking if an authentication token is valid.  Moreover, having a cache with built-in replication allows it to scale across multiple machines easily giving us the horizontal scaling we require. The reader may wonder why we are using a caching solution rather than making use of data structures within the server code itself to achieve the same thing.
 
-Moreover, having a cache with built-in replication allows it to scale across multiple machines easily giving us the horizontal scaling we require. The reader may wonder why we are using a caching solution rather than making use of data structures within the server code itself to achieve the same thing.
-
-Let us consider the situation where the load on the server becomes large, causing requests to become slow and even to time out. Since the memory of the machine hosting the server caches the data, the only option is to get a bigger machine with more memory (vertical scaling). On the other hand, using our approach we can spin up multiple machines hosting the server to balance the load, and Redis's inbuilt replication allows us to do the same thing with the cache. Figure \ref{fig:loadbalancing} shows the idea \footnote{This was only tested with one machine each for the cache, server and database without a load balancer due to the cost of doing so on Amazon Web Services and other platforms, the code however fully supports the architecture described.}.
+Let us consider the situation where the load on the server becomes large, causing requests to become slow and even to time out. Since the memory of the machine hosting the server caches the data, the only option is to get a bigger machine with more memory (vertical scaling). On the other hand, using our approach we can spin up multiple machines hosting the server to balance the load, and Redis's inbuilt replication allows us to do the same thing with the cache. Figure \ref{fig:loadbalancing} shows the idea \footnote{This was only tested with one machine each for the cache, server and database without a load balancer due to the cost of doing so on Amazon Web Services, the code however fully supports the architecture described.}.
 
 \fig{figures/loadbalancing.pdf}{The overall architecture of the main server and the way it is designed to scale.}{fig:loadbalancing}{0.5}
 
 \subsubsection{Data transfer}
 
-The decision to use the JSON data format for communication between the server and desktop client was a straightforward one. JSON is lightweight and is easily parsable by machine while also being straightforward to understand by humans (making debugging easy) \cite{json}.
+The decision to use the JSON data format for communication between the server and desktop client was a straightforward one. JSON is lightweight and is easily parsable by a machine while also being straightforward to understand by humans (making debugging easy) \cite{json}.
 
 Furthermore, the decision to create a RESTful interface with the server allows it to be used by other clients in future easily. For example, if a web interface was required to enable users to view and manipulate their remote repositories, the same endpoints could be used without any additional work.
 
@@ -124,15 +116,15 @@ Furthermore, the decision to create a RESTful interface with the server allows i
 
 While discussing technologies, we saw the overall structure of the server technology stack. In this section, however, we discuss the way the code which interacts with these various components is architected.
 
-As was described in Section \ref{sec:technologies}, a lightweight server framework was selected for the system which does not enforce a particular architecture. The architecture chosen was a \emph{Layered Architecture}, chosen for its testability. As Figure \ref{fig:server-architecture} shows, each layer abstracts the one beneath it and interacts exclusively with that layer (again, making testing much simpler). The roles of the individual layers are as follows.
+As was described in Section \ref{sec:technologies}, a lightweight server framework was selected for the system which does not enforce a particular architecture. The architecture chosen was a \emph{Layered Architecture} as shown in Figure \ref{fig:server-architecture}. Each layer abstracts the one beneath it and interacts exclusively with that layer; this seperation makes testing very straightforward. The roles of the individual layers are described below.
 
 \fig{figures/server-architecture.pdf}{The internal architecture of the main server.}{fig:server-architecture}{0.5}
 
 \subsubsection{Repository Layer}
 
-The repository layer is an abstraction on the database and caching layers. Used by the service layer to retrieve and write information, this layer invokes raw SQL commands to communicate with the database and crucially also reads from the cache, and invalidates cached information when data is updated. By the nature of this layer's direct communication with the SQL database, it is here that considerations must be made to protect against SQL injection attacks.
+The repository layer (not to be confused with a Git repository) interacts directly with the database and cache. This layer invokes raw SQL commands to communicate with the database and cache. It also invalidates cached information when data is updated. By the nature of this layer's direct communication with the SQL database, it is here that considerations must be made to protect against SQL injection attacks.
 
-Furthermore, the repository layer handles the mapping of data from the database and cache to Kotlin data structures.
+Furthermore, the repository layer handles the mapping of data from the database and cache to Kotlin data structures. In short, the repository layer is an abstraction on the database and cache, allowing the service layer to work at a level above the raw SQL.
 
 
 \subsubsection{Service Layer}
@@ -143,9 +135,7 @@ In this layer, we have all of our application-specific business logic. For examp
 
 This layer defines the interface between the server's logic and the outside world. This means defining the individual API endpoints and the mappings from HTTP URLs to methods. Importantly, in this layer, we also define what kind of user can access each endpoint. Admin users have access to everything which we mainly use for testing; then we have standard users of the system. The third type of user is the unauthenticated user; we can think of these users as those that are not logged in. Of course, the only endpoints these have access to are those used to login and register new users.
 
-By far, this is the most difficult layer to test since it how we define the interface of our API using syntax provided by the Jersey framework. For this reason, it is vital that the controller contains as little business logic as possible.
-
-
+By far, this is the most challenging layer to test since it how we define the interface of our API using syntax provided by the Jersey framework. For this reason, it is vital that the controller contains as little business logic as possible so that the bulk of unit testing can be done against the service layer.
 
 \section{Desktop GUI}
 
@@ -159,21 +149,17 @@ Some readers may suppose that given the feature set described in Section \ref{se
 
 \fig{figures/littlegit-complexgraph.png}{The Git graph for the littlegit-core library opened in littlegit.}{fig:littlegit-graph}{0.2}
 
-Each time the Git history changes (for example when the user creates a commit) the local copy needs to be updated, the graph must be re-drawn. As we saw from our research in Section \ref{sec:teen-design} it is critical that this is as fast as possible. 
+Each time the Git history changes (for example when the user creates a commit) the local copy needs to be updated, the graph must be re-drawn. As we saw from our research in Section \ref{sec:teen-design} it is critical that this is as fast as possible. Consider a project with a long history with many thousands of commits. It is not unreasonable that a person from the target demographic may be working with such a project; for example, it may be an exercise to make changes to an open source piece of software. In this case, the graph must update quickly. The key to this is first to calculate which part of the graph is currently visible on the screen based on how far the user has scrolled and the size of the window. We then only draw the visible portion, rather than draw everything and letting the window clip out what is out of frame.
 
-Consider a project with a long history with many thousands of commits. It is not unreasonable that a person from the target demographic may be working with such a project; for example, it may be an exercise to make changes to an open source piece of software. In this case, the graph must update quickly. The key to this is first to calculate which part of the graph is currently visible on the screen based on how far the user has scrolled and the size of the window.
-
-Experimentation with the resulting algorithm has shown that the time to redraw the graph is now negligible in comparison with the time taken to read the history from Git in order to draw it.
+Experimentation with the resulting algorithm has shown that the time to redraw the graph is now negligible in comparison with the time taken to read the history from Git in order to draw it (an unavoidable step).
 
 \subsection{Threading}
 
-We have stated repeatedly the importance of software that does not lag considering the target audience. It follows directly that the software should not freeze just because it is performing background tasks. In practice, this means ensuring we do not perform long running tasks on the application's main UI thread.
+We have stated repeatedly the importance of software that does not lag considering the target audience. It follows directly that the software should not freeze just because it is performing background tasks. In practice, this means ensuring we do not perform long running tasks on the application's main UI thread. Long-running tasks include API calls (since the network may be slow), interactions with the file-system, including calls to the littlegit-core since invoking some Git commands may be slow. On the face of it, this seems straightforward. Upon needing to run one of these tasks, we run it on a separate thread and wait for it to complete before updating the UI.
 
-Long-running tasks include API calls (since the network may be slow), interactions with the file-system, including calls to the littlegit-core since invoking some Git commands may be slow. On the face of it, this seems straightforward. Upon needing to run one of these tasks, we run it on a separate thread and wait for it to complete before updating the UI.
+Unfortunately, the fact that we are interacting with a Git repository complicates matters. Consider the scenario we make a call to the littlegit-core to create a new commit on a very slow machine, suppose that multiple files have changed and must be included in the commit. Now suppose the user tries to check out a different commit. Checking out a different commit while halfway through the creation of another will lead to Git throwing errors and possibly corrupting the repository. To prevent this, we have two options; whenever any background task runs, we disable the entire UI to prevent the user from doing anything. As we have discussed this is bound to anger our users.
 
-Unfortunately, the fact that we are interacting with a Git repository complicates matters. Consider the scenario we make a call to the littlegit-core to create a new commit on a very slow machine, suppose that multiple files have changed and must be included in the commit. Now suppose the user tries to check out a different commit. Checking out a different commit while halfway through the creation of another will lead to Git throwing errors and possibly corrupting the repository (depending on precisely what happened). To prevent this, we have two options; whenever any background task runs, we disable the entire UI to prevent the user from doing anything. As we have discussed this is bound to anger our users.
-
-The second option, the option used by littlegit is to use a queue instead. All operations which depend on these long-running tasks are added to a queue and executed one by one (on a separate thread). The scenario described above now performs as a user would expect, one operation following the other automatically without the need for repeated clicking.
+The second option, (the option used by littlegit) is to use a queue instead. All operations which depend on these long-running tasks are added to a queue and executed one by one (on a separate thread). The scenario described above now performs as a user would expect, one operation following the other automatically without the need for repeated clicking.
 
 \section{Authentication}
 
@@ -189,9 +175,9 @@ Implementing secure SSH based authentication between the desktop GUI and the Git
 
 The first task was to ensure that the user \emph{git} could only execute Git commands since otherwise, it would be possible to execute any shell command on the remote machine, a clear security risk. To achieve this, the \emph{git} user is configured not to use the standard Unix shell, but instead, to use a tool called the \textbf{git-shell} \cite{git-shell} which enforces the restrictions (this is reliable since the creators of Git itself wrote the tool).
 
-On the other hand, when a user creates a new repository, it is the responsibility of the main server to create this repository on one of the Git servers. This requires a different user to the \emph{git} user since it needs permission to create a directory and initialise the repository. Due to this need, it was important to carefully set file permissions to ensure both users have only the permissions they need and no more, to reduce the threat of malicious access.
+On the other hand, when a user creates a new repository, it is the responsibility of the main server to create this repository on one of the Git servers. This requires a different user to the \emph{git} user since it needs permission to create a directory and initialise the repository. Due to this need, it was necessary to carefully set file permissions to ensure both users have only the permissions they need and no more, to reduce the threat of malicious access.
 
-Shell commands are used on the Git servers, invoked by SSH to check with the main server if a specific user action is allowed before allowing it. This ensures the main server controls repository access allowing access to be easily revoked from users if needed. Appendix \ref{appendix_gitauth} describes details of the full authentication process.
+Shell commands are used on the Git servers, invoked by SSH to check with the main server if a specific user action is allowed before completing it. This ensures the main server controls repository access allowing access to be easily revoked from users if needed. Appendix \ref{appendix_gitauth} describes details of the full authentication process.
 
 
 

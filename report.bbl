@@ -2,25 +2,40 @@
 
 \bibitem{electron}
 Electron.
+\newblock https://electronjs.org/.
 
 \bibitem{git-shell}
 Git shell.
+\newblock https://git-scm.com/docs/git-shell.
+
+\bibitem{jedis}
+Jedis.
+\newblock https://github.com/xetorthio/jedis.
 
 \bibitem{jersey}
 Jersey.
+\newblock https://jersey.github.io/.
 
 \bibitem{nodejs}
 Nodejs.
+\newblock https://nodejs.org/en/.
 
 \bibitem{oauth2}
 Oauth 2.0.
+\newblock https://oauth.net/2/.
 
 \bibitem{redis}
 Redis.
+\newblock https://redis.io/.
+
+\bibitem{tornadofx}
+Tornado fx.
+\newblock https://tornadofx.io.
 
 \bibitem{maven}
 Apache.
 \newblock Apache maven.
+\newblock https://maven.apache.org/.
 
 \bibitem{sourcetree}
 Atlassian.
@@ -29,12 +44,9 @@ Atlassian.
 axosoft.
 
 \bibitem{sketch}
-Bohemian Coding.
+B.~Coding.
 \newblock Sketch.
-
-\bibitem{json}
-ereger.
-\newblock What is json?
+\newblock https://www.sketch.com/.
 
 \bibitem{gitguis}
 git scm.
@@ -43,30 +55,39 @@ git scm.
 
 \bibitem{gitk}
 gitk.
+\newblock https://git-scm.com/docs/gitk.
 
 \bibitem{dagger2}
 Google.
 \newblock Dagger 2.
+\newblock https://github.com/google/dagger.
 
 \bibitem{flaticon}
 Icongeek26.
 \newblock Flat icon.
+\newblock https://www.flaticon.com/authors/icongeek26.
 
 \bibitem{teendesign}
-Alita Joyce and Jakob Nielsen.
+A.~Joyce and J.~Nielsen.
 \newblock Teenager’s ux: Designing for teens.
+\newblock
+  https://www.nngroup.com/articles/usability-of-websites-for-teenagers/.
 
 \bibitem{asp}
 Microsoft.
 \newblock Asp.net.
+\newblock https://dotnet.microsoft.com/apps/aspnet.
 
 \bibitem{horizontalScrolling}
-Jakob Nielsen.
+J.~Nielsen.
 \newblock Scrolling and scrollbars.
+\newblock https://www.nngroup.com/articles/scrolling-and-scrollbars/.
 
 \bibitem{primarycoding}
-Department of~education.
+D.~of~education.
 \newblock Computing programmes of study.
+\newblock
+  https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/239033/PRIMARY_national_curriculum_-_Computing.pdf.
 
 \bibitem{ofqual}
 Ofqual.
@@ -76,29 +97,30 @@ Ofqual.
 \bibitem{spring}
 Pivotal.
 \newblock The spring framework.
-
-\bibitem{jedis}
-Open Source.
-\newblock Jedis.
-
-\bibitem{tornadofx}
-Open Source.
-\newblock Tornado fx.
+\newblock https://spring.io/.
 
 \bibitem{moshi}
 Square.
 \newblock Moshi.
+\newblock https://github.com/square/moshi.
 
 \bibitem{retrofit}
 Square.
 \newblock Retrofit.
+\newblock https://square.github.io/retrofit/.
 
 \bibitem{git}
-Linus Torvalds.
+L.~Torvalds.
 \newblock Git.
 
 \bibitem{testpyramid}
-Ham Vocke.
+H.~Vocke.
 \newblock The practical test pyramid.
+\newblock https://martinfowler.com/articles/practical-test-pyramid.html.
+
+\bibitem{json}
+W3Schools.
+\newblock What is json?
+\newblock https://www.w3schools.com/whatis/whatis_json.asp.
 
 \end{thebibliography}

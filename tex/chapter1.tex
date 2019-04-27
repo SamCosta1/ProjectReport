@@ -1,34 +1,24 @@
 \chapter{Introduction}
 
-In England and Wales, the percentage of students choosing to study a GCSE in Computer Science rose by 50\% from 2015 to 2016 and continued to rise between 2016 and 2017. This is according to official statistics published by Ofqual  \cite{ofqual}.
+In England and Wales, the percentage of students choosing to study a GCSE in Computer Science rose by 50\% from 2015 to 2016 and continued to rise between 2016 and 2017. This is according to official statistics published by Ofqual  \cite{ofqual}. Moreover, the UK government has introduced simple programming to children as young as five years old \cite{primarycoding}, suggesting that more and more young people are beginning to produce code.
 
-Moreover, the UK government has introduced simple programming to children as young as five years old \cite{primarycoding}, suggesting that more and more young people are beginning to produce code.
+This project does not aim to convince the reader that toddlers require a version-control system. However, students studying their GCSEs and A-Levels in Computer Science often produce non-trivial amounts of code, the need for complete backups and version-control is apparent.
 
-This project does not aim to convince the reader that toddlers require a source-control system. However, students studying their GCSEs and A-Levels in Computer Science often produce non-trivial amounts of code, the need for complete backups and version control become more apparent.
+In the field of computer science, this is a solved problem. The \emph{Git} \cite{git} version-control system solves all these problems. Git provides means of easily keeping backups, keeping track of versions and the ability to roll back to an old version easily. Of course, using Git comes with its challenges. Using it effectively requires practice and an understanding of its low-level commands which can be daunting to new users.
 
-In the field of computer science, this is a solved problem. The \emph{Git} \cite{git} source-control system solves all these problems. Git provides means of easily keeping backups, keeping track of versions and the ability to roll back to an old version easily.
-
-Of course, using Git comes with its challenges. To use it effectively requires practice and an understanding of its low-level commands which can be daunting to new users.
-
-This project aims to strike a balance between the complexity of the system and the needs of younger users. To take advantage of such a feature-rich version-control system and to provide an interface to it which can be understood and used even by children.
-
-The emphasis of this interface is on the concept of \emph{version-control} rather than Git specifically. Abstracting and automating the internals of Git to allow the user to concentrate on the higher level concepts such as, ``rolling back," and, ``saving a new version".
+This project aims to strike a balance between the complexity of Git and the needs of younger users. To take advantage of such a feature-rich version-control system and to provide an interface to it which can be understood and used even by children. The emphasis of this interface is on the concept of \emph{version-control} rather than Git specifically. Abstracting and automating the internals of Git to allow the user to concentrate on the higher level concepts such as, ``rolling back," and, ``saving a new version".
 
 \section{Background on Git}
 
-This section briefly describes some of the main advantages of Git and introduce some relevant terminology. 
+This section briefly describes some of the main advantages of Git and introduces some relevant terminology. 
 
 As previously mentioned Git allows for straightforward backups. In practice, this means the existence of a remote server which also holds a copy of the user's code. When the user wishes to back up their code, they create what is known as a \texttt{commit} object. Such an object contains a subset of the files in the directory that the user has edited since the last commit, as well as metadata such as the date, author e.t.c. Importantly, the metadata contains a pointer to the commit that was created before it. The resulting structure then forms a graph of project history.
 
-At any point in the future, the user now can reset the project to the state stored in any \texttt{commit}. Given these objects, Git handles backups by providing commands that allow secure storage of the objects on a remote server (referred to as \emph{pushing} to the remote server). 
-
-Sharing of projects across devices now becomes simple. The user on a different device makes a copy of the project from the remote server (referred to as \emph{cloning}). They are then free to create commits and to push them to the remote server, and to pull down commits created by others.
+At any point in the future, the user now can reset the project to the state stored in any \texttt{commit}. Given these objects, Git handles backups by providing commands that allow secure storage of the objects on a remote server (referred to as \emph{pushing} to the remote server). Sharing of projects across devices now becomes simple. The user on a different device makes a copy of the project from the remote server (referred to as \emph{cloning}). They are then free to create commits and to push them to the remote server, and to pull down commits created by others.
 
 In practice, however, the use of these commands can often be fiddly for new users.  The following is merely the author's opinion and should not be interpreted as a statement of concrete fact. This being said, it seems clear that Git's main complexity comes from the fact that any piece of code could be in one of many places. It could exist in a stash, in the working directory, in the staging area, in a commit on the remote e.t.c.
 
-Users are required to know about all these different areas and how they interact. When they inevitably make a mistake, usually this results in an error which is very difficult to read and interpret. 
-
-With this in mind, the first goal of this project becomes clear. To abstract away as many of these different locations as possible. We will see that the project presents the user with only two areas: the remote version, and their local version.
+Users are required to know about all these different areas and how they interact. When they inevitably make a mistake, the result is usually an error which is very difficult to read and interpret. The project aims to automate the resolving of these issues, as well as performing actions automatically to prevent them.
 
 \section{Project Goals}\label{sec:projectgoals}
 
@@ -38,28 +28,27 @@ At the outset of the project, there were three main objectives, from which all o
 
 The first objective was to produce a user interface which should be useable by anybody over the age of thirteen years old. This interface should enable interaction with an underlying Git repository at a very high level of abstraction. \emph{Note:} The GUI is not aiming to \emph{teach} the user about Git, or even about version-control. The idea, is that given a brief introduction to the concept of version-control, that the user should be able to use the system.
 
-To define specific use-cases that the GUI should support, it was essential to consider the behavior of Git users. A questionnaire was circulated to adult users who already use Git to determine which operations are considered most useful, and which are most challenging to use. 
+To define specific use-cases that the GUI should support, it was essential to consider the behaviour of Git users. A questionnaire was circulated to adult users who already use Git to determine which operations are considered most useful, and which are most challenging to use. 
 
-For the project, we'd aim to support the most useful operations, for those useful yet challenging tasks the aim was to support them but possibly in a simplified form. A prime example of this is branching, 96\% of respondents indicated branching was important to their workflow, but only 66\% found branching to be an easy task. Therefore, a simplified branching procedure is used whereby branches are automatically created and managed as the user navigates back and forth through the commit history.
+For the project, we aimed to support the most useful operations. For those useful yet challenging tasks, the aim was to support them but possibly in a simplified form. A prime example of this is branching, 96\% of respondents indicated branching was important to their workflow, but only 66\% found branching to be an easy task. Therefore, a simplified branching procedure is used whereby branches are automatically created and managed as the user navigates back and forth through the commit history.
 
 Furthermore, the survey indicated that only 7.4\%  considered the setting up of SSH keys to be easy, with a further 77\% saying they always needed to look up instructions for how to do so. Therefore this project aims to handle all SSH authentication automatically.
 
-The supported use-cases were also heavily influenced by studying the national curriculum for Computing in England for the target age group \ref{primarycoding}. It reveals that students are not required to work in teams or work on the same code. Because of this, the GUI concentrated on a single user's needs, for example, the branching structure described above is ill-suited to a repository with multiple collaborators but provides a much simpler user experience for the single user \footnote{The system does fully support multiple users interacting with a repository. We simply optimise the GUI for one user, possibly on multiple machines since this is the most likely scenario. }.
+The supported use-cases were also heavily influenced by studying the national curriculum for Computing in England for the target age group \ref{primarycoding}. It reveals that students are not required to work in teams or work on the same code. Because of this, the GUI concentrated on a single user's needs, for example, the branching structure described above is ill-suited to a repository with multiple collaborators but provides a much simpler user experience for the single user \footnote{The system does fully support multiple users interacting with a repository. However, we optimise the GUI for one user, possibly on multiple machines since this is the most likely scenario. }.
 
 What follows is the list of use cases the project initially aimed to fulfil. The use case highlighted in red was removed since it was judged to add needless complexity.
 
 \begin{itemize}
-\item Ability to login on any machine with the software installed and see a list of projects.
+\item Ability to login on to any machine with the software installed and see a list of projects.
 \item Ability to open any of these projects locally just with a click.
 \item New commits should appear on other machines logged into the same user account without the need for the user to perform manual steps.
 \item Ability to jump back and forwards through the project history.
 \item \color{red}Ability to choose which files to add to a commit \color{black}
 \end{itemize}
 
-
 \subsection{Objective 2} 
 
-The second objective was less tangible and to produce a system that is scalable, well tested and robust enough for use by inexperienced users. In practice, this last part implies that the system should be able to automatically detect and correct issues with the underlying Git repository which would usually need to be manually corrected.
+The second objective was less tangible; to produce a system that is scalable, well tested and robust enough for use by inexperienced users. In practice, this last part implies that the system should be able to automatically detect and correct issues with the underlying Git repository which would usually need to be manually corrected.
 
 Scalability is an essential part of this project. Consider the case that the project is wildly successful and has many users beginning to use it. The result would be many repositories needing storage on remote servers. One of the key aims of the project is to build a system that allows adding more remote machines to the pool of available resources and that the system automatically begins using these multiple servers.
 
@@ -67,4 +56,4 @@ Scalability is an essential part of this project. Consider the case that the pro
 
 Finally,  the project's third objective was to introduce the software to children and gather feedback about how useful it would be to them. This objective is fundamental; without user feedback and appraisal there is no way of knowing if the software is fit for purpose.
 
-By the end of the project, two feedback sessions were conducted with school children during a Computer Science lesson at their school. We'll discuss their feedback and the approach to the sessions in Section \ref{sec:user-testing}.
+By the end of the project, two feedback sessions were conducted with school children during a Computer Science lesson at their school. We will discuss their feedback and the approach to the sessions in Section \ref{sec:user-testing}.
