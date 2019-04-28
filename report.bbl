@@ -19,6 +19,18 @@ Linus Torvalds.
 \newblock \url{ https://git-scm.com}.
 \newblock \\Accessed: 26-02-2019.
 
+\bibitem{gitk}
+Git.
+\newblock \emph{gitk}.
+\newblock \url{https://git-scm.com/docs/gitk}.
+\newblock \\Accessed: 26-02-2019.
+
+\bibitem{gitgui}
+Git.
+\newblock \emph{git-gui}.
+\newblock \url{https://git-scm.com/docs/git-gui}.
+\newblock \\Accessed: 26-02-2019.
+
 \bibitem{gitguis}
 git.
 \newblock \emph{Git in Other Environments - Graphical Interfaces}.
@@ -37,12 +49,6 @@ axosoft.
 \newblock \emph{GitKraken}.
 \newblock \url{ https://www.gitkraken.com/}.
 \newblock \\Accessed: 28-02-2019.
-
-\bibitem{gitk}
-git.
-\newblock \emph{gitk}.
-\newblock \url{https://git-scm.com/docs/gitk}.
-\newblock \\Accessed: 26-02-2019.
 
 \bibitem{horizontalScrolling}
 Jakob Nielsen.
@@ -91,6 +97,11 @@ Apache.
 \newblock \url{https://maven.apache.org/}.
 \newblock \\Accessed: 02-03-2019.
 
+\bibitem{travis}
+\emph{Travis CI}.
+\newblock \url{https://travis-ci.com/}.
+\newblock \\Accessed: 28-04-2019.
+
 \bibitem{spring}
 Pivotal.
 \newblock \emph{The Spring framework}.
@@ -134,7 +145,7 @@ Aaron Parecki.
 \newblock \\Accessed: 14-04-2019.
 
 \bibitem{git-shell}
-git.
+Git.
 \newblock \emph{Git shell}.
 \newblock \url{https://git-scm.com/docs/git-shell}.
 \newblock \\Accessed: 02-03-2019.

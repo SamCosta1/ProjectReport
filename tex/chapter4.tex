@@ -24,7 +24,7 @@ The main server called for an entirely different testing strategy to that used f
 
 Recall the server architecture we discussed in Section \ref{sec:server-architecture}. Many unit tests are used to test the \emph{Repository} layer, the layer that interacts with the database. The decision was made to test against a real database and cache rather than try to mock out the connections since this is tedious. We also get the advantage of checking the database and cache connections using this approach.
 
-To unit test the \emph{Service} layer we mock out the dependency on the \emph{Repository} layer to ensure we only test the Service layer functionality (similarly for the Controller layer).  A much smaller number of integration tests are used to check the entire stack from the \emph{Controller} layer down to the database, the aim being to catch any issues in the integration of the various layers. Code coverage for the server is lower than the littlegit-core but still stands at 76\% which is acceptable.
+To unit test the \emph{Service} layer we mock out the dependency on the \emph{Repository} layer to ensure we only test the Service layer functionality (similarly for the \emph{Controller} layer).  A much smaller number of integration tests are used to check the entire stack from the \emph{Controller} layer down to the database, the aim being to catch any issues in the integration of the various layers. Code coverage for the server is lower than the littlegit-core but still stands at 76\% which is acceptable.
 
 Formal performance tests were not used in the development of the server. Manual testing shows that calls to the API execute quickly and that the caching strategy does indeed speed up data retrieval. Any further insights that formal performance tests would provide would require the system to run on multiple machines as previously described leading to a significant monetary cost which was deemed unnecessary.
 
@@ -60,7 +60,7 @@ During the first session, the software was unfinished with a few bugs in the way
 
 \noindent \emph{Task: } Could you create another couple of commits and then go back to the first version?
 
-\noindent \emph{Observations: } Again, this task was carried out smoothly. Performed by a different person to the first task they added a few commits and took very little time exploring the interface before finding the option to switch back to an old version. Another member of the group who was observing commented that they liked the fact they could use the graph for navigating back and forth.\\
+\noindent \emph{Observations: } Again, this task was carried out smoothly. Performed by a different person to the first task, they added a few commits and took very little time exploring the interface before finding the option to switch back to an old version. Another member of the group who was observing commented that they liked the fact they could use the graph for navigating back and forth.\\
 
 \noindent \emph{Question: } For this question, participants were presented with the interface to GitKraken (discussed in Chapter 2), they were asked for any comments they had comparing the two applications.
 
@@ -72,13 +72,13 @@ Overall, the consensus was that for their current needs and level of experience 
 
 \subsubsection{Second feedback session}
 
-The format of the first session worked well and was therefore used for the second session. The second group made up of some new faces and some of the same participants as the first group; however, the main difference was that before starting I encouraged criticism and negative comments. The questions, tasks and observations are as follows.
+The format of the first session worked well and was therefore used for the second session. The second group made up of some new faces and some of the same participants as the first group; however, the main difference was that before starting, criticism and negative comments were encouraged. The questions, tasks and observations are as follows.\\
 
-\noindent \emph{Task: } Could you open the sample directory in littlegit?
+\noindent \emph{Task: } Could you open the sample directory in littlegit?\\
 \noindent \emph{Observations: } The user (intentionally chosen to be someone who hadn't been in the previous group and hadn't seen the software before) successfully opened the indicated directory in the software. They were then asked to create a few commits and navigate back and forth through the commit history as in the previous session and had no issues doing so.\\
 
 \noindent \emph{Task: } Could you open one of the existing repositories that only exist on the server?\\
-\noindent \emph{Observations: } This task caused some confusion, and it was necessary to explain further what was meant by repositories not yet existing locally. The user was able to open the repository in littlegit but was unable to locate it on the file system a clear need for improvement in the software. Participants suggested a button to open the directory in the file explorer which would be an excellent solution to the problem. Further work is certainly needed in this area to improve the user experience. \\
+\noindent \emph{Observations: } This task caused some confusion, and it was necessary to explain further what was meant by repositories not yet existing locally. The user was able to open the repository in littlegit but was unable to locate it on the file system; a clear need for improvement in the software. Participants suggested a button to open the directory in the file explorer which would be an excellent solution to the problem. Further work is certainly needed in this area to improve the user experience. \\
 
 \noindent \emph{Overall comments:}
 During the session, one of the participants mentioned that the Git graph in the software looked odd when it only had one commit. Others agreed, and it is easy to see why. The commit is highlighted but has no other commit to distinguish it from which looks odd. Figure \ref{fig:odd-commit} shows the software in this state.

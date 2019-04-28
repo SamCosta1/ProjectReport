@@ -16,7 +16,7 @@ The strategy was first to complete a bulk of the tasks for the littlegit-core, t
 
 \section{Choice of language}
 
-Considering the time constraints on this project, only implementing the littlegit-core once, was crucial. Furthermore, the time constraints would not permit writing further wrappers around the littlegit-core to make it compatible with other technologies. Hence the GUI and server needed to be able to import the littlegit-core directly. Three main technologies were considered. They are as follows.
+Considering the time constraints on this project, only implementing the littlegit-core once, was crucial. Furthermore, the time constraints would not permit writing further wrappers around the littlegit-core to make it compatible with other technologies. Hence the GUI and server needed to be able to import the littlegit-core directly, meaning they needed to use the same language. Three main technologies were considered. They are as follows.
 
 \begin{enumerate}
 \item \textbf{JavaScript:} Though this technology has been a staple of web development for many years, in recent years the Electron \cite{electron} has become a popular technology allowing JavaScript, HTML and CSS (traditionally web technologies) to be used to produce cross-platform desktop applications.
@@ -56,7 +56,7 @@ The top layer is used to combine plumbing commands; for example, multiple plumbi
 
 \subsection{Deployment}
 
-We keep mentioning that the library is \emph{used} or \emph{included} by the GUI and server.  Figure \ref{fig:core-deployment} shows the deployment pipeline which concludes by deploying the library to a Maven \cite{maven} repository allowing it to easily be included as a Maven dependency by the server and the GUI, without the need to manually copy any files.
+We keep mentioning that the library is \emph{used} or \emph{included} by the GUI and server.  Figure \ref{fig:core-deployment} shows the deployment pipeline which concludes by deploying the library to a Maven \cite{maven} repository allowing it to easily be included as a Maven dependency by the server and the GUI, without the need to manually copy any files. The deployment is done using the Travis \cite{travis} continuous integration service (which is also used to deploy and run tests for the other project components).
 
 \figh{figures/core-deployment.pdf}{The deployment pipeline of the littlegit-core.}{fig:core-deployment}{0.5}
 
@@ -66,9 +66,7 @@ In this section, we will explore the implementation of the main server and justi
 
 \subsection{Technologies}\label{sec:technologies}
 
-Firstly, Amazon Web Services hosts all the online infrastructure for this project. The justification for this is simple, hosting of databases and servers is expensive, and for students, AWS offers a free tier of the services needed.
-
-We will now explore the different technologies available for components that make up the server, justifying the choices made.
+Firstly, Amazon Web Services hosts all the online infrastructure for this project. The justification for this is simple, hosting of databases and servers is expensive, and for students, AWS offers a free tier of the services needed. We will now explore the different technologies considered for components that make up the server.
 
 
 \subsubsection{Web server framework}
@@ -103,7 +101,7 @@ The scaling issue, however, must be addressed. No matter the convenience to the 
 
 The scalability of the server relies on one key observation, the fact that the reading from the database is a far more common operation than writing. For example, the creation of repositories is not a common operation but checking if a user has access to a repository is very common. This observation allows us to introduce caching to solve our scalability issue. By caching as many of the values as possible in a scalable, \textbf{in-memory} caching solution, we massively reduce traffic to the database.
 
-Redis \cite{redis} was selected as the caching solution, its feature set is vast, but the important ones for us are its in-memory key-value store and built-in replication. Its in-memory nature allows for very fast reads of the data letting the cache speed up common simple operations such as returning the details for a particular user, or checking if an authentication token is valid.  Moreover, having a cache with built-in replication allows it to scale across multiple machines easily giving us the horizontal scaling we require. The reader may wonder why we are using a caching solution rather than making use of data structures within the server code itself to achieve the same thing.
+Redis \cite{redis} was selected as the caching solution, its feature set is vast, but the important ones for us are its in-memory key-value store and built-in replication. Its in-memory nature allows for very fast reads of the data letting the cache speed up common simple operations such as returning the details for a particular user, or checking if an authentication token is valid.  Moreover, having a cache with built-in replication allows it to scale across multiple machines easily giving us the horizontal scaling we require. The reader may wonder why we are using a separate caching solution rather than making use of data structures within the server code itself to achieve the same thing.
 
 Let us consider the situation where the load on the server becomes large, causing requests to become slow and even to time out. Since the memory of the machine hosting the server caches the data, the only option is to get a bigger machine with more memory (vertical scaling). On the other hand, using our approach we can spin up multiple machines hosting the server to balance the load, and Redis's inbuilt replication allows us to do the same thing with the cache. Figure \ref{fig:loadbalancing} shows the idea \footnote{This was only tested with one machine each for the cache, server and database without a load balancer due to the cost of doing so on Amazon Web Services, the code however fully supports the architecture described.}.
 
@@ -125,7 +123,7 @@ As was described in Section \ref{sec:technologies}, a lightweight server framewo
 
 \subsubsection{Repository Layer}
 
-The repository layer (not to be confused with a Git repository) interacts directly with the database and cache. This layer invokes raw SQL commands to communicate with the database and cache. It also invalidates cached information when data is updated. By the nature of this layer's direct communication with the SQL database, it is here that considerations must be made to protect against SQL injection attacks.
+The repository layer (not to be confused with a Git repository) interacts directly with the database and cache. This involves using raw SQL commands to communicate with the database and is responsible for populating the cache and invalidating cached information when data is updated. By the nature of this layer's direct communication with the SQL database, it is here that considerations must be made to protect against SQL injection attacks.
 
 Furthermore, the repository layer handles the mapping of data from the database and cache to Kotlin data structures. In short, the repository layer is an abstraction on the database and cache, allowing the service layer to work at a level above the raw SQL.
 
@@ -152,7 +150,7 @@ Some readers may suppose that given the feature set described in Section \ref{se
 
 \fig{figures/littlegit-complexgraph.png}{The Git graph for the littlegit-core library opened in littlegit.}{fig:littlegit-graph}{0.2}
 
-Each time the Git history changes (for example when the user creates a commit) the local copy needs to be updated, the graph must be re-drawn. As we saw from our research in Section \ref{sec:teen-design} it is critical that this is as fast as possible. Consider a project with a long history with many thousands of commits. It is not unreasonable that a person from the target demographic may be working with such a project; for example, it may be an exercise to make changes to an open source piece of software. In this case, the graph must update quickly. The key to this is first to calculate which part of the graph is currently visible on the screen based on how far the user has scrolled and the size of the window. We then only draw the visible portion, rather than draw everything and letting the window clip out what is out of frame.
+Each time the Git history changes (for example when the user creates a commit) the local copy needs to be updated, the graph must be re-drawn. As we saw from our research in Section \ref{sec:teen-design} it is critical that this is as fast as possible. Consider a project with a long history with many thousands of commits. It is not unreasonable that a person from the target demographic may be working with such a project; for example, it may be an exercise to make changes to an open source piece of software. In this case, the graph must update quickly. The key to this is first to calculate which part of the graph is currently visible on the screen based on how far the user has scrolled and the size of the window (a fast calculation). We then only draw the visible portion, rather than drawing everything and letting the window clip out what is out of frame.
 
 Experimentation with the resulting algorithm has shown that the time to redraw the graph is now negligible in comparison with the time taken to read the history from Git in order to draw it (an unavoidable step).
 
@@ -170,7 +168,7 @@ There are two main kinds of authentication used by the system. SSH authenticatio
 
 \subsection{API authentication}
 
-The token-based system used to authenticate calls to the API implements the OAuth 2.0 protocol since at the time of writing this is the industry standard for authentication \cite{oauth2}. Furthermore, it is relatively simple to implement, and the use of tokens also makes it easy to cache authentication details for a user which helps speed up requests.
+The token-based system used to authenticate calls to the API implements the OAuth 2.0 protocol since at the time of writing this is the industry standard for authentication \cite{oauth2}. Furthermore, the use of tokens also makes it easy to cache authentication details for a user which helps speed up requests.
 
 \subsection{SSH authentication}
 
